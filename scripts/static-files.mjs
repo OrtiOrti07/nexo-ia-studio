@@ -8,7 +8,7 @@
 // NEXT_PUBLIC_SITE_URL, NEXT_PUBLIC_BASE_PATH y NEXT_PUBLIC_STATIC_EXPORT.
 // Se ejecuta antes de `dev` y de `build`.
 
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { absoluteUrl, basePath, href, site } from "../src/config/site.ts";
@@ -54,6 +54,8 @@ const manifest = {
   ],
 };
 
+// public/ puede no existir en un clon limpio (git no guarda carpetas vacías)
+mkdirSync(PUBLIC, { recursive: true });
 writeFileSync(join(PUBLIC, "robots.txt"), robots);
 writeFileSync(join(PUBLIC, "sitemap.xml"), sitemap);
 writeFileSync(join(PUBLIC, "manifest.webmanifest"), `${JSON.stringify(manifest, null, 2)}\n`);
