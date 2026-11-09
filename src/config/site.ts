@@ -5,21 +5,53 @@
  * y los datos de contacto y se actualizarán la cabecera, el pie, los metadatos,
  * el JSON-LD, la imagen para redes sociales y los textos del formulario.
  */
+
+/**
+ * Prefijo de las rutas cuando la web vive en una subcarpeta, como en GitHub
+ * Pages (`/nexo-ia-studio`). Vacío en local o con dominio propio.
+ */
+export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+/** true cuando se compila como web estática (GitHub Pages). */
+export const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === "1";
+
+/**
+ * Ruta interna lista para usar en un enlace: añade el prefijo del sitio y, en
+ * la versión estática, la barra final que espera GitHub Pages.
+ * Ejemplos: href("/#servicios"), href("/privacidad").
+ */
+export function href(path: string) {
+  const [rawPath, hash] = path.split("#");
+  let pathname = rawPath || "/";
+  const lastSegment = pathname.split("/").pop() ?? "";
+  if (isStaticExport && !pathname.endsWith("/") && !lastSegment.includes(".")) {
+    pathname += "/";
+  }
+  return `${basePath}${pathname}${hash ? `#${hash}` : ""}`;
+}
+
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "https://nexoia.studio");
+
+/** URL absoluta de una ruta interna (metadatos, sitemap, robots). */
+export function absoluteUrl(path: string) {
+  return new URL(href(path), new URL(siteUrl).origin).toString();
+}
+
 export const site = {
   name: "Nexo IA Studio",
   /** Versión corta para espacios reducidos (manifest, icono de app). */
   shortName: "Nexo",
   /**
-   * Dominio público, en este orden:
-   * 1. NEXT_PUBLIC_SITE_URL, si la defines (p. ej. cuando tengas dominio propio).
-   * 2. La dirección de producción que asigna Vercel (variable de sistema).
+   * Dirección pública completa (incluida la subcarpeta, si la hay), en orden:
+   * 1. NEXT_PUBLIC_SITE_URL (la define el despliegue en GitHub Pages).
+   * 2. La dirección de producción de Vercel, si se despliega allí.
    * 3. Un dominio provisional.
    */
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "https://nexoia.studio"),
+  url: siteUrl,
   locale: "es_ES",
   language: "es",
   /** Datos de contacto que se muestran en la web. */
@@ -37,10 +69,10 @@ export const site = {
 } as const;
 
 export const navigation = [
-  { label: "Servicios", href: "/#servicios" },
-  { label: "Método", href: "/#metodo" },
-  { label: "Ejemplos", href: "/#situaciones" },
-  { label: "Preguntas", href: "/#preguntas" },
+  { label: "Servicios", href: href("/#servicios") },
+  { label: "Método", href: href("/#metodo") },
+  { label: "Ejemplos", href: href("/#situaciones") },
+  { label: "Preguntas", href: href("/#preguntas") },
 ] as const;
 
-export const contactAnchor = "/#contacto";
+export const contactAnchor = href("/#contacto");

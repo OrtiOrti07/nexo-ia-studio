@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { site } from "@/config/site";
+import { absoluteUrl, href, site } from "@/config/site";
 import { legal } from "@/config/legal";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { Field, LegalDocument, OwnerDetails, type LegalSection } from "@/components/legal/LegalDocument";
@@ -7,7 +7,7 @@ import { Field, LegalDocument, OwnerDetails, type LegalSection } from "@/compone
 export const metadata: Metadata = {
   title: "Aviso legal",
   description: `Datos identificativos del titular y condiciones de uso del sitio web de ${site.name}.`,
-  alternates: { canonical: "/aviso-legal" },
+  alternates: { canonical: absoluteUrl("/aviso-legal") },
 };
 
 const owner = <Field value={legal.ownerName} label="Razón social o nombre" />;
@@ -116,7 +116,7 @@ const sections: LegalSection[] = [
     content: (
       <p>
         El tratamiento de los datos que nos facilitas a través del formulario de contacto se
-        explica en la <a href="/privacidad">política de privacidad</a>. Esta web no utiliza
+        explica en la <a href={href("/privacidad")}>política de privacidad</a>. Esta web no utiliza
         cookies.
       </p>
     ),

@@ -40,3 +40,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generados por scripts/static-files.mjs (dependen del entorno)
+/public/robots.txt
+/public/sitemap.xml
+/public/manifest.webmanifest

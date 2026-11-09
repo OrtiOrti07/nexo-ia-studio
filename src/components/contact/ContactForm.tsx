@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
-import { site } from "@/config/site";
+import { href, site } from "@/config/site";
 import { legal } from "@/config/legal";
 import { buttonClasses } from "@/components/ui/Button";
 import {
@@ -18,6 +18,17 @@ import {
 } from "@/lib/contact/schema";
 
 type Status = "idle" | "submitting" | "delivered" | "not_configured" | "failed";
+
+/**
+ * Adónde se envía el formulario:
+ * - NEXT_PUBLIC_CONTACT_ENDPOINT: un servicio externo de formularios (p. ej.
+ *   Formspree o Web3Forms). Funciona también en la versión estática.
+ * - /api/contact: la ruta propia, cuando la web corre con servidor.
+ * - Ninguno (versión estática sin servicio): se ofrece enviarlo por correo.
+ */
+const ENDPOINT =
+  process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ??
+  (process.env.NEXT_PUBLIC_STATIC_EXPORT === "1" ? null : "/api/contact");
 
 type ContactFormProps = {
   /** Lo calcula el servidor: indica si hay un canal de envío configurado. */
@@ -87,13 +98,24 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
       return;
     }
 
+    // Sin destino configurado no fingimos un envío: ofrecemos el correo
+    if (!ENDPOINT) {
+      setStatus("not_configured");
+      return;
+    }
+
     setStatus("submitting");
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch(ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(values),
       });
+      // Servicio externo: basta con que responda bien
+      if (ENDPOINT !== "/api/contact") {
+        setStatus(res.ok ? "delivered" : "failed");
+        return;
+      }
       const data = (await res.json()) as ContactResponse;
       if (data.status === "invalid") {
         setErrors(data.errors);
@@ -305,7 +327,7 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
             Acepto que {site.name} use estos datos únicamente para responder a mi consulta, según
             la{" "}
             <a
-              href="/privacidad"
+              href={href("/privacidad")}
               target="_blank"
               rel="noopener"
               className="font-sans font-semibold text-cobalt underline underline-offset-4"

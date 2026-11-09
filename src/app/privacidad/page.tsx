@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { site } from "@/config/site";
+import { absoluteUrl, site } from "@/config/site";
 import { legal } from "@/config/legal";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { Field, LegalDocument, OwnerDetails, type LegalSection } from "@/components/legal/LegalDocument";
@@ -7,7 +7,7 @@ import { Field, LegalDocument, OwnerDetails, type LegalSection } from "@/compone
 export const metadata: Metadata = {
   title: "Política de privacidad",
   description: `Cómo trata ${site.name} los datos personales que recibe a través de su web.`,
-  alternates: { canonical: "/privacidad" },
+  alternates: { canonical: absoluteUrl("/privacidad") },
 };
 
 const owner = <Field value={legal.ownerName} label="Razón social o nombre" />;

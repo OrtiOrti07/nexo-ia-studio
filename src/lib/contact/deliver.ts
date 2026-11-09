@@ -22,8 +22,10 @@ export type DeliveryResult =
 
 export function isDeliveryConfigured() {
   return Boolean(
-    process.env.CONTACT_WEBHOOK_URL ||
-      (process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL),
+    process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ||
+      (process.env.NEXT_PUBLIC_STATIC_EXPORT !== "1" &&
+        (process.env.CONTACT_WEBHOOK_URL ||
+          (process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL))),
   );
 }
 

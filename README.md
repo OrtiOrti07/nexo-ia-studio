@@ -59,6 +59,32 @@ Windows no puede leer los archivos y genera el CSS sin clases. Para evitarlo,
 No edites el bloque entre los comentarios `tailwind-classes:start` y `tailwind-classes:end`.
 En equipos donde el binario funciona, todo esto es inofensivo.
 
+## Publicación en GitHub Pages
+
+La web se publica sola en **https://ortiorti07.github.io/nexo-ia-studio/** cada vez que se sube
+un cambio a la rama `main` (flujo `.github/workflows/pages.yml`, pestaña *Actions* del repositorio).
+
+GitHub Pages solo sirve archivos estáticos, así que esa versión:
+
+- se compila con `NEXT_PUBLIC_STATIC_EXPORT=1` en la carpeta `out/`, bajo la subcarpeta
+  `/nexo-ia-studio` (`NEXT_PUBLIC_BASE_PATH`);
+- no incluye la ruta `/api/contact`. El formulario valida los datos y ofrece enviarlos desde el
+  correo del visitante a tu dirección. Para recibirlos directamente, crea un formulario en un
+  servicio como Formspree o Web3Forms y guarda su URL como variable del repositorio
+  `NEXT_PUBLIC_CONTACT_ENDPOINT` (*Settings → Secrets and variables → Actions → Variables*);
+- sirve las fotos sin optimizar por tamaño (no hay servidor de imágenes).
+
+Para enlaces internos usa siempre `href("/ruta")` de `src/config/site.ts`, que añade la
+subcarpeta. `robots.txt`, `sitemap.xml` y el manifest los genera `scripts/static-files.mjs`.
+
+Para probar la versión estática en local (Git Bash):
+
+```bash
+MSYS_NO_PATHCONV=1 NEXT_PUBLIC_STATIC_EXPORT=1 NEXT_PUBLIC_BASE_PATH=/nexo-ia-studio npm run build
+```
+
+(Antes, mueve temporalmente `src/app/api` fuera del proyecto, como hace el flujo de GitHub.)
+
 ## Cambiar la marca y los textos
 
 | Qué | Dónde |
@@ -66,8 +92,8 @@ En equipos donde el binario funciona, todo esto es inofensivo.
 | Nombre, dominio, correo, título y descripción SEO, navegación | `src/config/site.ts` |
 | Todos los textos de la página (hero, servicios, método, situaciones, criterio, FAQ, contacto) | `src/content/home.ts` |
 | Colores, tipografía, espaciado, radios | bloque `@theme` en `src/app/globals.css` |
-| Favicon e icono de app | `src/app/icon.svg`, `src/app/apple-icon.tsx` |
-| Imagen para redes sociales | `src/app/opengraph-image.tsx` (se genera con el nombre y el titular) |
+| Favicon e icono de app | `src/app/icon.svg`, `src/app/apple-icon.png` |
+| Imagen para redes sociales | `src/app/opengraph-image.jpg` |
 | Datos del titular para las páginas legales | `src/config/legal.ts` |
 
 El dominio `nexoia.studio` es provisional. El teléfono y el correo de contacto están en `src/config/site.ts`.
@@ -131,4 +157,4 @@ política y añadir un banner de consentimiento de cookies.
 
 - Sustituir el nombre y el dominio provisionales.
 - Completar los datos del titular en `src/config/legal.ts` y revisar los textos legales.
-- Conectar el envío del formulario y comprobar que el hosting sirve la web por HTTPS.
+- Conectar el envío del formulario (ver "Publicación en GitHub Pages").

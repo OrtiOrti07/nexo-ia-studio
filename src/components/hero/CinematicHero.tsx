@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Component, useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { contactAnchor } from "@/config/site";
+import { contactAnchor, href } from "@/config/site";
 import { hero } from "@/content/home";
 import { ButtonLink } from "@/components/ui/Button";
 import { gsap, MOTION, useGSAP } from "@/lib/motion";
@@ -216,7 +216,7 @@ export function CinematicHero() {
             <ButtonLink href={contactAnchor} variant="signal" size="lg">
               {hero.primaryCta}
             </ButtonLink>
-            <ButtonLink href="/#situaciones" variant="outline-light" size="lg" className="backdrop-blur-sm">
+            <ButtonLink href={href("/#situaciones")} variant="outline-light" size="lg" className="backdrop-blur-sm">
               {hero.secondaryCta}
             </ButtonLink>
           </div>

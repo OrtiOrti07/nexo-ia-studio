@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { navigation, site } from "@/config/site";
+import { href, navigation, site } from "@/config/site";
 import { legalPages } from "@/config/legal";
 import { BrandMark } from "@/components/ui/OrbitGlyph";
 import { CurrentYear } from "./CurrentYear";
@@ -9,10 +8,10 @@ export function SiteFooter() {
     <footer data-header-theme="dark" className="on-dark bg-night text-white">
       <div className="page-container grid gap-12 py-16 md:grid-cols-12 md:py-20">
         <div className="md:col-span-5">
-          <Link href="/#inicio" className="inline-flex items-center gap-2.5 rounded-md">
+          <a href={href("/#inicio")} className="inline-flex items-center gap-2.5 rounded-md">
             <BrandMark className="size-9" />
             <span className="wide text-[1.125rem] font-semibold">{site.name}</span>
-          </Link>
+          </a>
           <p className="mt-5 max-w-[24rem] font-serif text-small text-mist">
             Consultoría de inteligencia artificial, automatización y webs a medida para negocios que
             quieren trabajar mejor.

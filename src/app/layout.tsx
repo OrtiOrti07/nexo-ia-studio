@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Newsreader } from "next/font/google";
-import { site } from "@/config/site";
+import { absoluteUrl, href, site } from "@/config/site";
 import { faqs } from "@/content/home";
 import "./globals.css";
 
@@ -19,13 +19,15 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  // Solo el dominio: las rutas de imágenes ya incluyen la subcarpeta (basePath)
+  metadataBase: new URL(new URL(site.url).origin),
   title: {
     default: site.title,
     template: `%s | ${site.name}`,
   },
   description: site.description,
   applicationName: site.name,
+  manifest: href("/manifest.webmanifest"),
   keywords: [
     "consultoría de inteligencia artificial",
     "consultoría IA para empresas",
@@ -34,11 +36,11 @@ export const metadata: Metadata = {
     "desarrollo web a medida",
     "asistentes de IA para negocios",
   ],
-  alternates: { canonical: "/" },
+  alternates: { canonical: absoluteUrl("/") },
   openGraph: {
     type: "website",
     locale: site.locale,
-    url: "/",
+    url: absoluteUrl("/"),
     siteName: site.name,
     title: site.title,
     description: site.description,

@@ -1,4 +1,4 @@
-import { site } from "./site";
+import { href, site } from "./site";
 
 /**
  * Datos legales del titular de la web.
@@ -42,8 +42,8 @@ export const legal: {
 };
 
 export const legalPages = [
-  { label: "Aviso legal", href: "/aviso-legal" },
-  { label: "Privacidad", href: "/privacidad" },
+  { label: "Aviso legal", href: href("/aviso-legal") },
+  { label: "Privacidad", href: href("/privacidad") },
 ] as const;
 
 export function hasPendingLegalData() {

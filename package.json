@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/dev.mjs",
-    "build": "node scripts/tailwind-classes.mjs && next build",
+    "build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/static-files.mjs && node scripts/tailwind-classes.mjs && next build",
     "start": "next start",
     "lint": "eslint",
     "classes": "node scripts/tailwind-classes.mjs"
@@ -29,5 +29,8 @@
     "eslint-config-next": "16.4.5",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22.18"
   }
 }

@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
-import { contactAnchor, navigation, site } from "@/config/site";
+import { contactAnchor, href, navigation, site } from "@/config/site";
 import { buttonClasses } from "@/components/ui/Button";
 import { BrandMark } from "@/components/ui/OrbitGlyph";
 
@@ -81,8 +80,8 @@ export function SiteHeader({ overlay = false }: SiteHeaderProps) {
       }`}
     >
       <div className="page-container flex h-[4.5rem] items-center justify-between gap-6">
-        <Link
-          href="/#inicio"
+        <a
+          href={href("/#inicio")}
           className="flex items-center gap-2.5 rounded-md"
           aria-label={`${site.name}, ir al inicio`}
         >
@@ -90,7 +89,7 @@ export function SiteHeader({ overlay = false }: SiteHeaderProps) {
           <span className="wide text-[1.0625rem] font-semibold tracking-[-0.01em] whitespace-nowrap">
             {site.name}
           </span>
-        </Link>
+        </a>
 
         <nav aria-label="Principal" className="hidden lg:block">
           <ul className="flex items-center gap-1">

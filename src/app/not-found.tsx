@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { ButtonLink } from "@/components/ui/Button";
 import { OrbitGlyph } from "@/components/ui/OrbitGlyph";
-import { contactAnchor } from "@/config/site";
+import { contactAnchor, href } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Página no encontrada",
@@ -19,7 +19,7 @@ export default function NotFound() {
           No existe o ha cambiado de dirección. Vuelve al inicio o cuéntanos qué buscabas.
         </p>
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <ButtonLink href="/" variant="primary" size="lg">
+          <ButtonLink href={href("/")} variant="primary" size="lg">
             Volver al inicio
           </ButtonLink>
           <ButtonLink href={contactAnchor} variant="outline" size="lg">
