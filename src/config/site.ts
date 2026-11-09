@@ -10,10 +10,16 @@ export const site = {
   /** Versión corta para espacios reducidos (manifest, icono de app). */
   shortName: "Nexo",
   /**
-   * Dominio público. Se puede sobrescribir con NEXT_PUBLIC_SITE_URL en cada
-   * entorno. El valor por defecto es provisional.
+   * Dominio público, en este orden:
+   * 1. NEXT_PUBLIC_SITE_URL, si la defines (p. ej. cuando tengas dominio propio).
+   * 2. La dirección de producción que asigna Vercel (variable de sistema).
+   * 3. Un dominio provisional.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://nexoia.studio",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "https://nexoia.studio"),
   locale: "es_ES",
   language: "es",
   /** Datos de contacto que se muestran en la web. */
