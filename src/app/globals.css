@@ -1,0 +1,368 @@
+@import "tailwindcss";
+
+/* Lista de clases para Tailwind (ver scripts/tailwind-classes.mjs) */
+/* tailwind-classes:start (generado, no editar) */
+@source inline("* -inset-x-[4%] -inset-y-[12%] -inset-y-[14%] -left-[9999px] -ml-px -rotate-45 -translate-x-1/2 -translate-y-1/2 @/assets/photos/arquitectura.jpg @/assets/photos/automatizacion.jpg @/assets/photos/cierre-sol-nubes.jpg @/assets/photos/consultoria.jpg @/assets/photos/hero-nubes.jpg @/assets/photos/web.jpg @/components/contact/ContactForm @/components/hero/CinematicHero @/components/layout/SiteShell @/components/legal/LegalDocument @/components/motion/ParallaxPhoto @/components/motion/SmoothScroll @/components/sections/BrandReveal @/components/sections/Contact @/components/sections/Faq @/components/sections/Principles @/components/sections/Process @/components/sections/Services @/components/sections/Situations @/components/ui/Button @/components/ui/OrbitGlyph @/config/legal @/config/site @/content/home @/lib/contact/deliver @/lib/contact/schema @/lib/motion @context @gsap/react @react-three/fiber @type Ajustamos Analizamos Answer Antes ArrowDown ArrowLeft ArrowRight ArrowUp Asistentes Aviso Base Bearer Borradores CRM Cada Cambios Centralizamos Cerrar Con Concretamos Condiciones Conectamos Configuramos Construimos Consulta Content-Type Cookies Correo Creamos Cuentas Datos Definimos Dejamos Depende Desarrollamos Desarrollo Descubre Detectamos Domicilio ERP Ejemplos El Empresa En Encontrar End Enlaces Entendemos Enviar Error Escape Escribe Estrategia Estudiamos FAQPage Flujos Hablamos Hablemos Hay Hoja Home Horarios IA Inteligencia Inventariamos La Lanzamos Las Leemos Los M12 M4 M5 M8 Manuales Mapeamos Menores Mensaje NIF Nadie Necesitamos Nexo No No. Nombre Nuestro Nuevo Objeto Offer Operaciones PDFs. POST Para Pausar Personas Pie Podemos Ponemos Preguntas Preparar Presencia Primero Principal Priorizamos Privacidad Probamos Probar ProfessionalService Propiedad Puedes Queremos Question Quien RGPD. Reanudar Reescribimos Replanteamos Respondemos Responsabilidad Responsable Reunimos Revisa Revisamos SEO Sabes Se Seguridad Separamos Service Servicios Si Siempre Sin Situaciones Son Studio Te Tenemos Titular Trabajamos Transferencias Tres Tu Tus Un Una Unificamos Usamos Versiones WEBGL_lose_context Web Webs X [contacto] [data-chevron-pan] [data-chevron-photo] [data-chevron] [data-chevrons] [data-details] [data-header-theme] [data-layer=back] [data-layer=front] [data-layer=object] [data-layer=title] [data-layer=ui] [data-parallax] [data-photo] [data-principle] [data-principles] [data-reveal=photo] [data-reveal=statement] [data-reveal=tagline] [data-service] [data-statement] [data-step] [data-steps] [data-strip] [data-word] [grid-area:1/1] [mask-image:linear-gradient(180deg,transparent_0%,transparent_57%,#000_71%)] [top:calc(60%-min(47vw,16rem))] a abrirlo absolute acaba accent-cobalt acceso. acotado active active:scale-[0.97] actual. actualizarla adecuadas ahorra ajusta al alcance alcance. algo alguna algunos alrededor. always and ante antes antialiased any aplicable aplicada aporta application/json application/ld+json artificial asistente asistentes aspect-square automatizacion automatizaciones automatizamos automatizar avisamos avisos ayudamos ayudarte back backdrop-blur-md backdrop-blur-sm bajo base-juridica bg-[linear-gradient(0deg,rgba(7,11,31,0.86)_0%,rgba(7,11,31,0.5)_42%,rgba(7,11,31,0)_100%)] bg-[linear-gradient(180deg,rgba(7,11,31,0.62)_0%,rgba(7,11,31,0.18)_38%,rgba(7,11,31,0)_55%)] bg-[linear-gradient(90deg,rgba(7,11,31,0.78)_0%,rgba(7,11,31,0.35)_55%,rgba(7,11,31,0.15)_100%)] bg-[linear-gradient(90deg,rgba(7,11,31,0.86)_0%,rgba(7,11,31,0.62)_45%,rgba(7,11,31,0.25)_100%)] bg-[radial-gradient(circle,rgba(255,179,71,0.5),rgba(255,179,71,0)_45%)] bg-amber bg-amber/15 bg-amber/35 bg-cobalt bg-current bg-night bg-night/60 bg-paper bg-paper/50 bg-paper/90 bg-surface bg-transparent bien black block blur border border-[1.5px] border-amber border-b border-cobalt/30 border-danger border-ink border-ink/15 border-ink/20 border-ink/25 border-ink/30 border-ink/40 border-ink/50 border-l border-l-2 border-line border-line/80 border-t border-transparent border-white/10 border-white/12 border-white/20 border-white/40 border-white/70 borrador bottom bottom-0 bottom-3 bottom-4 break-all brevemente browser busca buscador buscamos button cabeza cada calendario cambios camino. canales candidatas canvas capa carpetas casi caso caso. casos center central centro centro. cero. cerrada cerrado change checkbox clara claras claridad claro claros clasificamos clasificar client cliente clientes clientes. coarse color column combinar. combinarlos. como company company-error compartimos competencia completa compromiso con concreta concreto condiciones conectarlo. conocer conseguir. consent consent-error conservacion conservamos construimos construir consulta consultar consultoria contacto contacto-title contactos. contenido contenidos contesta contigo contratar contratos control conversaciones conviene cookies copiando correo correos cortas cover creemos criterio criterio-title criterios cuando cuenta cuentas cuesta current currentColor cursor-pointer cuya damos dar dark dato datos datos-personales de debe decida decidir decisiones decoration-2 decoration-amber decoration-cobalt/40 dedique definimos dejamos del delivered demasiadas demasiado demasiados den dentro dentro. dependas depende dependencias derechos desarrollamos desarrollo desde destinatarios detalle detectar dinero diremos diremos. disabled:opacity-60 disabled:pointer-events-none distinto divide-line divide-y dividido documento documento. documentos documentos. dominio donde drop-shadow-[0_6px_40px_rgba(7,11,31,0.35)] dudas duration-1000 duration-200 duration-300 duration-700 e ease-out-quint edad editar ejemplos el elegir email email-error empezar empresa empresa. empresas empresas. en encontrada encuentra encuentran encuentras enfoque enlaces entendemos entender entendido entiendan entienden entra entradas entre entrega entrega. entregas enviado enviamos enviar enviarlo. equipo equipos es es_ES escena escrito esfuerzo esperado esperando. esta estamos estar estatica estimado estos estrategia estructura existe explica explicamos extent.height extent.width f failed false falta faq-icon-v faq-item fases fechas fichas final finalidad first:border-t-0 first:pt-0 fixed flex flex-1 flex-col flex-wrap float flujo focus:bg-surface focus:border-cobalt font-[680] font-[720] font-bold font-medium font-normal font-sans font-semibold font-serif forma formamos formato formulario formularios frecuentes front fuentes fuera funciona funciona. funcionales funcionando gap-1 gap-10 gap-12 gap-14 gap-2 gap-2.5 gap-3 gap-4 gap-5 gap-6 gap-x-10 gap-y-10 gastar genera gestione gl_FragColor gl_Position grid group group-hover:scale-[1.04] group-hover:text-ink group-open:bg-amber group-open:border-ink gsap gsap/ScrollTrigger guardan guiado h-10 h-11 h-12 h-14 h-3 h-8 h-[1.5px] h-[4.5rem] h-[52%] h-[clamp(12rem,24vw,21rem)] h-[clamp(7rem,17vw,15rem)] h-full h-px h-svh ha habituales hablar hace hacen hacer haces hacia haciendo haga hasta hay hecha hemos hero hero-reveal hero-title hero-zoom herramientas herramientas. hidden high high-performance hoja hojas horas hover:bg-amber-soft hover:bg-cobalt-deep hover:bg-ink/5 hover:bg-surface/60 hover:bg-white/10 hover:border-cobalt hover:border-ink hover:border-ink/40 hover:border-white hover:decoration-cobalt hover:text-amber hover:text-ink hover:text-white hover:underline hoy https://api.resend.com/emails https://nexoia.studio https://schema.org https://unsplash.com https://www.aepd.es humana i idea ideas. identificativos idle igual ilumina image/png image/svg+xml impacto importan importante importantes importantes. imprescindible imprescindibles incluimos indica indicada industrial informacion-interna informes iniciativas inicio inline-block inline-flex inset-0 inset-x-0 inset-y-0 integraciones. intelectual inteligencia interest interna internacionales invalid invisible ir isolate items-center items-start juanortereque@gmail.com juntar junto justify-between justify-center keydown la lanzamiento largo las last:border-b latin latin-ext leading-[0.95] leading-[0.98] leading-[0.9] leading-[1.05] leading-relaxed leading-snug leading-tight left-0 left-1/2 left-4 left-5 left-6 left-[calc(var(--d)+0.6rem)] legal legal-prose legislacion lejos. lenguaje lenis lg lg:[top:calc(60%-min(33vh,23rem))] lg:block lg:bottom-6 lg:col-span-4 lg:col-span-5 lg:col-span-6 lg:col-span-7 lg:col-span-8 lg:col-start-8 lg:flex-row lg:gap-10 lg:gap-12 lg:gap-x-8 lg:gap-y-0 lg:grid lg:grid-cols-12 lg:grid-cols-4 lg:grid-cols-5 lg:grid-rows-subgrid lg:hidden lg:items-end lg:justify-between lg:left-8 lg:max-w-none lg:mt-14 lg:mt-20 lg:mt-24 lg:order-1 lg:order-2 lg:p-12 lg:pb-1.5 lg:pb-14 lg:pt-2 lg:pt-40 lg:py-10 lg:row-span-3 lg:shrink-0 lg:sticky lg:top-28 lg:top-[12svh] lg:w-[min(66vh,46rem)] ligera light limpiamos line-rise lista lite llega llegan llegar lleva llevan lo los lugar mando manos mantenimiento marcha marcha. max-sm:hidden max-w-[15ch] max-w-[18ch] max-w-[24rem] max-w-[34rem] max-w-[40rem] max-w-[44rem] max-w-[46rem] max-w-copy max-width md md:col-span-3 md:col-span-4 md:col-span-5 md:grid-cols-12 md:py-20 md:text-[1.3125rem] medianas medida medimos medio. medir mejor mejora mejora. mejorando mejorar mejoras menores mensaje merece message message-error message-hint metodo metodo-title mi middle min-h-[36rem] min-h-[40rem] min-h-[80svh] min-h-dvh min-width mis mismas mismo ml-1.5 mode modelViewMatrix momento momento. monthly mouse mr-1 mt-0.5 mt-1 mt-1.5 mt-10 mt-12 mt-14 mt-16 mt-2 mt-3 mt-4 mt-5 mt-6 mt-7 mt-8 mt-[0.45em] mt-[0.55rem] mt-[0.5rem] mt-px mucho mv mx-auto nada name name-error natural navegable. necesario necesita. necesitas necesitas. negocio negocio. negocios never new nexo-title next next/dynamic next/font/google next/image next/link next/og ni ninguna no no-lo-se no-preference no. node:fs/promises node:path nombre nombre. nombre@empresa.com. none noopener noreferrer normal nos nosotros nosotros. not_configured note notice noviembre nuestro nuevas nuevo null o object object-[50%_40%] object-[50%_45%] object-[50%_58%] object-[50%_60%] object-cover objeto ocultas off ofreces on-dark on-paper online opacity-0 opacity-100 open operaciones oportunidades opsz optimizado orden ordenamos order-1 order-2 organization os otras otro otro. outline outline-light outline-none overflow-hidden oye p-10 p-6 pagas page-container panel panel-swap para parte. partes pasa pasan paso. pb-10 pb-12 pb-6 pb-7 pb-[0.06em] pb-section pedidos pedidos-dispersos pedimos peer peer-checked:bg-cobalt peer-checked:border-cobalt peer-checked:text-white peer-focus-visible:outline-[2.5px] peer-focus-visible:outline-cobalt peer-focus-visible:outline-offset-2 peer-focus-visible:outline-solid peer-hover:border-ink/40 pen pena. pendiente pending pensadas perfiles permiso permisos pero persona personal. personales personas personas. photo pierde piloto pl-4 place-items-center placeholder:text-slate/70 plan plan. planetario plantilla plantillas plazos pocas podemos pointer pointer-events-none pointerleave pointermove polite ponemos por por-donde-empezar posible position poster poster-core poster-glass poster-halo poster-node power2.inOut precios prefers-reduced-motion prefieres pregunta preguntar preguntas preguntas-repetidas preguntas-title preparamos preparar presencia presenta presupuesto presupuesto. presupuestos primary primera primera. primeras prioridades priorizamos privacidad probamos probar. problema problemas procedimientos proceso procesos producto projectionMatrix propiedad-intelectual propio propios proponer propuesta prototipo proveedores proyecto pruebas pt-1 pt-32 pt-6 publicar puede puedes puntos px-1.5 px-2 px-3 px-4 px-5 px-7 px-gutter py-0.5 py-1 py-1.5 py-10 py-16 py-2 py-3 py-3.5 py-4 py-5 py-6 py-8 py-section que queda quedan quien quieras. quiere quieren quieres quita quitar radio react ready real reales reales. recibe recoge recorrido reduce refleja registral registrales reglas relative repartidos repetitivas repiten requiere resend reservar. reservas resize resize-y resolver respeta responde responden responder responderte. responsabilidad responsable respuesta respuestas resuelve resultados. resumen resumir revisa revisamos revisar revisas revise riesgo riesgos riesgos. right-gutter rotate-45 round rounded-[18px] rounded-card rounded-field rounded-full rounded-md rounded-panel rounded-pill rounded-sm rumbo ruta sabe sabemos saber sabido. sale scroll se sea seguir seguridad select-none selected sencillo sentido separado sepas servicio servicios servicios-title shadow-[0_40px_80px_-40px_rgba(6,14,70,0.55)] shrink-0 si siempre siempre. signal siguen siguiente sin sirve sistema sistemas. sitio situaciones situaciones-title size size-1.5 size-12 size-2.5 size-24 size-3 size-3.5 size-4 size-5 size-6 size-7 size-8 size-9 skip-link slice sm:flex-row sm:gap-6 sm:grid-cols-2 sm:grid-cols-[11rem_1fr] sm:items-center sm:justify-between sm:p-10 sm:pt-0.5 sm:text-lead sm:w-auto sobre social solicitud solo soluciones. son space-between space-y-1 space-y-2 space-y-2.5 space-y-3 space-y-3.5 space-y-5 sr-only src/assets/photos/hero-nubes.jpg statement status string su submit submitting success summary_large_image supone sustituir swap tab tablist tabpanel tagline taller tapa tarda tarea tareas tarifas te tener teniendo text text-[0.8125rem] text-[0.9375rem] text-[0.9em] text-[1.0625rem] text-[1.125rem] text-[1.1875rem] text-[1.25rem] text-[1.3125rem] text-[1.375rem] text-[clamp(1.1rem,0.6rem+1.6vw,2.4rem)] text-[clamp(1.1rem,0.8rem+1.2vw,2rem)] text-[clamp(1.6rem,1.1rem+1.6vw,2.6rem)] text-[clamp(2.3rem,0.9rem+4.6vw,6rem)] text-[clamp(2.4rem,1rem+5vw,6.5rem)] text-[clamp(2.6rem,0.8rem+6.4vw,7.6rem)] text-amber text-balance text-body text-center text-cobalt text-danger text-h2 text-h3 text-ink text-ink/65 text-ink/80 text-ink/85 text-lead text-left text-micro text-mist text-right text-slate text-small text-ui text-white text-white/50 text-white/65 text-white/75 text-white/80 text-white/85 text-white/90 textos three three/addons/environments/RoomEnvironment.js tiempo tienda tiene tipo title titular todas todo tone top top-0 top-0.5 top-1/2 top-2 top-5 top-[13svh] top-[5px] top-[calc(42%+var(--tag-offset))] trabajamos trabajando trabajar trabajo trabajo. tracking-[-0.01em] tracking-[-0.02em] tracking-[-0.035em] tracking-[-0.045em] tracking-[-0.04em] tracking-normal traducimos trae transferencias transition-[background-color,border-color,color] transition-[background-color,color,border-color,transform] transition-[border-color,background-color] transition-colors transition-opacity transition-transform transparent trata tratamiento tratamos trato true tu tus uBase uColor uIntensity uPower ui un una una. underline underline-offset-2 underline-offset-4 underline-offset-[6px] uniform unknown uno uno. usa usamos usan usar usarlo. use userSpaceOnUse uso vNormal vViewDir va validamos value varias varios varying veas. vec3 vec4 velocidad ver verdad verdad. verlo. vertical videollamada viene void vosotros w-3 w-4 w-[1.5px] w-[min(94vw,32rem)] w-full w-px wdth web web-sin-contactos web. webgl webgl2 webhook webs website white whitespace-nowrap wide will-change-transform xMidYMid xl:p-14 y ya yearly yo z-10 z-20 z-30 z-50");
+/* tailwind-classes:end */
+
+/*
+ * Sistema de diseño de Nexo IA Studio
+ * -----------------------------------
+ * Concepto: un "planetario mecánico" (orrery). El negocio está en el centro y
+ * la IA y la web giran a su alrededor. Cobalto saturado para los momentos de
+ * marca, papel frío para la lectura y ámbar como señal: los nodos, los datos y
+ * la acción principal.
+ */
+
+@theme {
+  /* Color */
+  --color-cobalt: #1633c9;
+  --color-cobalt-deep: #0f26a3;
+  --color-cobalt-night: #0a1658;
+  --color-night: #070b1f;
+  --color-ink: #0f1733;
+  --color-slate: #4e5670;
+  --color-paper: #eff1f4;
+  --color-paper-deep: #e2e6ee;
+  --color-surface: #ffffff;
+  --color-line: #c9cfdb;
+  --color-amber: #f6b443;
+  --color-amber-soft: #fbd99d;
+  --color-mist: #c7d0ff;
+  --color-danger: #b42318;
+
+  /* Tipografía */
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+
+  --text-display: clamp(2.6rem, 1.35rem + 4.4vw, 5.4rem);
+  --text-display--line-height: 0.96;
+  --text-display--letter-spacing: -0.035em;
+  --text-h2: clamp(2.1rem, 1.35rem + 2.6vw, 3.75rem);
+  --text-h2--line-height: 1.02;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h3: clamp(1.35rem, 1.15rem + 0.6vw, 1.75rem);
+  --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.015em;
+  --text-lead: clamp(1.2rem, 1.06rem + 0.45vw, 1.45rem);
+  --text-lead--line-height: 1.45;
+  --text-body: 1.1875rem;
+  --text-body--line-height: 1.6;
+  --text-small: 1.0625rem;
+  --text-small--line-height: 1.55;
+  --text-ui: 1rem;
+  --text-ui--line-height: 1.4;
+  --text-micro: 0.875rem;
+  --text-micro--line-height: 1.4;
+
+  /* Espaciado */
+  --spacing-gutter: clamp(1.25rem, 4vw, 3rem);
+  --spacing-section: clamp(5rem, 3rem + 7vw, 9.5rem);
+  --container-page: 84rem;
+  --container-copy: 38rem;
+
+  /* Radios: cada nivel tiene su forma */
+  --radius-pill: 999px;
+  --radius-panel: 1.75rem;
+  --radius-card: 1.125rem;
+  --radius-field: 0.75rem;
+
+  /* Movimiento */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ---------- Base ---------- */
+
+@layer base {
+  :root {
+    --focus-ring: var(--color-cobalt);
+    color-scheme: light;
+  }
+
+  html {
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html:not(.lenis) {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-ui);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 650;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-amber);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Zonas oscuras: el anillo de foco pasa a ámbar para mantener contraste */
+  .on-cobalt,
+  .on-dark {
+    --focus-ring: var(--color-amber);
+  }
+
+  .on-paper {
+    --focus-ring: var(--color-cobalt);
+  }
+}
+
+/* ---------- Utilidades de marca ---------- */
+
+/* Archivo en su eje ancho: la voz de los titulares */
+@utility wide {
+  font-variation-settings: "wdth" 112;
+}
+
+@utility wider {
+  font-variation-settings: "wdth" 122;
+}
+
+@utility page-container {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+@utility prose-serif {
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+}
+
+/* Enlace de salto para teclado */
+@utility skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0.75rem;
+  z-index: 100;
+  transform: translateY(-160%);
+  padding: 0.75rem 1.1rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-amber);
+  color: var(--color-ink);
+  font-weight: 600;
+  transition: transform 160ms var(--ease-out-quint);
+
+  &:focus-visible {
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Componentes con CSS propio ---------- */
+
+/* Texto corrido de las páginas legales */
+.legal-prose {
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  color: color-mix(in oklab, var(--color-ink) 88%, transparent);
+}
+
+.legal-prose > * + * {
+  margin-top: 1rem;
+}
+
+.legal-prose ul {
+  list-style: none;
+  padding: 0;
+}
+
+.legal-prose ul > li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.legal-prose ul > li + li {
+  margin-top: 0.6rem;
+}
+
+.legal-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.68em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--color-amber);
+  box-shadow: 0 0 0 1.5px var(--color-ink);
+}
+
+.legal-prose strong {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95em;
+}
+
+.legal-prose a {
+  color: var(--color-cobalt);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Acordeón nativo con apertura animada cuando el navegador lo permite */
+.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 320ms var(--ease-out-quint),
+    content-visibility 320ms allow-discrete;
+}
+
+.faq-item[open]::details-content {
+  block-size: auto;
+}
+
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+}
+
+.faq-item summary {
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item .faq-icon-v {
+  transition: transform 260ms var(--ease-out-quint);
+}
+
+.faq-item[open] .faq-icon-v {
+  transform: scaleY(0);
+}
+
+/* Scroll suave (Lenis) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Entrada del hero: el único momento orquestado de la página */
+@media (prefers-reduced-motion: no-preference) {
+  /* Zum lento de la foto al cargar */
+  .hero-zoom {
+    animation: hero-zoom 2600ms var(--ease-out-quint) both;
+  }
+
+  /* Cada línea del titular sube desde su máscara */
+  .line-rise {
+    animation: line-rise 1100ms var(--ease-out-quint) both;
+    animation-delay: calc(var(--reveal-index, 0) * 110ms + 250ms);
+  }
+
+  .hero-reveal {
+    animation: hero-reveal 900ms var(--ease-out-quint) both;
+    animation-delay: calc(var(--reveal-index, 0) * 90ms + 120ms);
+  }
+
+  .canvas-fade {
+    animation: canvas-fade 1200ms var(--ease-out-quint) both;
+  }
+
+  .panel-swap {
+    animation: panel-swap 380ms var(--ease-out-quint) both;
+  }
+}
+
+@keyframes hero-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.14);
+  }
+  to {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes line-rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes canvas-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes panel-swap {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
