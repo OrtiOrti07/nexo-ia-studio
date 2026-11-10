@@ -1,36 +1,54 @@
 # Nexo IA Studio — web corporativa
 
-Web de una consultora de inteligencia artificial y desarrollo web a medida.
-"Nexo IA Studio" es un nombre **provisional**.
+Web de una consultoría de inteligencia artificial. "Nexo IA Studio" es un nombre **provisional**.
 
-Stack: Next.js 16 (App Router, Turbopack, Cache Components), React 19, TypeScript,
-Tailwind CSS 4, three.js + React Three Fiber para la escena 3D, GSAP + ScrollTrigger para las
-animaciones ligadas al scroll y Lenis para el scroll suave.
+Stack: Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, three.js +
+React Three Fiber + postprocesado (bloom) para la escena 3D, GSAP + ScrollTrigger para las
+animaciones ligadas al scroll, Motion para las microinteracciones, Lenis para el scroll suave y
+Lucide para los iconos.
 
-## Estilo cinematográfico
+## Dirección visual: "Señal"
 
-La portada se recorre como una secuencia:
+La explicación completa está en [`docs/direccion-visual.md`](docs/direccion-visual.md). En
+resumen: negro profundo, antracita y tres neones (azul eléctrico, violeta y cian) que solo
+emiten luz; titulares en Hubot Sans expandida y texto en Mona Sans.
 
-1. **Hero por capas** (`src/components/hero/CinematicHero.tsx`): cielo, titular gigante,
-   sistema orbital 3D y nubes en primer plano. Al hacer scroll cada capa se mueve a su propia
-   velocidad y el titular se hunde tras las nubes.
-2. **Presentación de marca** (`src/components/sections/BrandReveal.tsx`): se empieza dentro de
-   una letra (solo se ve la foto) y la cámara se aleja hasta mostrar el nombre con el cielo dentro.
-3. **Servicios** en filas oscuras con foto, que se abren desde el centro al entrar.
-4. **Método** en cinco flechas que comparten una sola foto.
-5. **Criterio**: la frase se ilumina palabra a palabra.
-6. **Contacto** sobre la foto del sol en las nubes, con parallax.
+Detrás de toda la portada hay **una sola escena WebGL fija**: un núcleo neuronal de ~7.000
+partículas que cambia de formación según la sección (`data-stage` en `src/app/page.tsx`):
+
+| Sección | Formación |
+| --- | --- |
+| Hero | Núcleo de cristal con sinapsis y pulsos de luz; reacciona al ratón |
+| Servicios | Constelación: disco galáctico al fondo |
+| Método | Señal: una hélice con cinco nodos; se ilumina el del paso activo |
+| Proyectos | Rejilla de datos en perspectiva |
+| Llamada final | Portal: un anillo de luz alrededor del titular |
+| Contacto | Calma: el núcleo pequeño, detrás del formulario |
+
+## Estructura
+
+| Carpeta | Contenido |
+| --- | --- |
+| `src/components/scene/` | Escena 3D: formaciones, shaders GLSL, capa fija, modo de calidad y pausa |
+| `src/components/sections/` | Hero, Servicios (recorrido horizontal), Método (paso a paso), Proyectos, Llamada final, Contacto |
+| `src/components/visuals/` | Diagramas animados de cada servicio e interfaces de las demos |
+| `src/components/ui/` | Logo, botón magnético, revelados al hacer scroll |
+| `src/content/home.ts` | Todos los textos de la portada |
+
+Calidad de la escena según el dispositivo (`src/components/scene/useSceneMode.ts`):
+
+| Situación | Qué se muestra |
+| --- | --- |
+| Escritorio con ratón | ~7.000 partículas, bloom, reacción al puntero |
+| Móvil, tableta o pantalla táctil | ~2.600 partículas, sin bloom, resolución limitada |
+| `prefers-reduced-motion`, ahorro de datos, poca memoria o CPU, sin WebGL | Fondo de luz estático, sin descargar three.js |
+
+three.js se descarga aparte, después del contenido. La escena se pausa con la pestaña oculta,
+tiene botón de pausa (que congela también las animaciones CSS) y baja la calidad si el equipo
+no mantiene ~40 fps. Para revisar las alternativas: `/?escena=estatica` o `/?escena=ligera`.
 
 Con `prefers-reduced-motion` no hay scroll suave ni animaciones ligadas al scroll: cada sección
 se muestra en su composición final.
-
-### Fotografías
-
-En `src/assets/photos/`, de Unsplash (licencia libre para uso comercial; se acredita a los
-autores en el pie): Jason Leung (mar de nubes), Jerry Zhang (sol sobre las nubes), Parrish
-Freeman (arquitectura), Calvin Wise (escritorio), Compare Fibre (fibra óptica) y Jakub
-Żerdzicki (pantalla con código). Se importan de forma estática, así que Next.js genera
-versiones AVIF/WebP del tamaño de cada pantalla.
 
 ## Ejecutar
 
@@ -72,7 +90,6 @@ GitHub Pages solo sirve archivos estáticos, así que esa versión:
   correo del visitante a tu dirección. Para recibirlos directamente, crea un formulario en un
   servicio como Formspree o Web3Forms y guarda su URL como variable del repositorio
   `NEXT_PUBLIC_CONTACT_ENDPOINT` (*Settings → Secrets and variables → Actions → Variables*);
-- sirve las fotos sin optimizar por tamaño (no hay servidor de imágenes).
 
 Para enlaces internos usa siempre `href("/ruta")` de `src/config/site.ts`, que añade la
 subcarpeta. `robots.txt`, `sitemap.xml` y el manifest los genera `scripts/static-files.mjs`.
@@ -90,7 +107,8 @@ MSYS_NO_PATHCONV=1 NEXT_PUBLIC_STATIC_EXPORT=1 NEXT_PUBLIC_BASE_PATH=/nexo-ia-st
 | Qué | Dónde |
 | --- | --- |
 | Nombre, dominio, correo, título y descripción SEO, navegación | `src/config/site.ts` |
-| Todos los textos de la página (hero, servicios, método, situaciones, criterio, FAQ, contacto) | `src/content/home.ts` |
+| Todos los textos de la portada (hero, servicios, método, proyectos, llamada final, contacto) | `src/content/home.ts` |
+| Redes sociales del pie (solo se muestran las que tengan URL) | `socials` en `src/config/site.ts` |
 | Colores, tipografía, espaciado, radios | bloque `@theme` en `src/app/globals.css` |
 | Favicon e icono de app | `src/app/icon.svg`, `src/app/apple-icon.png` |
 | Imagen para redes sociales | `src/app/opengraph-image.jpg` |
@@ -114,27 +132,6 @@ elige una opción:
 
 La lógica de envío está en `src/lib/contact/deliver.ts`. Incluye un campo trampa contra bots;
 no hay limitación de peticiones (conviene añadirla en el hosting o en un proxy).
-
-## Escena 3D
-
-`src/components/hero/`
-
-- `OrreryScene.tsx`: la escena three.js (núcleo, órbitas, nodos, pulsos de datos).
-- `useSceneMode.ts`: decide si se muestra el 3D completo, el ligero o la ilustración.
-- `OrreryPoster.tsx`: versión estática en SVG.
-
-Comportamiento:
-
-| Situación | Qué se muestra |
-| --- | --- |
-| Escritorio con ratón | 3D completo, inclinación con el puntero |
-| Móvil, tableta o pantalla táctil | 3D ligero (menos partículas, resolución limitada) |
-| `prefers-reduced-motion`, ahorro de datos, equipo con poca memoria o CPU, sin WebGL | Ilustración estática, sin descargar three.js |
-
-three.js se descarga aparte y solo cuando hace falta. La animación se detiene cuando el hero
-sale de pantalla, tiene botón de pausa y baja la resolución si el equipo no mantiene ~45 fps.
-
-Para revisar las alternativas: `/?escena=estatica` o `/?escena=ligera`.
 
 ## Páginas legales
 

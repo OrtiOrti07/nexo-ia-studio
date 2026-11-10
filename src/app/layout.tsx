@@ -1,20 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Newsreader } from "next/font/google";
+import { Geist_Mono, Hubot_Sans, Mona_Sans } from "next/font/google";
 import { absoluteUrl, href, site } from "@/config/site";
-import { faqs } from "@/content/home";
+import { services } from "@/content/home";
 import "./globals.css";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+// Titulares: Hubot Sans con su eje de anchura (expandida)
+const hubot = Hubot_Sans({
+  variable: "--font-hubot",
   subsets: ["latin", "latin-ext"],
   axes: ["wdth"],
   display: "swap",
 });
 
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
+// Texto: Mona Sans, de la misma familia
+const mona = Mona_Sans({
+  variable: "--font-mona",
   subsets: ["latin", "latin-ext"],
-  axes: ["opsz"],
+  axes: ["wdth"],
+  display: "swap",
+});
+
+// Solo índices y etiquetas técnicas cortas
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -31,10 +40,10 @@ export const metadata: Metadata = {
   keywords: [
     "consultoría de inteligencia artificial",
     "consultoría IA para empresas",
+    "agentes de IA",
     "automatización de procesos con IA",
-    "diseño web a medida",
-    "desarrollo web a medida",
-    "asistentes de IA para negocios",
+    "chatbots para empresas",
+    "integración de inteligencia artificial",
   ],
   alternates: { canonical: absoluteUrl("/") },
   openGraph: {
@@ -55,63 +64,39 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1633c9",
-  colorScheme: "light",
+  themeColor: "#050505",
+  colorScheme: "dark",
 };
 
 function StructuredData() {
-  const data = [
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      name: site.name,
-      url: site.url,
-      email: site.email,
-      telephone: site.phone.href,
-      description: site.description,
-      inLanguage: site.language,
-      knowsAbout: [
-        "Inteligencia artificial aplicada a negocios",
-        "Automatización de procesos",
-        "Diseño y desarrollo web a medida",
-      ],
-      makesOffer: [
-        "Consultoría de IA",
-        "Automatización con IA",
-        "Webs a medida",
-      ].map((name) => ({
-        "@type": "Offer",
-        itemOffered: { "@type": "Service", name },
-      })),
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: faqs.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    },
-  ];
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: site.name,
+    url: site.url,
+    email: site.email,
+    telephone: site.phone.href,
+    description: site.description,
+    inLanguage: site.language,
+    knowsAbout: ["Inteligencia artificial aplicada a empresas", "Agentes de IA", "Automatización de procesos"],
+    makesOffer: services.map((service) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: service.title, description: service.body },
+    })),
+  };
 
   return (
     <script
       type="application/ld+json"
       // Escapamos "<" para que el JSON no pueda cerrar la etiqueta script.
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data).replace(/</g, "\\u003c"),
-      }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang={site.language}
-      className={`${archivo.variable} ${newsreader.variable} antialiased`}
-    >
+    <html lang={site.language} className={`${hubot.variable} ${mona.variable} ${geistMono.variable} antialiased`}>
       <body className="min-h-dvh">
         <StructuredData />
         {children}

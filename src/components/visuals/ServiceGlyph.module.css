@@ -1,0 +1,713 @@
+/*
+ * Glifos animados de los servicios (ver ServiceGlyph.tsx).
+ *
+ * Solo se animan transform, opacity y stroke-dashoffset. El estado base de cada
+ * elemento es un fotograma con sentido (pulsos a mitad de carril, núcleos
+ * encendidos, esfera en reposo): es lo que se ve con movimiento reducido.
+ * Un ancestro con data-motion="paused" congela las animaciones.
+ */
+
+.glyph {
+  display: block;
+  overflow: visible;
+}
+
+/* El acento lidera (--a); los otros dos neones acompañan (--b, --c) */
+.blue {
+  --a: var(--color-blue, #3b82ff);
+  --b: var(--color-violet, #8b5cff);
+  --c: var(--color-cyan, #22e3ff);
+}
+
+.violet {
+  --a: var(--color-violet, #8b5cff);
+  --b: var(--color-cyan, #22e3ff);
+  --c: var(--color-blue, #3b82ff);
+}
+
+.cyan {
+  --a: var(--color-cyan, #22e3ff);
+  --b: var(--color-blue, #3b82ff);
+  --c: var(--color-violet, #8b5cff);
+}
+
+.ca {
+  color: var(--a);
+}
+
+.cb {
+  color: var(--b);
+}
+
+.cc {
+  color: var(--c);
+}
+
+/* Escala o rota sobre su propio centro */
+.fb {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Pulso: guion corto que recorre un trazo con pathLength="100" */
+.pulse {
+  stroke-dasharray: 5 100;
+  stroke-dashoffset: -50;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Automatización · 3,6 s ---------- */
+
+.autoIn {
+  animation: auto-in 3.6s cubic-bezier(0.45, 0, 0.55, 1) infinite both;
+}
+
+.autoOut {
+  stroke-dashoffset: -62;
+  animation: auto-out 3.6s cubic-bezier(0.45, 0, 0.55, 1) infinite both;
+}
+
+.autoCore {
+  animation: auto-core 3.6s ease-in-out infinite both;
+}
+
+.autoCell {
+  opacity: 0.4;
+  animation: auto-cell 3.6s ease-in-out infinite both;
+}
+
+.autoSink {
+  opacity: 0;
+  animation: auto-sink 3.6s ease-out infinite both;
+}
+
+@keyframes auto-in {
+  0% {
+    stroke-dashoffset: 5;
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  40% {
+    stroke-dashoffset: -100;
+    opacity: 1;
+  }
+  42%,
+  100% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+}
+
+@keyframes auto-core {
+  0%,
+  38% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  46% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  80%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+}
+
+@keyframes auto-cell {
+  0%,
+  40% {
+    opacity: 0;
+  }
+  47% {
+    opacity: 0.5;
+  }
+  62%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes auto-out {
+  0%,
+  54% {
+    stroke-dashoffset: 5;
+    opacity: 0;
+  }
+  57% {
+    opacity: 1;
+  }
+  88% {
+    stroke-dashoffset: -100;
+    opacity: 1;
+  }
+  90%,
+  100% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+}
+
+@keyframes auto-sink {
+  0%,
+  84% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  87% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+
+/* ---------- Agentes · 4 s (una consulta cada 0,8 s) ---------- */
+
+.agOut,
+.agBack {
+  stroke-dasharray: 6 100;
+  stroke-dashoffset: 6;
+  opacity: 0;
+}
+
+.agOut {
+  animation: ag-out 4s cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+}
+
+.agBack {
+  animation: ag-back 4s cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+}
+
+.agNode {
+  opacity: 0;
+  animation: ag-node 4s ease-out infinite both;
+}
+
+/* Fotograma estático: una consulta en curso */
+.agOut.on {
+  stroke-dashoffset: -48;
+  opacity: 1;
+}
+
+.agNode.on {
+  opacity: 1;
+}
+
+.agBeat {
+  opacity: 0;
+  animation: ag-beat 0.8s ease-out infinite both;
+}
+
+.agSpin {
+  transform-box: view-box;
+  transform-origin: 160px 120px;
+  animation: spin 16s linear infinite;
+}
+
+@keyframes ag-out {
+  0% {
+    stroke-dashoffset: 6;
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  8% {
+    stroke-dashoffset: -100;
+    opacity: 1;
+  }
+  9%,
+  100% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+}
+
+@keyframes ag-back {
+  0%,
+  11% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  19% {
+    stroke-dashoffset: 6;
+    opacity: 1;
+  }
+  20%,
+  100% {
+    stroke-dashoffset: 6;
+    opacity: 0;
+  }
+}
+
+@keyframes ag-node {
+  0%,
+  6% {
+    opacity: 0;
+  }
+  9%,
+  13% {
+    opacity: 1;
+  }
+  24%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ag-beat {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+/* ---------- Asistentes · 4 s ---------- */
+
+.asUser,
+.asBot,
+.asTyping {
+  transform-box: fill-box;
+}
+
+.asUser {
+  transform-origin: 0% 100%;
+  animation: as-user 4s cubic-bezier(0.23, 1, 0.32, 1) infinite both;
+}
+
+.asBot {
+  transform-origin: 100% 0%;
+  animation: as-bot 4s cubic-bezier(0.23, 1, 0.32, 1) infinite both;
+}
+
+.asTyping {
+  opacity: 0;
+  transform-origin: 100% 50%;
+  animation: as-typing 4s ease-out infinite both;
+}
+
+.asDot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: as-dot 0.8s ease-in-out infinite both;
+}
+
+.asBar {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: as-bar 0.6s ease-in-out infinite alternate both;
+}
+
+@keyframes as-user {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  8%,
+  84% {
+    opacity: 1;
+    transform: none;
+  }
+  92%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes as-typing {
+  0%,
+  14% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  19%,
+  44% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  49%,
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes as-bot {
+  0%,
+  46% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+  }
+  55%,
+  86% {
+    opacity: 1;
+    transform: none;
+  }
+  94%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes as-dot {
+  0%,
+  70%,
+  100% {
+    opacity: 0.45;
+    transform: translateY(0);
+  }
+  35% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes as-bar {
+  from {
+    transform: scaleY(0.3);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* ---------- Integración · 4 s (una conexión por segundo) ---------- */
+
+.inLink {
+  stroke-dasharray: 100 100;
+  stroke-dashoffset: 0;
+  opacity: 0.55;
+  animation: in-link 4s cubic-bezier(0.65, 0, 0.35, 1) infinite both;
+}
+
+.inSpark {
+  stroke-dasharray: 4 100;
+  stroke-dashoffset: 4;
+  opacity: 0;
+  animation: in-spark 4s cubic-bezier(0.65, 0, 0.35, 1) infinite both;
+}
+
+.inBlock {
+  opacity: 0.45;
+  animation: in-block 4s ease-out infinite both;
+}
+
+.inBeat {
+  opacity: 0;
+  animation: in-beat 1s ease-out infinite both;
+}
+
+.inSpin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 12s linear infinite;
+}
+
+@keyframes in-link {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 1;
+  }
+  18%,
+  30% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  44% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  45%,
+  100% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+}
+
+/* Mismo avance que in-link: la chispa va en el frente de la línea */
+@keyframes in-spark {
+  0% {
+    stroke-dashoffset: 4;
+    opacity: 1;
+  }
+  18% {
+    stroke-dashoffset: -96;
+    opacity: 1;
+  }
+  21%,
+  100% {
+    stroke-dashoffset: -96;
+    opacity: 0;
+  }
+}
+
+@keyframes in-block {
+  0% {
+    opacity: 0;
+  }
+  5%,
+  30% {
+    opacity: 1;
+  }
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes in-beat {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+/* ---------- Estrategia · barrido de 4 s ---------- */
+
+.esSweep {
+  transform-box: view-box;
+  transform-origin: 160px 120px;
+  transform: rotate(-58deg);
+  animation: spin 4s linear infinite;
+}
+
+.esBlip {
+  opacity: 0.7;
+  animation: es-blip 4s ease-out infinite both;
+}
+
+.esRing {
+  opacity: 0;
+  animation: es-ring 4s ease-out infinite both;
+}
+
+/* Fotograma estático: la señal que el barrido acaba de tocar */
+.esBlip.on {
+  opacity: 1;
+}
+
+.esRing.on {
+  opacity: 0.45;
+  transform: scale(2.4);
+}
+
+@keyframes es-blip {
+  0% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  25% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+}
+
+@keyframes es-ring {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  30%,
+  100% {
+    opacity: 0;
+    transform: scale(4.5);
+  }
+}
+
+/* ---------- A medida · giro de 16 s, señales de órbita cada 4 s ---------- */
+
+.meMeridian {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: me-meridian 16s linear infinite both;
+}
+
+.meEq {
+  animation: me-eq 16s linear infinite both;
+}
+
+.meN {
+  animation: me-n 16s linear infinite both;
+}
+
+.meS {
+  animation: me-s 16s linear infinite both;
+}
+
+.meOrbit {
+  stroke-dasharray: 4 96;
+  stroke-dashoffset: -30;
+  animation: me-orbit 4s linear infinite;
+}
+
+@keyframes me-orbit {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+/* Meridiano: scaleX(sen α) skewY(atan(sen 20° · cos α)), cada 15° */
+@keyframes me-meridian {
+  0% { transform: scaleX(0.001) skewY(18.88deg); }
+  4.167% { transform: scaleX(0.259) skewY(18.28deg); }
+  8.333% { transform: scaleX(0.5) skewY(16.5deg); }
+  12.5% { transform: scaleX(0.707) skewY(13.6deg); }
+  16.667% { transform: scaleX(0.866) skewY(9.7deg); }
+  20.833% { transform: scaleX(0.966) skewY(5.06deg); }
+  25% { transform: scaleX(1) skewY(0deg); }
+  29.167% { transform: scaleX(0.966) skewY(-5.06deg); }
+  33.333% { transform: scaleX(0.866) skewY(-9.7deg); }
+  37.5% { transform: scaleX(0.707) skewY(-13.6deg); }
+  41.667% { transform: scaleX(0.5) skewY(-16.5deg); }
+  45.833% { transform: scaleX(0.259) skewY(-18.28deg); }
+  50% { transform: scaleX(0.001) skewY(-18.88deg); }
+  54.167% { transform: scaleX(-0.259) skewY(-18.28deg); }
+  58.333% { transform: scaleX(-0.5) skewY(-16.5deg); }
+  62.5% { transform: scaleX(-0.707) skewY(-13.6deg); }
+  66.667% { transform: scaleX(-0.866) skewY(-9.7deg); }
+  70.833% { transform: scaleX(-0.966) skewY(-5.06deg); }
+  75% { transform: scaleX(-1) skewY(0deg); }
+  79.167% { transform: scaleX(-0.966) skewY(5.06deg); }
+  83.333% { transform: scaleX(-0.866) skewY(9.7deg); }
+  87.5% { transform: scaleX(-0.707) skewY(13.6deg); }
+  91.667% { transform: scaleX(-0.5) skewY(16.5deg); }
+  95.833% { transform: scaleX(-0.259) skewY(18.28deg); }
+  100% { transform: scaleX(-0.001) skewY(18.88deg); }
+}
+
+/* Puntos de los paralelos (0°, +40°, −40°): posición y profundidad */
+@keyframes me-eq {
+  0% { transform: translate(0px, 25.31px); opacity: 0.97; }
+  4.167% { transform: translate(19.15px, 24.45px); opacity: 0.96; }
+  8.333% { transform: translate(37px, 21.92px); opacity: 0.92; }
+  12.5% { transform: translate(52.33px, 17.9px); opacity: 0.85; }
+  16.667% { transform: translate(64.09px, 12.65px); opacity: 0.77; }
+  20.833% { transform: translate(71.48px, 6.55px); opacity: 0.67; }
+  25% { transform: translate(74px, 0px); opacity: 0.56; }
+  29.167% { transform: translate(71.48px, -6.55px); opacity: 0.45; }
+  33.333% { transform: translate(64.09px, -12.65px); opacity: 0.35; }
+  37.5% { transform: translate(52.33px, -17.9px); opacity: 0.27; }
+  41.667% { transform: translate(37px, -21.92px); opacity: 0.2; }
+  45.833% { transform: translate(19.15px, -24.45px); opacity: 0.16; }
+  50% { transform: translate(0px, -25.31px); opacity: 0.15; }
+  54.167% { transform: translate(-19.15px, -24.45px); opacity: 0.16; }
+  58.333% { transform: translate(-37px, -21.92px); opacity: 0.2; }
+  62.5% { transform: translate(-52.33px, -17.9px); opacity: 0.27; }
+  66.667% { transform: translate(-64.09px, -12.65px); opacity: 0.35; }
+  70.833% { transform: translate(-71.48px, -6.55px); opacity: 0.45; }
+  75% { transform: translate(-74px, 0px); opacity: 0.56; }
+  79.167% { transform: translate(-71.48px, 6.55px); opacity: 0.67; }
+  83.333% { transform: translate(-64.09px, 12.65px); opacity: 0.77; }
+  87.5% { transform: translate(-52.33px, 17.9px); opacity: 0.85; }
+  91.667% { transform: translate(-37px, 21.92px); opacity: 0.92; }
+  95.833% { transform: translate(-19.15px, 24.45px); opacity: 0.96; }
+  100% { transform: translate(0px, 25.31px); opacity: 0.97; }
+}
+
+@keyframes me-n {
+  0% { transform: translate(0px, -25.31px); opacity: 0.97; }
+  4.167% { transform: translate(14.67px, -25.97px); opacity: 0.96; }
+  8.333% { transform: translate(28.34px, -27.91px); opacity: 0.93; }
+  12.5% { transform: translate(40.08px, -30.99px); opacity: 0.88; }
+  16.667% { transform: translate(49.09px, -35px); opacity: 0.82; }
+  20.833% { transform: translate(54.76px, -39.68px); opacity: 0.74; }
+  25% { transform: translate(56.69px, -44.7px); opacity: 0.66; }
+  29.167% { transform: translate(54.76px, -49.72px); opacity: 0.57; }
+  33.333% { transform: translate(49.09px, -54.39px); opacity: 0.5; }
+  37.5% { transform: translate(40.08px, -58.41px); opacity: 0.43; }
+  41.667% { transform: translate(28.34px, -61.49px); opacity: 0.38; }
+  45.833% { transform: translate(14.67px, -63.43px); opacity: 0.35; }
+  50% { transform: translate(0px, -64.09px); opacity: 0.34; }
+  54.167% { transform: translate(-14.67px, -63.43px); opacity: 0.35; }
+  58.333% { transform: translate(-28.34px, -61.49px); opacity: 0.38; }
+  62.5% { transform: translate(-40.08px, -58.41px); opacity: 0.43; }
+  66.667% { transform: translate(-49.09px, -54.39px); opacity: 0.5; }
+  70.833% { transform: translate(-54.76px, -49.72px); opacity: 0.57; }
+  75% { transform: translate(-56.69px, -44.7px); opacity: 0.66; }
+  79.167% { transform: translate(-54.76px, -39.68px); opacity: 0.74; }
+  83.333% { transform: translate(-49.09px, -35px); opacity: 0.82; }
+  87.5% { transform: translate(-40.08px, -30.99px); opacity: 0.88; }
+  91.667% { transform: translate(-28.34px, -27.91px); opacity: 0.93; }
+  95.833% { transform: translate(-14.67px, -25.97px); opacity: 0.96; }
+  100% { transform: translate(0px, -25.31px); opacity: 0.97; }
+}
+
+@keyframes me-s {
+  0% { transform: translate(0px, 64.09px); opacity: 0.78; }
+  4.167% { transform: translate(14.67px, 63.43px); opacity: 0.77; }
+  8.333% { transform: translate(28.34px, 61.49px); opacity: 0.74; }
+  12.5% { transform: translate(40.08px, 58.41px); opacity: 0.69; }
+  16.667% { transform: translate(49.09px, 54.39px); opacity: 0.62; }
+  20.833% { transform: translate(54.76px, 49.72px); opacity: 0.55; }
+  25% { transform: translate(56.69px, 44.7px); opacity: 0.46; }
+  29.167% { transform: translate(54.76px, 39.68px); opacity: 0.38; }
+  33.333% { transform: translate(49.09px, 35px); opacity: 0.3; }
+  37.5% { transform: translate(40.08px, 30.99px); opacity: 0.24; }
+  41.667% { transform: translate(28.34px, 27.91px); opacity: 0.19; }
+  45.833% { transform: translate(14.67px, 25.97px); opacity: 0.16; }
+  50% { transform: translate(0px, 25.31px); opacity: 0.15; }
+  54.167% { transform: translate(-14.67px, 25.97px); opacity: 0.16; }
+  58.333% { transform: translate(-28.34px, 27.91px); opacity: 0.19; }
+  62.5% { transform: translate(-40.08px, 30.99px); opacity: 0.24; }
+  66.667% { transform: translate(-49.09px, 35px); opacity: 0.3; }
+  70.833% { transform: translate(-54.76px, 39.68px); opacity: 0.38; }
+  75% { transform: translate(-56.69px, 44.7px); opacity: 0.46; }
+  79.167% { transform: translate(-54.76px, 49.72px); opacity: 0.55; }
+  83.333% { transform: translate(-49.09px, 54.39px); opacity: 0.62; }
+  87.5% { transform: translate(-40.08px, 58.41px); opacity: 0.69; }
+  91.667% { transform: translate(-28.34px, 61.49px); opacity: 0.74; }
+  95.833% { transform: translate(-14.67px, 63.43px); opacity: 0.77; }
+  100% { transform: translate(0px, 64.09px); opacity: 0.78; }
+}
+
+/* ---------- Movimiento reducido y pausa ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .glyph,
+  .glyph * {
+    animation: none !important;
+  }
+}
+
+:global([data-motion="paused"]) .glyph * {
+  animation-play-state: paused;
+}

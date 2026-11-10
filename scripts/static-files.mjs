@@ -46,8 +46,8 @@ const manifest = {
   lang: site.language,
   start_url: href("/"),
   display: "browser",
-  background_color: "#eff1f4",
-  theme_color: "#1633c9",
+  background_color: "#050505",
+  theme_color: "#050505",
   icons: [
     { src: `${basePath}/icon.svg`, sizes: "any", type: "image/svg+xml" },
     { src: `${basePath}/apple-icon.png`, sizes: "180x180", type: "image/png" },

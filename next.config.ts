@@ -23,7 +23,9 @@ const nextConfig: NextConfig = {
   partialPrefetching: !isStaticExport,
   turbopack: {
     rules: {
-      "*.css": {
+      // Solo la hoja global usa Tailwind; los módulos CSS (*.module.css) siguen
+      // siendo módulos, con sus clases con ámbito propio.
+      "globals.css": {
         loaders: ["@tailwindcss/turbopack"],
         as: "*.css",
       },

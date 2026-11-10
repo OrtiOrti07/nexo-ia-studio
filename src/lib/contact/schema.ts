@@ -3,9 +3,12 @@
  */
 
 export const INTERESTS = [
-  { value: "consultoria", label: "Consultoría de IA" },
-  { value: "automatizacion", label: "Automatización" },
-  { value: "web", label: "Web a medida" },
+  { value: "automatizacion", label: "Automatización inteligente de procesos" },
+  { value: "agentes", label: "Desarrollo de agentes de IA" },
+  { value: "asistentes", label: "Chatbots y asistentes virtuales" },
+  { value: "integracion", label: "Integración de IA en tu empresa" },
+  { value: "estrategia", label: "Consultoría y estrategia de IA" },
+  { value: "medida", label: "Soluciones a medida" },
   { value: "no-lo-se", label: "Aún no lo sé" },
 ] as const;
 

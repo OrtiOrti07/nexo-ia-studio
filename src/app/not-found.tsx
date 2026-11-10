@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
 import { SiteShell } from "@/components/layout/SiteShell";
-import { ButtonLink } from "@/components/ui/Button";
-import { OrbitGlyph } from "@/components/ui/OrbitGlyph";
+import { MagneticLink } from "@/components/ui/MagneticLink";
+import { LogoMark } from "@/components/ui/Logo";
 import { contactAnchor, href } from "@/config/site";
 
 export const metadata: Metadata = {
@@ -13,18 +14,19 @@ export default function NotFound() {
   return (
     <SiteShell>
       <section className="page-container flex min-h-[80svh] flex-col justify-center pt-32 pb-section">
-        <OrbitGlyph active={2} className="size-24" />
-        <h1 className="wide mt-8 max-w-[40rem] text-h2">Esta página se ha salido de órbita</h1>
-        <p className="mt-6 max-w-copy font-serif text-lead text-slate">
-          No existe o ha cambiado de dirección. Vuelve al inicio o cuéntanos qué buscabas.
+        <LogoMark className="size-16" />
+        <h1 className="mt-8 max-w-[18ch] text-h2">Esta señal no lleva a ninguna parte</h1>
+        <p className="mt-6 max-w-copy text-lead text-muted">
+          La página no existe o ha cambiado de dirección. Vuelve al inicio o cuéntanos qué buscabas.
         </p>
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <ButtonLink href={href("/")} variant="primary" size="lg">
+          <MagneticLink href={href("/")} size="lg">
             Volver al inicio
-          </ButtonLink>
-          <ButtonLink href={contactAnchor} variant="outline" size="lg">
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </MagneticLink>
+          <MagneticLink href={contactAnchor} variant="ghost" size="lg">
             Escríbenos
-          </ButtonLink>
+          </MagneticLink>
         </div>
       </section>
     </SiteShell>

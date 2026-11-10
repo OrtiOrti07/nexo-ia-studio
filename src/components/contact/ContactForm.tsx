@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { AlertCircle, Check, ChevronDown, Loader2, Mail, Send } from "lucide-react";
 import { href, site } from "@/config/site";
 import { legal } from "@/config/legal";
-import { buttonClasses } from "@/components/ui/Button";
 import {
   INTERESTS,
   LIMITS,
@@ -15,6 +15,7 @@ import {
   type ContactField,
   type ContactInput,
   type ContactResponse,
+  type Interest,
 } from "@/lib/contact/schema";
 
 type Status = "idle" | "submitting" | "delivered" | "not_configured" | "failed";
@@ -36,8 +37,12 @@ type ContactFormProps = {
 };
 
 const fieldBase =
-  "w-full rounded-field border bg-paper/50 px-4 font-sans text-ui text-ink placeholder:text-slate/70 " +
-  "transition-[border-color,background-color] duration-200 hover:border-ink/40 focus:border-cobalt focus:bg-surface";
+  "w-full rounded-field border bg-white/[0.03] px-4 text-body text-text placeholder:text-muted/60 " +
+  "transition-[border-color,background-color,box-shadow] duration-200 hover:border-white/25 " +
+  "focus:border-cyan/70 focus:bg-white/[0.05] focus:shadow-[0_0_0_4px_rgb(34_227_255/0.12)] focus:outline-none";
+
+const buttonBase =
+  "inline-flex h-12 items-center justify-center gap-2 rounded-pill px-6 text-small font-semibold select-none";
 
 function buildMailto(values: ContactInput) {
   const subject = `Consulta desde la web: ${values.name}`;
@@ -48,7 +53,7 @@ function buildMailto(values: ContactInput) {
     `Nombre: ${values.name}`,
     `Correo: ${values.email}`,
     values.company ? `Empresa: ${values.company}` : null,
-    `Interés: ${interestLabel(values.interest)}`,
+    `Servicio: ${interestLabel(values.interest)}`,
   ]
     .filter(Boolean)
     .join("\n");
@@ -93,8 +98,7 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
 
     const firstInvalid = Object.keys(found)[0] as ContactField | undefined;
     if (firstInvalid) {
-      const el = formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`);
-      el?.focus();
+      formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
       return;
     }
 
@@ -144,13 +148,13 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
         tone="success"
         title="Mensaje enviado"
         actions={
-          <button type="button" onClick={() => reset(false)} className={buttonClasses("outline", "md")}>
+          <button type="button" onClick={() => reset(false)} className={`btn-ghost ${buttonBase}`}>
             Enviar otro mensaje
           </button>
         }
       >
         Gracias, {values.name}. Hemos recibido tu mensaje y te responderemos en{" "}
-        <strong className="font-semibold text-ink">{values.email}</strong>.
+        <strong className="font-semibold text-text">{values.email}</strong>.
       </ResultPanel>
     );
   }
@@ -163,19 +167,19 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
         title="Tu mensaje aún no se ha enviado"
         actions={
           <>
-            <a href={buildMailto(values)} className={buttonClasses("primary", "md")}>
+            <a href={buildMailto(values)} className={`btn-neon ${buttonBase}`}>
+              <Mail aria-hidden="true" className="size-4" />
               Enviarlo desde mi correo
             </a>
-            <button type="button" onClick={() => reset(true)} className={buttonClasses("outline", "md")}>
+            <button type="button" onClick={() => reset(true)} className={`btn-ghost ${buttonBase}`}>
               Volver al formulario
             </button>
           </>
         }
       >
-        Los datos son correctos, pero el envío del formulario todavía no está conectado a ningún
-        correo, así que no nos ha llegado. Puedes enviárnoslo desde tu propio correo: abriremos un
-        mensaje con todo lo que has escrito, dirigido a{" "}
-        <strong className="font-semibold text-ink">{site.email}</strong>.
+        Los datos son correctos, pero el envío del formulario todavía no está conectado, así que no nos ha
+        llegado. Puedes enviárnoslo desde tu correo: se abrirá un mensaje con todo lo que has escrito, dirigido a{" "}
+        <strong className="font-semibold text-text">{site.email}</strong>.
       </ResultPanel>
     );
   }
@@ -183,6 +187,7 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
   const describedBy = (field: ContactField, extra?: string) =>
     [errors[field] ? id(`${field}-error`) : null, extra].filter(Boolean).join(" ") || undefined;
 
+  const border = (field: ContactField) => (errors[field] ? "border-danger/80" : "border-white/12");
   const messageLength = values.message.trim().length;
 
   return (
@@ -201,16 +206,11 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
             onBlur={() => blur("name")}
             aria-invalid={Boolean(errors.name)}
             aria-describedby={describedBy("name")}
-            className={`${fieldBase} h-12 ${errors.name ? "border-danger" : "border-line"}`}
+            className={`${fieldBase} h-12 ${border("name")}`}
           />
         </Field>
 
-        <Field
-          label="Correo electrónico"
-          htmlFor={id("email")}
-          error={errors.email}
-          errorId={id("email-error")}
-        >
+        <Field label="Correo electrónico" htmlFor={id("email")} error={errors.email} errorId={id("email-error")}>
           <input
             id={id("email")}
             name="email"
@@ -223,63 +223,56 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
             onBlur={() => blur("email")}
             aria-invalid={Boolean(errors.email)}
             aria-describedby={describedBy("email")}
-            className={`${fieldBase} h-12 ${errors.email ? "border-danger" : "border-line"}`}
+            className={`${fieldBase} h-12 ${border("email")}`}
           />
         </Field>
       </div>
 
-      <Field
-        label="Empresa"
-        optional
-        htmlFor={id("company")}
-        error={errors.company}
-        errorId={id("company-error")}
-      >
-        <input
-          id={id("company")}
-          name="company"
-          type="text"
-          autoComplete="organization"
-          value={values.company}
-          onChange={(e) => update("company", e.target.value)}
-          onBlur={() => blur("company")}
-          aria-invalid={Boolean(errors.company)}
-          aria-describedby={describedBy("company")}
-          className={`${fieldBase} h-12 ${errors.company ? "border-danger" : "border-line"}`}
-        />
-      </Field>
+      <div className="grid gap-6 sm:grid-cols-2">
+        <Field label="Empresa" optional htmlFor={id("company")} error={errors.company} errorId={id("company-error")}>
+          <input
+            id={id("company")}
+            name="company"
+            type="text"
+            autoComplete="organization"
+            value={values.company}
+            onChange={(e) => update("company", e.target.value)}
+            onBlur={() => blur("company")}
+            aria-invalid={Boolean(errors.company)}
+            aria-describedby={describedBy("company")}
+            className={`${fieldBase} h-12 ${border("company")}`}
+          />
+        </Field>
 
-      <fieldset>
-        <legend className="text-[0.9375rem] font-semibold">¿En qué podemos ayudarte?</legend>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {INTERESTS.map((option) => (
-            <label key={option.value} className="relative cursor-pointer">
-              <input
-                type="radio"
-                name="interest"
-                value={option.value}
-                checked={values.interest === option.value}
-                onChange={() => update("interest", option.value)}
-                className="peer absolute inset-0 cursor-pointer opacity-0"
-              />
-              <span className="inline-flex h-10 items-center rounded-pill border border-line px-4 text-[0.9375rem] font-medium text-ink transition-colors duration-200 peer-checked:border-cobalt peer-checked:bg-cobalt peer-checked:text-white peer-hover:border-ink/40 peer-focus-visible:outline-[2.5px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-cobalt peer-focus-visible:outline-solid">
-                {option.label}
-              </span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
+        <Field label="Servicio de interés" htmlFor={id("interest")} errorId={id("interest-error")}>
+          <div className="relative">
+            <select
+              id={id("interest")}
+              name="interest"
+              value={values.interest}
+              onChange={(e) => update("interest", e.target.value as Interest)}
+              className={`${fieldBase} h-12 appearance-none pr-11 ${border("interest")} [&>option]:bg-graphite`}
+            >
+              {INTERESTS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              aria-hidden="true"
+              className="pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2 text-muted"
+            />
+          </div>
+        </Field>
+      </div>
 
       <Field
-        label="Cuéntanos tu caso"
+        label="Descripción del proyecto"
         htmlFor={id("message")}
         error={errors.message}
         errorId={id("message-error")}
-        hint={
-          <span id={id("message-hint")}>
-            Qué haces, qué te gustaría mejorar y cualquier plazo que tengas en mente.
-          </span>
-        }
+        hint={<span id={id("message-hint")}>Qué hacéis, qué queréis mejorar y cualquier plazo que tengáis en mente.</span>}
       >
         <textarea
           id={id("message")}
@@ -291,9 +284,9 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
           onBlur={() => blur("message")}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={describedBy("message", id("message-hint"))}
-          className={`${fieldBase} resize-y py-3 leading-relaxed ${errors.message ? "border-danger" : "border-line"}`}
+          className={`${fieldBase} resize-y py-3 leading-relaxed ${border("message")}`}
         />
-        <p className="mt-1.5 text-right text-micro text-slate" aria-hidden="true">
+        <p className="mt-1.5 text-right font-mono text-micro text-muted" aria-hidden="true">
           {messageLength}/{LIMITS.messageMax}
         </p>
       </Field>
@@ -321,16 +314,15 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
             onChange={(e) => update("consent", e.target.checked)}
             aria-invalid={Boolean(errors.consent)}
             aria-describedby={describedBy("consent")}
-            className="mt-0.5 size-5 shrink-0 cursor-pointer accent-cobalt"
+            className="mt-0.5 size-5 shrink-0 cursor-pointer accent-cyan"
           />
-          <span className="font-serif text-small leading-snug">
-            Acepto que {site.name} use estos datos únicamente para responder a mi consulta, según
-            la{" "}
+          <span className="text-small leading-snug text-text/90">
+            Acepto que {site.name} use estos datos únicamente para responder a mi consulta, según la{" "}
             <a
               href={href("/privacidad")}
               target="_blank"
               rel="noopener"
-              className="font-sans font-semibold text-cobalt underline underline-offset-4"
+              className="font-semibold text-cyan underline underline-offset-4"
             >
               política de privacidad
               <span className="sr-only"> (se abre en una pestaña nueva)</span>
@@ -339,20 +331,18 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
           </span>
         </label>
         {errors.consent && <ErrorText id={id("consent-error")}>{errors.consent}</ErrorText>}
-        <p className="mt-4 font-serif text-micro leading-relaxed text-slate">
-          <strong className="font-sans font-semibold text-ink">Protección de datos.</strong>{" "}
-          Responsable: {legal.ownerName ?? site.name}. Finalidad: responder a tu consulta y, si lo
-          pides, enviarte una propuesta. Legitimación: tu consentimiento. No cedemos tus datos a
-          terceros salvo obligación legal. Puedes acceder a ellos, rectificarlos o suprimirlos,
-          entre otros derechos, como explica la política de privacidad.
+        <p className="mt-4 text-micro leading-relaxed text-muted">
+          <strong className="font-semibold text-text/90">Protección de datos.</strong> Responsable:{" "}
+          {legal.ownerName ?? site.name}. Finalidad: responder a tu consulta y, si lo pides, enviarte una propuesta.
+          Legitimación: tu consentimiento. No cedemos tus datos a terceros salvo obligación legal. Puedes acceder a
+          ellos, rectificarlos o suprimirlos, entre otros derechos, como explica la política de privacidad.
         </p>
       </div>
 
       {!deliveryConfigured && (
-        <p className="rounded-card border border-amber bg-amber/15 px-4 py-3.5 font-serif text-small leading-snug">
-          <strong className="font-sans font-semibold">Aviso:</strong> el envío de este formulario
-          todavía no está conectado. Puedes rellenarlo y comprobar que todo está bien; al final te
-          ofreceremos enviarlo desde tu propio correo.
+        <p className="rounded-card border border-cyan/25 bg-cyan/[0.06] px-4 py-3.5 text-small leading-snug text-text/90">
+          <strong className="font-semibold">Aviso:</strong> el envío de este formulario todavía no está conectado.
+          Puedes rellenarlo y comprobar que todo está bien; al final te ofreceremos enviarlo desde tu correo.
         </p>
       )}
 
@@ -360,15 +350,25 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
         <button
           type="submit"
           disabled={status === "submitting"}
-          className={`${buttonClasses("primary", "lg")} w-full sm:w-auto`}
+          className={`btn-neon ${buttonBase} h-14 w-full px-8 text-[1rem] disabled:cursor-progress disabled:opacity-70 sm:w-auto`}
         >
-          {status === "submitting" ? "Enviando…" : "Enviar mensaje"}
+          {status === "submitting" ? (
+            <>
+              <Loader2 aria-hidden="true" className="size-4 animate-spin" />
+              Enviando…
+            </>
+          ) : (
+            <>
+              <Send aria-hidden="true" className="size-4" />
+              Enviar mensaje
+            </>
+          )}
         </button>
-        <div role="status" aria-live="polite" className="text-micro">
+        <div role="status" aria-live="polite" className="text-small">
           {status === "failed" && (
             <span className="font-medium text-danger">
-              No hemos podido enviar el mensaje. Comprueba tu conexión e inténtalo de nuevo, o
-              escríbenos a {site.email} o llámanos al {site.phone.display}.
+              No hemos podido enviar el mensaje. Comprueba tu conexión e inténtalo de nuevo, o escríbenos a{" "}
+              {site.email} o llámanos al {site.phone.display}.
             </span>
           )}
         </div>
@@ -396,11 +396,11 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={htmlFor} className="block text-[0.9375rem] font-semibold">
+      <label htmlFor={htmlFor} className="block text-small font-semibold text-text">
         {label}
-        {optional && <span className="ml-1.5 font-normal text-slate">(opcional)</span>}
+        {optional && <span className="ml-1.5 font-normal text-muted">(opcional)</span>}
       </label>
-      {hint && <p className="mt-1 font-serif text-micro text-slate">{hint}</p>}
+      {hint && <p className="mt-1 text-micro text-muted">{hint}</p>}
       <div className="mt-2">{children}</div>
       {error && <ErrorText id={errorId}>{error}</ErrorText>}
     </div>
@@ -410,11 +410,7 @@ function Field({
 function ErrorText({ id, children }: { id: string; children: ReactNode }) {
   return (
     <p id={id} className="mt-2 flex items-start gap-2 text-micro font-medium text-danger">
-      <svg viewBox="0 0 16 16" className="mt-px size-4 shrink-0" aria-hidden="true">
-        <circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M8 4.5v4.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        <circle cx="8" cy="11.3" r="0.95" fill="currentColor" />
-      </svg>
+      <AlertCircle aria-hidden="true" className="mt-px size-4 shrink-0" />
       {children}
     </p>
   );
@@ -434,28 +430,19 @@ function ResultPanel({
   children: ReactNode;
 }) {
   return (
-    <div className="panel-swap">
+    <div>
       <span
         aria-hidden="true"
         className={`grid size-12 place-items-center rounded-full ${
-          tone === "success" ? "bg-cobalt text-white" : "bg-amber text-ink"
+          tone === "success" ? "bg-ok/15 text-ok" : "bg-cyan/15 text-cyan"
         }`}
       >
-        {tone === "success" ? (
-          <svg viewBox="0 0 24 24" className="size-6">
-            <path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        ) : (
-          <svg viewBox="0 0 24 24" className="size-6">
-            <path d="M12 6.5v7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-            <circle cx="12" cy="17.3" r="1.3" fill="currentColor" />
-          </svg>
-        )}
+        {tone === "success" ? <Check className="size-6" /> : <AlertCircle className="size-6" />}
       </span>
-      <h3 ref={headingRef} tabIndex={-1} className="wide mt-6 text-h3 outline-none">
+      <h3 ref={headingRef} tabIndex={-1} className="mt-6 text-h3 outline-none">
         {title}
       </h3>
-      <p className="mt-4 max-w-copy font-serif text-body text-slate">{children}</p>
+      <p className="mt-4 max-w-copy text-body text-muted">{children}</p>
       <div className="mt-8 flex flex-wrap gap-3">{actions}</div>
     </div>
   );

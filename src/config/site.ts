@@ -62,17 +62,28 @@ export const site = {
     /** Formato para el enlace tel: (sin espacios). */
     href: "+34683593864",
   },
-  title: "Nexo IA Studio · Consultoría de IA y webs a medida",
+  title: "Nexo IA Studio | Consultoría de inteligencia artificial para empresas",
   description:
-    "Consultoría de inteligencia artificial, automatización de procesos y desarrollo de páginas web a medida para negocios que quieren trabajar mejor y llegar más lejos.",
-  tagline: "Consultoría de IA y webs a medida",
+    "Agentes de IA, automatización de procesos, asistentes virtuales e integración de inteligencia artificial a medida. Estrategia, desarrollo y puesta en marcha con un mismo equipo.",
+  tagline: "Consultoría de inteligencia artificial",
 } as const;
+
+/**
+ * Redes sociales. Añade la URL de cada perfil cuando exista: solo se muestran
+ * las que tengan dirección (sin enlaces vacíos ni decorativos).
+ */
+export const socials: { label: string; href: string | null }[] = [
+  { label: "LinkedIn", href: null },
+  { label: "Instagram", href: null },
+  { label: "X", href: null },
+  { label: "YouTube", href: null },
+];
 
 export const navigation = [
   { label: "Servicios", href: href("/#servicios") },
   { label: "Método", href: href("/#metodo") },
-  { label: "Ejemplos", href: href("/#situaciones") },
-  { label: "Preguntas", href: href("/#preguntas") },
+  { label: "Proyectos", href: href("/#proyectos") },
+  { label: "Contacto", href: href("/#contacto") },
 ] as const;
 
 export const contactAnchor = href("/#contacto");

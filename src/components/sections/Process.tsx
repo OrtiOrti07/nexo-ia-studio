@@ -1,138 +1,164 @@
 "use client";
 
-import Image from "next/image";
-import { useRef, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
+import { PackageCheck } from "lucide-react";
 import { processIntro, processSteps } from "@/content/home";
-import { gsap, MOTION, useGSAP } from "@/lib/motion";
-import arquitectura from "@/assets/photos/arquitectura.jpg";
-import { SectionIntro } from "./SectionIntro";
+import { gsap, MOTION, ScrollTrigger, useGSAP } from "@/lib/motion";
+import { sceneState } from "@/components/scene/sceneStore";
+import { RevealText } from "@/components/ui/Reveal";
 
-const N = processSteps.length;
+/** Posición x de cada nodo en la escena 3D (ver formations.ts, formación "señal"). */
+const NODE_X = [-3.6, -1.8, 0, 1.8, 3.6];
 
 /**
- * Método en chevrons: una sola foto repartida entre cinco flechas que apuntan
- * hacia delante, una por fase. Cada flecha muestra su parte de la imagen, de
- * modo que juntas forman la foto completa.
+ * Método. En escritorio la sección se fija y el scroll avanza paso a paso: el
+ * nodo activo se ilumina en la escena 3D, en la línea de progreso y en el texto.
+ * En móvil es una línea de tiempo vertical.
  */
 export function Process() {
   const root = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(0);
+  const activeRef = useRef(0);
 
   useGSAP(
     () => {
+      const select = (index: number) => {
+        if (index === activeRef.current) return;
+        activeRef.current = index;
+        sceneState.focusX = NODE_X[index];
+        setActive(index);
+      };
+      sceneState.focusX = NODE_X[0];
+
       const mm = gsap.matchMedia();
-      mm.add(MOTION.any, () => {
-        gsap
-          .timeline({
-            defaults: { ease: "none" },
-            scrollTrigger: { trigger: "[data-chevrons]", start: "top 85%", end: "top 30%", scrub: true },
-          })
-          .fromTo(
-            "[data-chevron]",
-            { autoAlpha: 0, y: 36 },
-            { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.12 },
-            0,
-          )
-          .fromTo("[data-chevron-photo]", { scale: 1.25 }, { scale: 1, duration: 1 }, 0);
-
-        // Paneo lento de la foto mientras se recorre la sección
+      mm.add(MOTION.desktop, () => {
+        ScrollTrigger.create({
+          trigger: "[data-process-pin]",
+          start: "top top",
+          end: () => `+=${window.innerHeight * 3.2}`,
+          pin: true,
+          scrub: true,
+          onUpdate: (self) => {
+            gsap.set("[data-progress]", { scaleX: self.progress });
+            select(Math.min(processSteps.length - 1, Math.floor(self.progress * processSteps.length)));
+          },
+        });
+      });
+      mm.add(MOTION.mobile, () => {
         gsap.fromTo(
-          "[data-chevron-pan]",
-          { xPercent: -3 },
+          "[data-progress-v]",
+          { scaleY: 0 },
           {
-            xPercent: 3,
+            scaleY: 1,
             ease: "none",
-            scrollTrigger: { trigger: "[data-chevrons]", start: "top bottom", end: "bottom top", scrub: true },
+            scrollTrigger: { trigger: "[data-steps-v]", start: "top 70%", end: "bottom 60%", scrub: true },
           },
         );
-
-        gsap.fromTo(
-          "[data-step]",
-          { autoAlpha: 0, y: 32 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            stagger: 0.1,
-            ease: "none",
-            scrollTrigger: { trigger: "[data-steps]", start: "top 88%", end: "top 55%", scrub: true },
-          },
-        );
+        gsap.utils.toArray<HTMLElement>("[data-step-v]").forEach((step, i) => {
+          ScrollTrigger.create({ trigger: step, start: "top 65%", onEnter: () => select(i), onEnterBack: () => select(i) });
+        });
       });
     },
     { scope: root },
   );
 
   return (
-    <section ref={root} id="metodo" aria-labelledby="metodo-title" className="bg-paper py-section">
-      <div className="page-container">
-        <SectionIntro id="metodo-title" title={processIntro.title} body={processIntro.body} />
+    <section ref={root} id="metodo" aria-labelledby="metodo-title" className="relative">
+      <div data-process-pin className="relative lg:h-svh">
+        <div className="page-container py-section lg:pt-28 lg:pb-0">
+          <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
+            <RevealText id="metodo-title" text={processIntro.title} className="text-h2 lg:col-span-6" />
+            <p className="max-w-copy text-lead text-muted lg:col-span-5 lg:col-start-8">{processIntro.body}</p>
+          </div>
+        </div>
 
-        <div
-          data-chevrons
-          aria-hidden="true"
-          className="relative mt-14 h-[clamp(7rem,17vw,15rem)] lg:mt-20"
-          style={{ "--n": N, "--d": "clamp(1.4rem, 4.2vw, 4.25rem)", "--g": "clamp(0.3rem, 0.6vw, 0.6rem)" } as CSSProperties}
-        >
+        {/* Escritorio: raíl alineado con los nodos de la escena 3D */}
+        <div aria-hidden="true" className="absolute inset-x-0 top-[59%] hidden lg:block">
+          <div className="relative h-px bg-white/10">
+            <div
+              data-progress
+              className="absolute inset-y-0 left-0 w-full origin-left scale-x-0 bg-[linear-gradient(90deg,#3b82ff,#8b5cff,#22e3ff)]"
+            />
+          </div>
           {processSteps.map((step, i) => (
             <div
               key={step.title}
-              data-chevron
-              className="absolute inset-y-0 overflow-hidden"
-              style={{
-                width: "calc((100% + (var(--n) - 1) * (var(--d) - var(--g))) / var(--n))",
-                left: `calc(${i} * ((100% + (var(--n) - 1) * (var(--d) - var(--g))) / var(--n) - var(--d) + var(--g)))`,
-                clipPath:
-                  i === 0
-                    ? "polygon(0 0, calc(100% - var(--d)) 0, 100% 50%, calc(100% - var(--d)) 100%, 0 100%)"
-                    : "polygon(0 0, calc(100% - var(--d)) 0, 100% 50%, calc(100% - var(--d)) 100%, 0 100%, var(--d) 50%)",
-              }}
+              className="absolute top-0 -translate-x-1/2 text-center"
+              style={{ left: `calc(50% + ${i - 2} * min(33.6vh, 21.7vw))` } as CSSProperties}
             >
-              {/* La foto ocupa el ancho de toda la fila y se desplaza para alinearse */}
-              <div
-                className="absolute inset-y-0"
-                style={{
-                  width: "calc(var(--n) * 100% - (var(--n) - 1) * (var(--d) - var(--g)))",
-                  left: `calc(${-i} * (100% - var(--d) + var(--g)))`,
-                }}
-              >
-                <div data-chevron-pan className="absolute -inset-x-[4%] inset-y-0">
-                  <div data-chevron-photo className="absolute inset-0">
-                    <Image
-                      src={arquitectura}
-                      alt=""
-                      fill
-                      sizes="100vw"
-                      placeholder="blur"
-                      className="object-cover object-[50%_60%]"
-                    />
-                  </div>
-                </div>
-              </div>
               <span
-                className={`wide absolute bottom-3 text-[clamp(1.1rem,0.6rem+1.6vw,2.4rem)] font-bold text-ink/80 ${
-                  i === 0 ? "left-4" : "left-[calc(var(--d)+0.6rem)]"
+                className={`mx-auto block size-3 -translate-y-1/2 rounded-full border transition-all duration-500 ${
+                  i <= active
+                    ? "border-cyan bg-cyan shadow-[0_0_18px_4px_rgb(34_227_255/0.55)]"
+                    : "border-white/30 bg-bg"
+                }`}
+              />
+              <span
+                className={`mt-3 block font-mono text-micro transition-colors duration-500 ${
+                  i === active ? "text-text" : "text-muted"
                 }`}
               >
-                {i + 1}
+                {String(i + 1).padStart(2, "0")}
               </span>
             </div>
           ))}
         </div>
 
-        <ol data-steps className="mt-12 grid gap-10 sm:grid-cols-2 lg:mt-14 lg:grid-cols-5 lg:gap-x-8 lg:gap-y-0">
-          {processSteps.map((step, index) => (
-            <li key={step.title} data-step className="flex flex-col lg:row-span-3 lg:grid lg:grid-rows-subgrid">
-              <h3 className="wide text-[1.3125rem] leading-tight font-semibold">
-                <span className="sr-only">Paso {index + 1}: </span>
+        {/* Escritorio: detalle del paso activo */}
+        <div className="page-container absolute inset-x-0 bottom-[7svh] hidden lg:block">
+          {/* Versión visual; los lectores de pantalla leen la lista completa de abajo */}
+          <div className="relative min-h-[12rem] max-w-[44rem]" aria-hidden="true">
+            {processSteps.map((step, i) => (
+              <article
+                key={step.title}
+                className={`absolute inset-x-0 bottom-0 transition-[opacity,transform,filter] duration-500 ease-out ${
+                  i === active ? "translate-y-0 opacity-100 blur-0" : "pointer-events-none translate-y-4 opacity-0 blur-sm"
+                }`}
+              >
+                <h3 className="text-h3">
+                  <span className="mr-3 font-mono text-[0.6em] text-cyan">{String(i + 1).padStart(2, "0")}</span>
+                  {step.title}
+                </h3>
+                <p className="mt-3 text-body text-muted">{step.body}</p>
+                <p className="mt-4 inline-flex items-center gap-2 text-small text-text">
+                  <PackageCheck aria-hidden="true" className="size-4 text-cyan" />
+                  Recibes: {step.output}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        {/* Móvil y tableta: línea de tiempo vertical (en escritorio, solo para lectores de pantalla) */}
+        <div data-steps-v className="page-container relative pb-section lg:sr-only">
+          <span aria-hidden="true" className="absolute top-2 bottom-0 left-[calc(var(--spacing-gutter)+5px)] w-px bg-white/10" />
+          <span
+            aria-hidden="true"
+            data-progress-v
+            className="absolute top-2 bottom-0 left-[calc(var(--spacing-gutter)+5px)] w-px origin-top bg-[linear-gradient(180deg,#3b82ff,#8b5cff,#22e3ff)]"
+          />
+          <ol>
+          {processSteps.map((step, i) => (
+            <li key={step.title} data-step-v className="relative pb-12 pl-10 last:pb-0">
+              <span
+                aria-hidden="true"
+                className={`absolute top-1.5 left-0 size-[11px] rounded-full border transition-all duration-500 ${
+                  i <= active ? "border-cyan bg-cyan shadow-[0_0_14px_3px_rgb(34_227_255/0.5)]" : "border-white/30 bg-bg"
+                }`}
+              />
+              <h3 className="text-h3">
+                <span className="mr-2 font-mono text-[0.6em] text-cyan">{String(i + 1).padStart(2, "0")}</span>
                 {step.title}
               </h3>
-              <p className="mt-3 font-serif text-small text-slate">{step.body}</p>
-              <div className="mt-5 rounded-card bg-surface px-4 py-3.5">
-                <p className="text-micro font-semibold text-cobalt">Recibes</p>
-                <p className="mt-1 font-serif text-small leading-snug">{step.deliverable}</p>
-              </div>
+              <p className="mt-3 text-body text-muted">{step.body}</p>
+              <p className="mt-3 inline-flex items-start gap-2 text-small text-text">
+                <PackageCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-cyan" />
+                Recibes: {step.output}
+              </p>
             </li>
           ))}
-        </ol>
+          </ol>
+        </div>
       </div>
     </section>
   );
