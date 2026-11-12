@@ -1,9 +1,9 @@
 /**
- * Configuración central de la marca.
+ * Configuración central de la marca personal.
  *
- * "Nexo IA Studio" es un nombre provisional: cambia aquí el nombre, el dominio
- * y los datos de contacto y se actualizarán la cabecera, el pie, los metadatos,
- * el JSON-LD, la imagen para redes sociales y los textos del formulario.
+ * Cambia aquí el nombre, la dirección pública y los datos de contacto: se
+ * actualizan la cabecera, el pie, los metadatos, el JSON-LD, el manifest y los
+ * textos del formulario.
  */
 
 /**
@@ -30,11 +30,17 @@ export function href(path: string) {
   return `${basePath}${pathname}${hash ? `#${hash}` : ""}`;
 }
 
+/**
+ * Dirección pública completa (incluida la subcarpeta, si la hay), en orden:
+ * 1. NEXT_PUBLIC_SITE_URL (la define el despliegue en GitHub Pages).
+ * 2. La dirección de producción de Vercel, si algún día se despliega allí.
+ * 3. La dirección actual en GitHub Pages.
+ */
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "https://nexoia.studio");
+    : "https://ortiorti07.github.io/nexo-ia-studio");
 
 /** URL absoluta de una ruta interna (metadatos, sitemap, robots). */
 export function absoluteUrl(path: string) {
@@ -42,15 +48,13 @@ export function absoluteUrl(path: string) {
 }
 
 export const site = {
-  name: "Nexo IA Studio",
+  /** Nombre de la marca tal como aparece en títulos y metadatos. */
+  name: "Juan · Diseño web",
   /** Versión corta para espacios reducidos (manifest, icono de app). */
-  shortName: "Nexo",
-  /**
-   * Dirección pública completa (incluida la subcarpeta, si la hay), en orden:
-   * 1. NEXT_PUBLIC_SITE_URL (la define el despliegue en GitHub Pages).
-   * 2. La dirección de producción de Vercel, si se despliega allí.
-   * 3. Un dominio provisional.
-   */
+  shortName: "Juan",
+  /** Persona que está detrás de la web. */
+  owner: "Juan",
+  role: "Diseño y desarrollo web",
   url: siteUrl,
   locale: "es_ES",
   language: "es",
@@ -58,14 +62,18 @@ export const site = {
   email: "juanortereque@gmail.com",
   phone: {
     /** Cómo se muestra. */
-    display: "+34 683 59 38 64",
+    display: "+34 683 593 864",
     /** Formato para el enlace tel: (sin espacios). */
     href: "+34683593864",
   },
-  title: "Nexo IA Studio | Consultoría de inteligencia artificial para empresas",
+  title: "Juan · Diseño y desarrollo de webs a medida para empresas",
   description:
-    "Agentes de IA, automatización de procesos, asistentes virtuales e integración de inteligencia artificial a medida. Estrategia, desarrollo y puesta en marcha con un mismo equipo.",
-  tagline: "Consultoría de inteligencia artificial",
+    "Soy Juan y diseño y desarrollo páginas web a medida para empresas: webs corporativas, landing pages y rediseños adaptados a tu marca y a tus objetivos. Cuéntame tu proyecto.",
+  /** Colores de la marca fuera del CSS (manifest, navegador). */
+  colors: {
+    paper: "#f4f5f7",
+    ink: "#0b1020",
+  },
 } as const;
 
 /**
@@ -75,14 +83,13 @@ export const site = {
 export const socials: { label: string; href: string | null }[] = [
   { label: "LinkedIn", href: null },
   { label: "Instagram", href: null },
-  { label: "X", href: null },
-  { label: "YouTube", href: null },
+  { label: "GitHub", href: null },
 ];
 
 export const navigation = [
   { label: "Servicios", href: href("/#servicios") },
-  { label: "Método", href: href("/#metodo") },
-  { label: "Proyectos", href: href("/#proyectos") },
+  { label: "Proceso", href: href("/#proceso") },
+  { label: "Trabajos", href: href("/#trabajos") },
   { label: "Contacto", href: href("/#contacto") },
 ] as const;
 

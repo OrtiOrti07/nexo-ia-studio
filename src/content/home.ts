@@ -1,197 +1,154 @@
 /**
- * Contenido de la página de inicio.
+ * Textos de la página de inicio.
  *
- * Regla editorial: no se inventan clientes, cifras, testimonios ni
- * certificaciones. Los proyectos son demostraciones conceptuales y se presentan
- * como tales.
+ * Regla editorial: no se inventan apellidos, trayectoria, clientes, premios,
+ * cifras, precios ni testimonios. Los trabajos que se muestran son conceptos
+ * con marcas ficticias y se presentan como tales.
  */
 
-export type ServiceId =
-  | "automatizacion"
-  | "agentes"
-  | "asistentes"
-  | "integracion"
-  | "estrategia"
-  | "medida";
-
 export const hero = {
-  title: "Diseñamos la inteligencia que mueve tu empresa.",
-  lead: "Agentes, automatizaciones y asistentes de IA construidos sobre tus procesos reales. Estrategia, desarrollo e integración con un mismo equipo, de la primera idea a la puesta en marcha.",
-  primaryCta: "Transforma tu negocio",
-  secondaryCta: "Descubre nuestros servicios",
-  scrollHint: "Desliza para explorar",
+  eyebrow: "Juan · diseño y desarrollo web",
+  /** El titular se compone en Showcase.tsx para marcar «a la altura». */
+  title: "Tu web debería estar a la altura de tu negocio.",
+  lead: "Soy Juan. Diseño y programo webs a medida para empresas, pensadas para que tus clientes te escriban, te llamen o te pidan presupuesto.",
+  primaryCta: "Cuéntame tu proyecto",
+  secondaryCta: "Cómo trabajo",
 };
+
+/** Etapas del escaparate 3D de la portada (la primera es la portada en sí). */
+export const showcaseStages = [
+  {
+    kicker: "Diseño propio",
+    title: "Diseñada desde cero para tu marca.",
+    body: "Sin plantillas: tu tono, tus colores y lo que necesitan tus clientes.",
+  },
+  {
+    kicker: "Clara y directa",
+    title: "Que se entienda a la primera.",
+    body: "Cada sección lleva al visitante, sin rodeos, hasta el contacto.",
+  },
+  {
+    kicker: "En cualquier pantalla",
+    title: "Igual de bien en el móvil.",
+    body: "Diseñada también para el teléfono, no adaptada a última hora.",
+  },
+  {
+    kicker: "Cada negocio, su web",
+    title: "Hecha a la medida de lo que haces.",
+    body: "Un restaurante, un estudio o un instalador no necesitan la misma web.",
+  },
+];
+
+export type ServiceId = "corporativa" | "landing" | "rediseno";
 
 export const servicesIntro = {
-  title: "Seis formas de poner la IA a trabajar",
-  body: "Cada servicio resuelve un problema concreto. Puedes empezar por uno y sumar los demás cuando tenga sentido.",
+  kicker: "Servicios",
+  title: "Qué puedes encargarme",
 };
 
-export type Service = {
-  id: ServiceId;
-  title: string;
-  short: string;
-  body: string;
-  includes: string[];
-  /** Acento del panel: cambia la luz de cada servicio. */
-  accent: "blue" | "violet" | "cyan";
-};
-
-export const services: Service[] = [
+export const services: { id: ServiceId; index: string; title: string; body: string; cta: string }[] = [
   {
-    id: "automatizacion",
-    title: "Automatización inteligente de procesos",
-    short: "Automatización",
-    body: "Convertimos tareas repetitivas en flujos que se ejecutan solos: leer documentos, clasificar solicitudes, mover datos entre herramientas y avisar a la persona adecuada.",
-    includes: ["Lectura de correos y documentos", "Flujos entre tus herramientas", "Revisión humana donde importa"],
-    accent: "blue",
+    id: "corporativa",
+    index: "01",
+    title: "Web corporativa",
+    body: "Quién eres, qué ofreces y cómo contactarte, claro desde cualquier pantalla.",
+    cta: "Quiero una web corporativa",
   },
   {
-    id: "agentes",
-    title: "Desarrollo de agentes de IA",
-    short: "Agentes",
-    body: "Agentes que razonan, consultan tus sistemas y completan tareas de principio a fin, con límites claros y un registro de cada paso que dan.",
-    includes: ["Herramientas y permisos propios", "Trazabilidad de cada acción", "Despliegue en tu infraestructura"],
-    accent: "violet",
+    id: "landing",
+    index: "02",
+    title: "Landing page",
+    body: "Una sola página para una campaña, un servicio o un lanzamiento.",
+    cta: "Quiero una landing page",
   },
   {
-    id: "asistentes",
-    title: "Chatbots y asistentes virtuales",
-    short: "Asistentes",
-    body: "Asistentes que responden con la información real de tu negocio en la web, WhatsApp o tu intranet, y pasan la conversación a una persona cuando hace falta.",
-    includes: ["Web, WhatsApp e intranet", "Base de conocimiento propia", "Traspaso a tu equipo"],
-    accent: "cyan",
-  },
-  {
-    id: "integracion",
-    title: "Integración de IA en tu empresa",
-    short: "Integración",
-    body: "Llevamos la IA a las herramientas que ya usas, como el CRM, el ERP, el correo o tus documentos, sin obligarte a cambiar de sistema.",
-    includes: ["Conectores y APIs", "Seguridad y control de accesos", "Formación del equipo"],
-    accent: "blue",
-  },
-  {
-    id: "estrategia",
-    title: "Consultoría y estrategia de IA",
-    short: "Estrategia",
-    body: "Analizamos dónde aporta valor la IA en tu empresa, priorizamos por impacto y riesgo y diseñamos una hoja de ruta que se pueda cumplir.",
-    includes: ["Diagnóstico y priorización", "Hoja de ruta por fases", "RGPD y Reglamento europeo de IA"],
-    accent: "violet",
-  },
-  {
-    id: "medida",
-    title: "Soluciones a medida",
-    short: "A medida",
-    body: "Cuando no existe una herramienta para tu problema, la construimos: aplicaciones, paneles y modelos ajustados a tu caso, desde el prototipo hasta producción.",
-    includes: ["Prototipo antes de construir", "Desarrollo completo", "Mantenimiento y mejora"],
-    accent: "cyan",
+    id: "rediseno",
+    index: "03",
+    title: "Rediseño",
+    body: "Tu web actual, puesta al día sin perder lo que ya funciona.",
+    cta: "Quiero rediseñar mi web",
   },
 ];
 
 export const processIntro = {
-  title: "Del ruido a la señal",
-  body: "Un método en cinco fases. En cada una sabes qué hacemos, por qué y qué recibes.",
+  kicker: "Proceso",
+  title: "Así trabajaremos juntos",
 };
 
 export const processSteps = [
+  { title: "Conversación", body: "Me cuentas tu negocio y qué quieres conseguir con la web." },
+  { title: "Propuesta", body: "Alcance, plazos y presupuesto por escrito, antes de empezar." },
+  { title: "Diseño", body: "Diseño la web con tu marca y la ajustamos juntos." },
+  { title: "Desarrollo", body: "La programo y la pruebo en móvil, tableta y ordenador." },
+  { title: "Publicación", body: "La publicamos en tu dominio y te explico cómo funciona." },
+];
+
+export const workIntro = {
+  kicker: "Trabajos",
+  title: "Conceptos de diseño",
+  body: "Marcas inventadas para enseñarte cómo cambia una web según el negocio. No son trabajos para clientes.",
+  label: "Concepto · marca ficticia",
+};
+
+export type ConceptId = "restaurante" | "arquitectura" | "instalaciones";
+
+export const concepts: { id: ConceptId; index: string; sector: string; brand: string; title: string; body: string }[] = [
   {
-    title: "Análisis del negocio",
-    body: "Entendemos cómo trabaja tu equipo: procesos, datos, herramientas y objetivos. Hablamos con quien hace el trabajo, no solo con quien lo dirige.",
-    output: "Mapa de procesos y puntos de fricción",
+    id: "restaurante",
+    index: "01",
+    sector: "Restaurante",
+    brand: "Lumbre",
+    title: "Que apetezca reservar desde el móvil",
+    body: "La comida delante y el botón de reservar siempre a mano.",
   },
   {
-    title: "Identificación de oportunidades",
-    body: "Señalamos dónde la IA ahorra tiempo o mejora decisiones, y lo ordenamos por impacto, esfuerzo y riesgo.",
-    output: "Lista priorizada y propuesta cerrada",
+    id: "arquitectura",
+    index: "02",
+    sector: "Estudio de arquitectura",
+    brand: "Cierzo",
+    title: "Habla poco y enseña mucho",
+    body: "Mucho aire, proyectos a gran tamaño y el contacto al final del recorrido.",
   },
   {
-    title: "Desarrollo de soluciones",
-    body: "Prototipamos, lo probamos con tu equipo y con datos reales, y construimos la versión definitiva por entregas cortas.",
-    output: "Prototipo validado y versiones funcionales",
-  },
-  {
-    title: "Integración tecnológica",
-    body: "Conectamos la solución con tus sistemas, con permisos, seguridad y registro de actividad desde el primer día.",
-    output: "Solución en producción y documentada",
-  },
-  {
-    title: "Optimización continua",
-    body: "Medimos cómo se usa, ajustamos lo que falla y ampliamos lo que funciona. La IA mejora con el uso si alguien la cuida.",
-    output: "Informe de uso y plan de mejora",
+    id: "instalaciones",
+    index: "03",
+    sector: "Empresa de instalaciones",
+    brand: "Faro Instalaciones",
+    title: "Del problema al presupuesto en dos pasos",
+    body: "Mensaje directo, teléfono visible y un formulario corto.",
   },
 ];
 
-export type CaseVisual = "invoices" | "support" | "planning" | "agent";
-
-export const casesIntro = {
-  title: "Proyectos de demostración",
-  body: "Cuatro ejemplos conceptuales de lo que construimos. No son clientes reales: muestran cómo abordaríamos cada problema.",
+export const faqIntro = {
+  kicker: "Preguntas frecuentes",
+  title: "Antes de empezar",
 };
 
-export const cases: {
-  id: string;
-  label: string;
-  area: string;
-  title: string;
-  problem: string;
-  solution: string;
-  stack: string[];
-  visual: CaseVisual;
-}[] = [
+export const faqs = [
   {
-    id: "facturas",
-    label: "Demo 01",
-    area: "Automatización empresarial",
-    title: "Facturas de proveedores que se registran solas",
-    problem: "Un equipo de administración copia a mano cada factura del correo al ERP y cruza los datos con los pedidos.",
-    solution: "Un flujo lee las facturas al llegar, extrae los datos, los valida contra el pedido y deja el asiento listo para aprobar.",
-    stack: ["Lectura de documentos", "Validación", "ERP"],
-    visual: "invoices",
+    q: "¿Cuánto cuesta una web?",
+    a: "Depende del tipo de web, de las páginas y de las funciones que necesites. Tras la primera conversación te envío un presupuesto por escrito y sin compromiso.",
   },
   {
-    id: "soporte",
-    label: "Demo 02",
-    area: "Atención al cliente con IA",
-    title: "Un asistente que resuelve y sabe cuándo pasar a una persona",
-    problem: "Una tienda online responde las mismas preguntas sobre pedidos y devoluciones por correo, chat y teléfono.",
-    solution: "Un asistente consulta el estado real del pedido, responde con la política de la tienda y deriva a una persona los casos delicados.",
-    stack: ["Asistente", "Consulta de pedidos", "Traspaso humano"],
-    visual: "support",
+    q: "¿Cuánto se tarda?",
+    a: "Depende del alcance. En la propuesta va un calendario con las fechas de cada fase; tener los contenidos preparados lo acelera mucho.",
   },
   {
-    id: "planificacion",
-    label: "Demo 03",
-    area: "Optimización de procesos",
-    title: "Planificación semanal propuesta en minutos",
-    problem: "Un taller organiza turnos y pedidos en una hoja de cálculo que se rehace cada semana y depende de una sola persona.",
-    solution: "Un sistema propone la planificación con las restricciones del taller y el responsable solo revisa y ajusta.",
-    stack: ["Optimización", "Restricciones", "Panel de revisión"],
-    visual: "planning",
+    q: "¿Necesito tener los textos y las fotos?",
+    a: "Ayuda, pero no es imprescindible. Te digo qué hace falta para cada página y te ayudo a ordenarlo.",
   },
   {
-    id: "agente",
-    label: "Demo 04",
-    area: "Agentes inteligentes",
-    title: "Un agente comercial que prepara propuestas",
-    problem: "Preparar una propuesta exige consultar el CRM, el catálogo y las tarifas, y se tarda días en enviarla.",
-    solution: "Un agente reúne la información del cliente, calcula el presupuesto con las tarifas vigentes y redacta un borrador para revisar.",
-    stack: ["Agente", "CRM", "Generación de documentos"],
-    visual: "agent",
+    q: "Ya tengo web. ¿Puedes mejorarla?",
+    a: "Sí. Reviso qué funciona y qué no, y te propongo qué conservar y qué cambiar sin perder lo que ya te funciona.",
+  },
+  {
+    q: "¿Quién se encarga del dominio y el alojamiento?",
+    a: "Si ya los tienes, trabajo con ellos. Si no, te ayudo a contratarlos a tu nombre para que siempre sean tuyos.",
   },
 ];
-
-export const finalCta = {
-  title: "Tu próximo salto tecnológico empieza aquí.",
-  body: "Cuéntanos qué quieres mejorar. En la primera conversación te proponemos un primer paso concreto, con alcance y plazos claros.",
-  button: "Agenda una conversación",
-};
 
 export const contactIntro = {
-  title: "Hablemos de tu proyecto",
-  body: "Escríbenos con lo que tengas en mente, aunque solo sea una intuición. Leemos cada mensaje y respondemos personalmente.",
-  nextSteps: [
-    "Leemos tu mensaje y, si hace falta, te pedimos algún dato más.",
-    "Hablamos para entender tu negocio y lo que quieres conseguir.",
-    "Te enviamos una propuesta con alcance, plazos y presupuesto.",
-  ],
+  kicker: "Contacto",
+  title: "Cuéntame tu proyecto",
+  body: "Escríbeme con lo que tengas, aunque solo sea una idea. Te respondo personalmente.",
 };

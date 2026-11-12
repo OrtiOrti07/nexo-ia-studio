@@ -1,164 +1,132 @@
 "use client";
 
-import { useRef, useState, type CSSProperties } from "react";
-import { PackageCheck } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { processIntro, processSteps } from "@/content/home";
-import { gsap, MOTION, ScrollTrigger, useGSAP } from "@/lib/motion";
-import { sceneState } from "@/components/scene/sceneStore";
-import { RevealText } from "@/components/ui/Reveal";
-
-/** Posición x de cada nodo en la escena 3D (ver formations.ts, formación "señal"). */
-const NODE_X = [-3.6, -1.8, 0, 1.8, 3.6];
+import { processRenders } from "@/components/visuals/renders";
 
 /**
- * Método. En escritorio la sección se fija y el scroll avanza paso a paso: el
- * nodo activo se ilumina en la escena 3D, en la línea de progreso y en el texto.
- * En móvil es una línea de tiempo vertical.
+ * Proceso. En escritorio, el render 3D de cada paso acompaña la lectura (el
+ * del paso que cruza el centro de la pantalla aparece al frente) y una línea
+ * se llena con el scroll. En móvil, los pasos se deslizan en horizontal.
  */
 export function Process() {
-  const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
-  const activeRef = useRef(0);
+  const listRef = useRef<HTMLOListElement>(null);
 
-  useGSAP(
-    () => {
-      const select = (index: number) => {
-        if (index === activeRef.current) return;
-        activeRef.current = index;
-        sceneState.focusX = NODE_X[index];
-        setActive(index);
-      };
-      sceneState.focusX = NODE_X[0];
-
-      const mm = gsap.matchMedia();
-      mm.add(MOTION.desktop, () => {
-        ScrollTrigger.create({
-          trigger: "[data-process-pin]",
-          start: "top top",
-          end: () => `+=${window.innerHeight * 3.2}`,
-          pin: true,
-          scrub: true,
-          onUpdate: (self) => {
-            gsap.set("[data-progress]", { scaleX: self.progress });
-            select(Math.min(processSteps.length - 1, Math.floor(self.progress * processSteps.length)));
-          },
-        });
-      });
-      mm.add(MOTION.mobile, () => {
-        gsap.fromTo(
-          "[data-progress-v]",
-          { scaleY: 0 },
-          {
-            scaleY: 1,
-            ease: "none",
-            scrollTrigger: { trigger: "[data-steps-v]", start: "top 70%", end: "bottom 60%", scrub: true },
-          },
-        );
-        gsap.utils.toArray<HTMLElement>("[data-step-v]").forEach((step, i) => {
-          ScrollTrigger.create({ trigger: step, start: "top 65%", onEnter: () => select(i), onEnterBack: () => select(i) });
-        });
-      });
-    },
-    { scope: root },
-  );
+  useEffect(() => {
+    const items = listRef.current?.querySelectorAll<HTMLElement>("[data-step]");
+    if (!items?.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(Number((entry.target as HTMLElement).dataset.step));
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px" },
+    );
+    items.forEach((item) => io.observe(item));
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <section ref={root} id="metodo" aria-labelledby="metodo-title" className="relative">
-      <div data-process-pin className="relative lg:h-svh">
-        <div className="page-container py-section lg:pt-28 lg:pb-0">
-          <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
-            <RevealText id="metodo-title" text={processIntro.title} className="text-h2 lg:col-span-6" />
-            <p className="max-w-copy text-lead text-muted lg:col-span-5 lg:col-start-8">{processIntro.body}</p>
-          </div>
-        </div>
+    <section id="proceso" aria-labelledby="proceso-title" className="relative border-t border-line bg-paper-2/70 py-section">
+      <div className="page-container">
+        <header>
+          <p data-reveal className="kicker text-muted">
+            {processIntro.kicker}
+          </p>
+          <h2 id="proceso-title" data-split className="mt-4 text-h2">
+            {processIntro.title}
+          </h2>
+        </header>
 
-        {/* Escritorio: raíl alineado con los nodos de la escena 3D */}
-        <div aria-hidden="true" className="absolute inset-x-0 top-[59%] hidden lg:block">
-          <div className="relative h-px bg-white/10">
-            <div
-              data-progress
-              className="absolute inset-y-0 left-0 w-full origin-left scale-x-0 bg-[linear-gradient(90deg,#3b82ff,#8b5cff,#22e3ff)]"
-            />
-          </div>
-          {processSteps.map((step, i) => (
-            <div
-              key={step.title}
-              className="absolute top-0 -translate-x-1/2 text-center"
-              style={{ left: `calc(50% + ${i - 2} * min(33.6vh, 21.7vw))` } as CSSProperties}
-            >
-              <span
-                className={`mx-auto block size-3 -translate-y-1/2 rounded-full border transition-all duration-500 ${
-                  i <= active
-                    ? "border-cyan bg-cyan shadow-[0_0_18px_4px_rgb(34_227_255/0.55)]"
-                    : "border-white/30 bg-bg"
-                }`}
-              />
-              <span
-                className={`mt-3 block font-mono text-micro transition-colors duration-500 ${
-                  i === active ? "text-text" : "text-muted"
-                }`}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Escritorio: detalle del paso activo */}
-        <div className="page-container absolute inset-x-0 bottom-[7svh] hidden lg:block">
-          {/* Versión visual; los lectores de pantalla leen la lista completa de abajo */}
-          <div className="relative min-h-[12rem] max-w-[44rem]" aria-hidden="true">
-            {processSteps.map((step, i) => (
-              <article
-                key={step.title}
-                className={`absolute inset-x-0 bottom-0 transition-[opacity,transform,filter] duration-500 ease-out ${
-                  i === active ? "translate-y-0 opacity-100 blur-0" : "pointer-events-none translate-y-4 opacity-0 blur-sm"
-                }`}
-              >
-                <h3 className="text-h3">
-                  <span className="mr-3 font-mono text-[0.6em] text-cyan">{String(i + 1).padStart(2, "0")}</span>
-                  {step.title}
-                </h3>
-                <p className="mt-3 text-body text-muted">{step.body}</p>
-                <p className="mt-4 inline-flex items-center gap-2 text-small text-text">
-                  <PackageCheck aria-hidden="true" className="size-4 text-cyan" />
-                  Recibes: {step.output}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        {/* Móvil y tableta: línea de tiempo vertical (en escritorio, solo para lectores de pantalla) */}
-        <div data-steps-v className="page-container relative pb-section lg:sr-only">
-          <span aria-hidden="true" className="absolute top-2 bottom-0 left-[calc(var(--spacing-gutter)+5px)] w-px bg-white/10" />
-          <span
-            aria-hidden="true"
-            data-progress-v
-            className="absolute top-2 bottom-0 left-[calc(var(--spacing-gutter)+5px)] w-px origin-top bg-[linear-gradient(180deg,#3b82ff,#8b5cff,#22e3ff)]"
-          />
-          <ol>
-          {processSteps.map((step, i) => (
-            <li key={step.title} data-step-v className="relative pb-12 pl-10 last:pb-0">
-              <span
-                aria-hidden="true"
-                className={`absolute top-1.5 left-0 size-[11px] rounded-full border transition-all duration-500 ${
-                  i <= active ? "border-cyan bg-cyan shadow-[0_0_14px_3px_rgb(34_227_255/0.5)]" : "border-white/30 bg-bg"
-                }`}
-              />
-              <h3 className="text-h3">
-                <span className="mr-2 font-mono text-[0.6em] text-cyan">{String(i + 1).padStart(2, "0")}</span>
-                {step.title}
-              </h3>
-              <p className="mt-3 text-body text-muted">{step.body}</p>
-              <p className="mt-3 inline-flex items-start gap-2 text-small text-text">
-                <PackageCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-cyan" />
-                Recibes: {step.output}
+        {/* Escritorio */}
+        <div className="mt-20 hidden gap-8 lg:grid lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <div className="sticky top-[calc(50svh-15rem)]">
+              <div aria-hidden="true" className="relative aspect-[100/82]">
+                {processRenders.map((img, i) => (
+                  <Image
+                    key={img.src}
+                    src={img}
+                    alt=""
+                    sizes="45vw"
+                    className={`absolute inset-0 size-full object-contain transition-[opacity,scale,translate,filter] duration-700 ease-out ${
+                      i === active
+                        ? "blur-0 scale-100 opacity-100"
+                        : i < active
+                          ? "-translate-y-6 scale-[0.94] opacity-0 blur-md"
+                          : "translate-y-6 scale-[0.94] opacity-0 blur-md"
+                    }`}
+                  />
+                ))}
+              </div>
+              <p className="mt-2 text-center font-mono text-micro text-muted">
+                <span className="text-accent-ink">
+                  Paso {active + 1} de {processSteps.length}
+                </span>{" "}
+                · {processSteps[active].title}
               </p>
-            </li>
-          ))}
+            </div>
+          </div>
+
+          <ol ref={listRef} data-progress-track className="relative lg:col-span-5 lg:col-start-8">
+            <span aria-hidden="true" className="absolute top-6 bottom-6 left-6 w-px bg-line-strong" />
+            <span
+              aria-hidden="true"
+              data-progress
+              className="absolute top-6 bottom-6 left-6 w-px origin-top bg-accent"
+            />
+            {processSteps.map((step, i) => {
+              const isActive = i === active;
+              return (
+                <li
+                  key={step.title}
+                  data-step={i}
+                  aria-current={isActive ? "step" : undefined}
+                  className="relative grid grid-cols-[3rem_minmax(0,1fr)] gap-x-6 not-last:mb-[20svh]"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`relative grid size-12 place-items-center rounded-full border font-mono text-micro transition-[background-color,border-color,color,scale] duration-500 ease-out ${
+                      isActive ? "scale-110 border-accent bg-accent text-white" : "border-line-strong bg-paper text-muted"
+                    }`}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className={`pt-2 transition-opacity duration-500 ${isActive ? "" : "opacity-45"}`}>
+                    <h3 className="text-h3">{step.title}</h3>
+                    <p className="mt-3 text-lead text-muted">{step.body}</p>
+                  </div>
+                </li>
+              );
+            })}
           </ol>
         </div>
+
+        {/* Móvil: tarjetas que se deslizan */}
+        <ol className="-mx-gutter mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-gutter pb-4 [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden">
+          {processSteps.map((step, i) => (
+            <li
+              key={step.title}
+              data-reveal
+              className="w-[80%] max-w-[22rem] shrink-0 snap-center overflow-hidden rounded-panel border border-line bg-card shadow-soft sm:w-[55%]"
+            >
+              <Image
+                src={processRenders[i]}
+                alt=""
+                sizes="80vw"
+                className="aspect-[100/82] w-full bg-[radial-gradient(120%_90%_at_50%_0%,#ffffff_0%,var(--color-paper)_75%)] object-contain"
+              />
+              <div className="border-t border-line p-5">
+                <p className="font-mono text-micro text-accent-ink">Paso {String(i + 1).padStart(2, "0")}</p>
+                <h3 className="mt-2 text-h3">{step.title}</h3>
+                <p className="mt-2 text-small text-muted">{step.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

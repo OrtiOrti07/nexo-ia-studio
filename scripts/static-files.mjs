@@ -23,7 +23,6 @@ const pages = [
 
 const robots = `User-agent: *
 Allow: ${href("/")}
-Disallow: ${href("/api/")}
 
 Sitemap: ${absoluteUrl("/sitemap.xml")}
 `;
@@ -46,8 +45,8 @@ const manifest = {
   lang: site.language,
   start_url: href("/"),
   display: "browser",
-  background_color: "#050505",
-  theme_color: "#050505",
+  background_color: site.colors.paper,
+  theme_color: site.colors.paper,
   icons: [
     { src: `${basePath}/icon.svg`, sizes: "any", type: "image/svg+xml" },
     { src: `${basePath}/apple-icon.png`, sizes: "180x180", type: "image/png" },

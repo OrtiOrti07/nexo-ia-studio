@@ -1,22 +1,21 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
-import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { Motion } from "@/components/motion/Motion";
 
-/** Estructura común: salto al contenido, cabecera, contenido, pie y scroll suave. */
-export function SiteShell({ children, background }: { children: ReactNode; background?: ReactNode }) {
+/** Estructura común: salto al contenido, cabecera, contenido, pie y coreografía de animaciones. */
+export function SiteShell({ children }: { children: ReactNode }) {
   return (
     <>
       <a href="#contenido" className="skip-link">
         Saltar al contenido
       </a>
-      {background}
       <SiteHeader />
-      <main id="contenido" tabIndex={-1} className="relative z-10 outline-none">
+      <main id="contenido" tabIndex={-1} className="relative outline-none">
         {children}
       </main>
       <SiteFooter />
-      <SmoothScroll />
+      <Motion />
     </>
   );
 }
