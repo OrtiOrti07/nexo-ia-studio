@@ -1,54 +1,101 @@
-# Nexo IA Studio — web corporativa
+# Juan · Diseño web
 
-Web de una consultoría de inteligencia artificial. "Nexo IA Studio" es un nombre **provisional**.
+Web personal de Juan, que diseña y desarrolla páginas web a medida para empresas: webs
+corporativas, landing pages y rediseños.
 
-Stack: Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, three.js +
-React Three Fiber + postprocesado (bloom) para la escena 3D, GSAP + ScrollTrigger para las
-animaciones ligadas al scroll, Motion para las microinteracciones, Lenis para el scroll suave y
-Lucide para los iconos.
+Publicada en **https://ortiorti07.github.io/nexo-ia-studio/** (el nombre del repositorio se
+mantiene para no cambiar la dirección).
 
-## Dirección visual: "Señal"
+Stack: Next.js 16 (App Router, Turbopack, exportación estática), React 19, TypeScript,
+Tailwind CSS 4, three.js para las escenas 3D, GSAP (ScrollTrigger y SplitText) y Lenis para
+las animaciones y el scroll suave, y Lucide para los iconos.
+
+## Dirección visual: "Plano"
 
 La explicación completa está en [`docs/direccion-visual.md`](docs/direccion-visual.md). En
-resumen: negro profundo, antracita y tres neones (azul eléctrico, violeta y cian) que solo
-emiten luz; titulares en Hubot Sans expandida y texto en Mona Sans.
+resumen: blancos fríos, tinta azulada y un cobalto (`#2e5bff`) que marca lo importante;
+titulares en Bricolage Grotesque, texto en Instrument Sans y detalles técnicos en Geist Mono.
 
-Detrás de toda la portada hay **una sola escena WebGL fija**: un núcleo neuronal de ~7.000
-partículas que cambia de formación según la sección (`data-stage` en `src/app/page.tsx`):
+### Escenas 3D
 
-| Sección | Formación |
+**Portada: escaparate 3D ligado al scroll.** Escena oscura de cine renderizada en tiempo real
+con three.js: un portátil flota cerrado, inclinado y con el emblema de la marca, delante de la
+palabra «A MEDIDA». Al bajar, la escena se queda fija y los textos pasan por encima mientras:
+
+1. el portátil se abre y la pantalla se enciende con la web de «tu empresa»;
+2. la cámara se acerca y la web se recorre dentro de la pantalla;
+3. llega el móvil con la versión móvil;
+4. pasan los conceptos (restaurante, arquitectura, instalaciones).
+
+Suelo con reflejo, contraluces en cobalto, luz de la pantalla sobre el teclado, brillo
+(*bloom*), partículas y un leve giro hacia el ratón.
+
+**Resto de secciones:** renders WebP (65–190 KB) hechos con el mismo motor: páginas en abanico,
+landing con botón protagonista y antes/después (servicios), una escena por paso (proceso) y
+cada concepto en portátil y móvil (trabajos).
+
+Los dispositivos se construyen con geometría propia y las pantallas se dibujan en canvas: no se
+descarga ningún modelo, textura ni mapa de entorno.
+
+| Situación | Portada |
 | --- | --- |
-| Hero | Núcleo de cristal con sinapsis y pulsos de luz; reacciona al ratón |
-| Servicios | Constelación: disco galáctico al fondo |
-| Método | Señal: una hélice con cinco nodos; se ilumina el del paso activo |
-| Proyectos | Rejilla de datos en perspectiva |
-| Llamada final | Portal: un anillo de luz alrededor del titular |
-| Contacto | Calma: el núcleo pequeño, detrás del formulario |
+| Escritorio con WebGL 2 | Escena en tiempo real en calidad alta (three.js se descarga aparte, después de la página) |
+| Móvil o tableta con WebGL 2 | También en tiempo real, en calidad ligera: menos resolución, menos partículas y reflejo más barato |
+| Equipo que no llega a ~35 fps | Baja la resolución, luego quita el brillo y por último el reflejo |
+| Sin WebGL, ahorro de datos, poca memoria o `prefers-reduced-motion` | Fotogramas renderizados de cada etapa (verticales en móvil), con fundido. No se descarga three.js |
+| Fuera de pantalla o pestaña oculta | La escena se detiene |
+
+La escena sigue al scroll a través de un muelle (con inercia), entra desde la oscuridad al
+cargar, la pantalla se enciende con un destello y los conceptos pasan con una cortinilla de luz
+(un shader propio en `showcase.ts`).
+
+### Animaciones
+
+Toda la coreografía está en `src/components/motion/Motion.tsx` y se engancha a atributos del
+HTML (`data-split`, `data-reveal`, `data-clip`, `data-parallax`, `data-tilt`, `data-magnetic`…):
+
+- Titulares que se revelan palabra a palabra tras una máscara (SplitText).
+- Textos del escaparate que entran y salen con el scroll, con desenfoque.
+- Imágenes que se descubren con un recorte y un acercamiento; paralaje suave.
+- Tarjetas que se inclinan hacia el ratón y botones magnéticos (solo con ratón).
+- La cabecera se esconde al bajar y vuelve al subir.
+- Scroll suave con Lenis en escritorio; en táctil, el nativo.
+
+Con `prefers-reduced-motion` no se anima nada. La portada solo empieza oculta si hay JavaScript
+y, si en 4 s no ha arrancado la animación, se muestra igualmente.
+
+#### Volver a generar los renders
+
+Si cambias una escena (`src/components/three/scenes.ts`) o el contenido de sus pantallas
+(`src/components/three/screens.ts`):
+
+1. `npm run dev`
+2. Abre http://localhost:3000/estudio-3d.
+   - **Renderizar todo**: escenas de servicios, proceso y trabajos.
+   - **Escaparate de la portada**: fotogramas de cada etapa (horizontal y vertical) y la imagen
+     para redes sociales.
+3. Las imágenes se guardan en `src/assets/renders/` y la imagen social en
+   `src/app/opengraph-image.png`.
+
+El escaparate está en `src/components/three/showcase.ts` (fotogramas clave en `KEYS`).
+
+El laboratorio (`src/app/estudio-3d/*.dev.tsx`) solo existe en desarrollo: no se publica.
 
 ## Estructura
 
 | Carpeta | Contenido |
 | --- | --- |
-| `src/components/scene/` | Escena 3D: formaciones, shaders GLSL, capa fija, modo de calidad y pausa |
-| `src/components/sections/` | Hero, Servicios (recorrido horizontal), Método (paso a paso), Proyectos, Llamada final, Contacto |
-| `src/components/visuals/` | Diagramas animados de cada servicio e interfaces de las demos |
-| `src/components/ui/` | Logo, botón magnético, revelados al hacer scroll |
-| `src/content/home.ts` | Todos los textos de la portada |
-
-Calidad de la escena según el dispositivo (`src/components/scene/useSceneMode.ts`):
-
-| Situación | Qué se muestra |
-| --- | --- |
-| Escritorio con ratón | ~7.000 partículas, bloom, reacción al puntero |
-| Móvil, tableta o pantalla táctil | ~2.600 partículas, sin bloom, resolución limitada |
-| `prefers-reduced-motion`, ahorro de datos, poca memoria o CPU, sin WebGL | Fondo de luz estático, sin descargar three.js |
-
-three.js se descarga aparte, después del contenido. La escena se pausa con la pestaña oculta,
-tiene botón de pausa (que congela también las animaciones CSS) y baja la calidad si el equipo
-no mantiene ~40 fps. Para revisar las alternativas: `/?escena=estatica` o `/?escena=ligera`.
-
-Con `prefers-reduced-motion` no hay scroll suave ni animaciones ligadas al scroll: cada sección
-se muestra en su composición final.
+| `src/config/site.ts` | Nombre, dirección pública, correo, teléfono, título y descripción SEO, navegación |
+| `src/config/legal.ts` | Datos del titular para las páginas legales |
+| `src/content/home.ts` | Todos los textos de la portada (servicios, proceso, conceptos, preguntas, contacto) |
+| `src/components/sections/` | Portada con escaparate 3D (`Showcase.tsx`), Quién hay detrás, Servicios, Proceso, Trabajos, Preguntas, Contacto |
+| `src/components/three/` | Motor 3D: dispositivos, pantallas, escaparate de la portada, escenas, estudio de luz y laboratorio de render |
+| `src/components/visuals/renders.ts` | Lista de renders de cada sección |
+| `src/assets/renders/` | Renders WebP de las escenas |
+| `src/components/contact/ContactForm.tsx` | Formulario de contacto |
+| `src/lib/contact/` | Validación (`schema.ts`) y envío a Formspree (`send.ts`) |
+| `src/app/globals.css` | Sistema de diseño: colores, tipografía, espaciado, botones (bloque `@theme`) |
+| `src/app/estudio-3d/` | Laboratorio de render (solo en desarrollo) |
 
 ## Ejecutar
 
@@ -56,11 +103,10 @@ se muestra en su composición final.
 npm install
 npm run dev        # http://localhost:3000
 npm run build      # compilación de producción
-npm start          # sirve la compilación
 npm run lint
 ```
 
-Requiere Node.js 20.9 o superior.
+Requiere Node.js 22.18 o superior.
 
 ### Nota sobre Tailwind en Windows
 
@@ -79,79 +125,80 @@ En equipos donde el binario funciona, todo esto es inofensivo.
 
 ## Publicación en GitHub Pages
 
-La web se publica sola en **https://ortiorti07.github.io/nexo-ia-studio/** cada vez que se sube
-un cambio a la rama `main` (flujo `.github/workflows/pages.yml`, pestaña *Actions* del repositorio).
-
-GitHub Pages solo sirve archivos estáticos, así que esa versión:
-
-- se compila con `NEXT_PUBLIC_STATIC_EXPORT=1` en la carpeta `out/`, bajo la subcarpeta
-  `/nexo-ia-studio` (`NEXT_PUBLIC_BASE_PATH`);
-- no incluye la ruta `/api/contact`. El formulario valida los datos y ofrece enviarlos desde el
-  correo del visitante a tu dirección. Para recibirlos directamente, crea un formulario en un
-  servicio como Formspree o Web3Forms y guarda su URL como variable del repositorio
-  `NEXT_PUBLIC_CONTACT_ENDPOINT` (*Settings → Secrets and variables → Actions → Variables*);
+La web se publica sola cada vez que se sube un cambio a la rama `main` (flujo
+`.github/workflows/pages.yml`, pestaña *Actions* del repositorio). Se compila como web estática
+(`NEXT_PUBLIC_STATIC_EXPORT=1`, carpeta `out/`) bajo la subcarpeta `/nexo-ia-studio`
+(`NEXT_PUBLIC_BASE_PATH`), que el propio flujo toma de la configuración de Pages.
 
 Para enlaces internos usa siempre `href("/ruta")` de `src/config/site.ts`, que añade la
 subcarpeta. `robots.txt`, `sitemap.xml` y el manifest los genera `scripts/static-files.mjs`.
 
-Para probar la versión estática en local (Git Bash):
+Para comprobar en local la versión estática tal como la sirve GitHub Pages (Git Bash):
 
 ```bash
 MSYS_NO_PATHCONV=1 NEXT_PUBLIC_STATIC_EXPORT=1 NEXT_PUBLIC_BASE_PATH=/nexo-ia-studio npm run build
 ```
 
-(Antes, mueve temporalmente `src/app/api` fuera del proyecto, como hace el flujo de GitHub.)
+```bash
+npm run preview:pages
+```
 
-## Cambiar la marca y los textos
+y abre http://localhost:4173/nexo-ia-studio/.
 
-| Qué | Dónde |
-| --- | --- |
-| Nombre, dominio, correo, título y descripción SEO, navegación | `src/config/site.ts` |
-| Todos los textos de la portada (hero, servicios, método, proyectos, llamada final, contacto) | `src/content/home.ts` |
-| Redes sociales del pie (solo se muestran las que tengan URL) | `socials` en `src/config/site.ts` |
-| Colores, tipografía, espaciado, radios | bloque `@theme` en `src/app/globals.css` |
-| Favicon e icono de app | `src/app/icon.svg`, `src/app/apple-icon.png` |
-| Imagen para redes sociales | `src/app/opengraph-image.jpg` |
-| Datos del titular para las páginas legales | `src/config/legal.ts` |
+## Formulario de contacto (Formspree)
 
-El dominio `nexoia.studio` es provisional. El teléfono y el correo de contacto están en `src/config/site.ts`.
+El formulario envía los mensajes **sin salir de la página** a [Formspree](https://formspree.io),
+un servicio de formularios compatible con webs estáticas que los reenvía por correo. No hay
+claves secretas en el código: la dirección de un formulario de Formspree es pública por
+naturaleza.
 
-## Formulario de contacto
+Incluye validación en el navegador, estado de envío, confirmación, mensajes de error (de red o
+de Formspree), un campo trampa para bots (`_gotcha`, que Formspree descarta), un tiempo mínimo
+de relleno y la casilla de consentimiento con la información básica de protección de datos.
+Los enlaces «Quiero una landing page…» de los servicios preseleccionan el tipo de proyecto.
 
-El formulario valida los datos en el navegador y en el servidor (`src/app/api/contact/route.ts`,
-reglas compartidas en `src/lib/contact/schema.ts`).
+**Hasta que configures Formspree, el formulario no envía nada** y lo dice claramente: muestra un
+aviso y ofrece el correo y el teléfono. Para activarlo:
 
-**Ahora mismo no envía correos.** Mientras no haya un canal configurado, la web lo dice
-claramente antes y después de enviar, y ofrece mandar el mensaje desde el correo del usuario.
+1. Crea una cuenta en [formspree.io](https://formspree.io) con `juanortereque@gmail.com` y
+   confirma el correo de verificación que te envíen.
+2. Crea un formulario nuevo (*New form*) con ese correo como destino y copia su dirección
+   (*endpoint*), con la forma `https://formspree.io/f/xxxxxxxx`.
+3. En GitHub, en el repositorio: *Settings → Secrets and variables → Actions → Variables →
+   New repository variable*.
+   - **Name:** `NEXT_PUBLIC_CONTACT_ENDPOINT`
+   - **Value:** la dirección del paso 2.
+4. Vuelve a publicar: *Actions → Publicar en GitHub Pages → Run workflow* (o sube cualquier
+   cambio a `main`).
+5. Envía un mensaje de prueba desde la web publicada. Si Formspree te pide confirmar algo en el
+   primer envío, sigue el enlace del correo que te mande.
 
-Para conectarlo, copia `.env.example` a `.env.local` (o define las variables en el hosting) y
-elige una opción:
+Opcional: en la configuración del formulario en Formspree puedes revisar las opciones antispam
+y de dominios permitidos que ofrezca tu plan, y el límite mensual de envíos del plan gratuito.
 
-- `CONTACT_WEBHOOK_URL`: recibe un POST JSON (Make, Zapier, n8n, CRM o backend propio).
-- `RESEND_API_KEY` + `CONTACT_TO_EMAIL` (+ `CONTACT_FROM_EMAIL`): correo a través de Resend.
-
-La lógica de envío está en `src/lib/contact/deliver.ts`. Incluye un campo trampa contra bots;
-no hay limitación de peticiones (conviene añadirla en el hosting o en un proxy).
+Para probarlo en local, copia `.env.example` a `.env.local` y rellena la misma variable.
 
 ## Páginas legales
 
 - `/aviso-legal` (`src/app/aviso-legal/page.tsx`): datos del titular según la LSSI-CE y
   condiciones de uso.
 - `/privacidad` (`src/app/privacidad/page.tsx`): política de privacidad según el RGPD y la
-  LOPDGDD, incluido el apartado de cookies.
+  LOPDGDD, incluidos los proveedores (Formspree y GitHub Pages) y el apartado de cookies.
 
-Los datos del titular (razón social, NIF, domicilio, inscripción registral) se rellenan en
-`src/config/legal.ts`. Mientras falte alguno, las páginas lo marcan como "pendiente" y muestran
-un aviso; al completarlos, ambos desaparecen solos. El formulario incluye la información básica
-de protección de datos y enlaza a la política.
+Los datos del titular (nombre y apellidos, NIF, domicilio y, si aplica, inscripción registral)
+se rellenan en `src/config/legal.ts`. Mientras falte alguno, las páginas lo marcan como
+"pendiente" y muestran un aviso; al completarlos, ambos desaparecen solos. Si trabajas como
+autónomo y no hay inscripción registral, pon `registry: false`.
 
 Los textos son una base para una web informativa con formulario de contacto y **sin cookies**.
 No sustituyen el asesoramiento legal: conviene que los revise un profesional. Si se añade
 analítica, píxeles publicitarios o vídeos incrustados de terceros, hay que actualizar la
-política y añadir un banner de consentimiento de cookies.
+política y añadir un aviso de consentimiento de cookies.
 
-## Pendiente antes de publicar
+## Pendiente
 
-- Sustituir el nombre y el dominio provisionales.
-- Completar los datos del titular en `src/config/legal.ts` y revisar los textos legales.
-- Conectar el envío del formulario (ver "Publicación en GitHub Pages").
+- Configurar Formspree (pasos de arriba) para recibir los mensajes.
+- Completar los datos del titular en `src/config/legal.ts`.
+- Añadir las redes sociales en `socials` de `src/config/site.ts`, si quieres que aparezcan.
+- Cuando haya trabajos reales para clientes (y su permiso), sustituir o acompañar los conceptos
+  de `src/content/home.ts`.

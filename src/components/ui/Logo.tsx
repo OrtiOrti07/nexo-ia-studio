@@ -1,33 +1,35 @@
 import { site } from "@/config/site";
 
-/** Marca: un núcleo con tres nodos conectados, en el degradado de la paleta. */
+/**
+ * Marca: dos ventanas de navegador superpuestas, la de delante en cobalto.
+ * Resume el trabajo (webs) y la idea de profundidad de toda la identidad.
+ */
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" className={className} aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="logo-neon" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#3b82ff" />
-          <stop offset="0.5" stopColor="#8b5cff" />
-          <stop offset="1" stopColor="#22e3ff" />
-        </linearGradient>
-      </defs>
-      <circle cx="16" cy="16" r="13" fill="none" stroke="url(#logo-neon)" strokeWidth="1.6" opacity="0.9" />
-      <path d="M9 20.5 16 9.5l7 11z" fill="none" stroke="#eef0f5" strokeWidth="1.3" strokeLinejoin="round" opacity="0.55" />
-      <circle cx="16" cy="9.5" r="2.3" fill="#22e3ff" />
-      <circle cx="9" cy="20.5" r="2.3" fill="#3b82ff" />
-      <circle cx="23" cy="20.5" r="2.3" fill="#8b5cff" />
-      <circle cx="16" cy="16.8" r="1.6" fill="#eef0f5" />
+      <rect x="2.5" y="4" width="19" height="15.5" rx="3.2" fill="#ffffff" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M2.5 8.6h19" stroke="currentColor" strokeWidth="1.4" />
+      <rect x="10" y="11.5" width="19.5" height="16.5" rx="3.2" fill="#2e5bff" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M10 16.2h19.5" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="13.4" cy="13.9" r="0.95" fill="currentColor" />
+      <circle cx="16.2" cy="13.9" r="0.95" fill="currentColor" />
+      <path d="M14 21.5h8.5M14 24.4h5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
 
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({ className = "", compact = false }: { className?: string; compact?: boolean }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <LogoMark className="size-8 shrink-0" />
-      <span className="wide font-display text-[1.0625rem] font-bold tracking-[-0.02em] whitespace-nowrap">
-        {site.name}
+      <span className="font-display text-[1.375rem] leading-none font-extrabold tracking-[-0.03em]">
+        {site.shortName}
       </span>
+      {!compact && (
+        <span className="hidden border-l border-current/20 pl-2.5 font-mono text-[0.75rem] leading-none opacity-70 sm:inline">
+          diseño web
+        </span>
+      )}
     </span>
   );
 }

@@ -3,23 +3,23 @@ import { href, site } from "./site";
 /**
  * Datos legales del titular de la web.
  *
- * Rellénalos antes de publicar. Mientras alguno valga `null`, las páginas de
- * aviso legal y privacidad lo marcan como "pendiente" y muestran un aviso.
+ * Rellénalos antes de dar la web por terminada. Mientras alguno valga `null`,
+ * las páginas de aviso legal y privacidad lo marcan como "pendiente" y
+ * muestran un aviso.
  *
  * Los textos legales son una base redactada para una web informativa con
- * formulario de contacto y sin cookies. Conviene que los revise un asesor legal
- * antes de publicarlos.
+ * formulario de contacto y sin cookies. Conviene que los revise un asesor legal.
  */
 export const legal: {
-  /** Razón social (sociedad) o nombre y apellidos (autónomo/a). */
+  /** Nombre y apellidos del titular (o razón social, si factura una sociedad). */
   ownerName: string | null;
-  /** NIF o CIF. */
+  /** NIF. */
   taxId: string | null;
-  /** Domicilio completo. */
+  /** Domicilio a efectos de notificaciones. */
   address: string | null;
   /**
    * Datos de inscripción en el Registro Mercantil (solo sociedades).
-   * Usa `false` si no aplica (por ejemplo, si eres autónomo/a).
+   * Usa `false` si no aplica (por ejemplo, si trabajas como autónomo).
    */
   registry: string | false | null;
   /** Correo para consultas y ejercicio de derechos de protección de datos. */
@@ -38,8 +38,11 @@ export const legal: {
   email: site.email,
   phone: site.phone,
   retentionWithoutContract: "un año desde el último contacto",
-  updatedAt: "8 de noviembre de 2026",
+  updatedAt: "12 de noviembre de 2026",
 };
+
+/** Cómo se nombra al titular en los textos mientras falta el nombre completo. */
+export const ownerLabel = legal.ownerName ?? site.owner;
 
 export const legalPages = [
   { label: "Aviso legal", href: href("/aviso-legal") },

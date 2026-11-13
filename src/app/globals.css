@@ -2,45 +2,56 @@
 
 /* Lista de clases para Tailwind (ver scripts/tailwind-classes.mjs) */
 /* tailwind-classes:start (generado, no editar) */
-@source inline("* *= -inset-6 -inset-px -left-[9999px] -ml-px -mv.z -right-1/4 -top-1/3 -translate-x-1/2 -translate-y-1/2 @/components/contact/ContactForm @/components/layout/SiteShell @/components/legal/LegalDocument @/components/motion/SmoothScroll @/components/scene/SceneLayer @/components/scene/sceneStore @/components/sections/Cases @/components/sections/Contact @/components/sections/FinalCta @/components/sections/Hero @/components/sections/Process @/components/sections/Services @/components/ui/Logo @/components/ui/MagneticLink @/components/ui/Reveal @/components/visuals/CaseVisual @/components/visuals/ServiceGlyph @/config/legal @/config/site @/content/home @/lib/contact/deliver @/lib/contact/schema @/lib/motion @container @context @gsap/react @lg:bg-anthracite @lg:border @lg:border-white/10 @lg:flex-col @lg:gap-3 @lg:gap-6 @lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] @lg:h-1.5 @lg:items-center @lg:left-3.5 @lg:mt-3 @lg:p-4 @lg:px-5 @lg:py-1.5 @lg:py-3 @lg:rounded-lg @lg:size-3.5 @lg:size-7 @lg:space-y-2 @lg:w-full @md:flex @md:gap-2.5 @md:grid-cols-[4.5rem_minmax(0,1fr)] @md:inline @md:p-5 @md:px-4 @md:py-3 @react-three/fiber @react-three/postprocessing @type @xl:p-7 @xl:py-4 @xl:text-[14px] A A-12 APIs Abrir Agenda Agente Agentes Analizamos Antes Asistente Asistentes Avance Aviso B-07 Bandas Base Bearer C C-31 C.xxx C.yyy CRM Cada Calcular Cambios Central Cerrar Chatbots Con Condiciones Conectamos Conectores Consulta Consultar Contacto Content-Type Convertimos Cookies Correo Corte Cuando Cuatro D D-05 D.wyz D.xzx D.yyy Datos Del Demo Deriva Desarrollo Descubre Desliza Despliegue Docs Domicilio E-20 ERP El Empresa En Enlaces Entendemos Entrada Error Escape Escribe Estrategia FAC-0412 FAC-0413 FAC-0414 Facturas Flujos Hablamos Hablemos Herramientas Hoja IA Informe Instagram Inteligencia J L La Lectura Leemos LinkedIn Lista Llevamos M M-4.5 M-5.5 M-6 M1.8 M103.31 M136 M136.7 M143.6 M154 M160 M176.4 M183.3 M20 M200 M222 M260 M265.5 M34 M38 M5 M52 M86 M9 M98 Mantenimiento Mapa Medimos Menores Mensaje Montaje NIF Necesitamos Nexo No Nombre Norte Nuevo Objeto Offer POST Panel Para Pausar Pie Preparar Principal Privacidad ProfessionalService Propiedad Propuesta Prototipamos Prototipo Proyectos Puedes RGPD Reanudar Recibida Redactar Reglamento Responsabilidad Responsable Restricciones Revisa Revisar Ribera Seguridad Seis Service Servicio Servicios Soluciones SourceGraphic Studio Suministros Te Titular Transferencias Transforma Transportes Traspaso Trazabilidad Tu Tus Un Una V Validada WEBGL_lose_context Web WhatsApp X YouTube [&>option]:bg-graphite [contacto] [data-panel] [data-process-pin] [data-progress-v] [data-progress] [data-reveal] [data-services-pin] [data-stage] [data-step-v] [data-steps-v] [data-word] [perspective:1400px] a a0 a1 aAlong aDust aP1 aP2 aP3 aP4 aP5 aRandom aRandom.x aRandom.y aRandom.z aSeed absolute accent accent-cyan accesos active actividad activo adecuada. agent agente agentes ahorra ajusta. ajustados ajustamos al alcance algo alguien align-bottom alpha always ampliamos and animate-ping animate-spin antes antialiased aparta aplicable aplicaciones aplicada aporta appearance-none application/json application/ld+json aprobar aprobar. article artificial asiento asistente asistentes aspect-[4/3] at attribute aunque auto-rows-fr automatizacion automatizaciones avanzan avisar b0 b0.xzyw b1 b1.xzyw backdrop-blur-xl background bands base base-juridica bg-[length:0%_1px] bg-[linear-gradient(180deg,#3b82ff,#8b5cff,#22e3ff)] bg-[linear-gradient(180deg,transparent,#22e3ff)] bg-[linear-gradient(180deg,var(--color-blue),var(--color-violet),var(--color-cyan))] bg-[linear-gradient(90deg,#3b82ff,#22e3ff)] bg-[linear-gradient(90deg,#3b82ff,#8b5cff,#22e3ff)] bg-[linear-gradient(90deg,transparent,#22e3ff)] bg-[linear-gradient(90deg,var(--color-blue),var(--color-violet),var(--color-cyan))] bg-[radial-gradient(60%_60%_at_50%_50%,rgb(59_130_255/0.18),transparent_70%)] bg-[radial-gradient(circle,rgb(139_92_255/0.22),transparent_62%)] bg-[radial-gradient(circle,rgb(34_227_255/0.16),transparent_60%)] bg-[radial-gradient(circle,rgb(59_130_255/0.16),transparent_62%)] bg-[radial-gradient(ellipse_at_center,transparent_45%,rgb(5_5_5/0.75)_100%)] bg-anthracite/70 bg-anthracite/90 bg-bg bg-bg/70 bg-blue bg-blue/[0.08] bg-cyan bg-cyan/15 bg-cyan/[0.06] bg-cyan/[0.08] bg-danger bg-danger/[0.08] bg-graphite bg-graphite/80 bg-graphite/92 bg-graphite/95 bg-left-bottom bg-linear-to-r bg-no-repeat bg-ok bg-ok/15 bg-ok/[0.08] bg-text/70 bg-transparent bg-violet bg-violet/[0.08] bg-white/10 bg-white/15 bg-white/40 bg-white/[0.025] bg-white/[0.03] bg-white/[0.04] bg-white/[0.05] bg-white/[0.06] bg-white/[0.09] bg-white/[0.12] block blue blur-0 blur-3xl blur-sm body border border-b border-blue/25 border-cyan border-cyan/25 border-cyan/30 border-cyan/40 border-danger/30 border-danger/70 border-danger/80 border-l border-l-2 border-l-blue border-l-cyan border-l-violet border-ok/30 border-t border-transparent border-violet/25 border-white/10 border-white/12 border-white/15 border-white/20 border-white/30 border-white/8 border-white/[0.06] border-white/[0.08] borrador bottom bottom-0 bottom-2 bottom-[-20%] bottom-[12.5%] bottom-[7svh] break-all brevemente brilla btn-ghost btn-neon button c cada calcula calendar calendario calma cambiar cambios campo canvas caso casos central cercanas cerrada change chat chatbots checkbox cinco claros claros. clasificar client cliente cliente. clientes coarse col-start-1 color comercial como company company-error compartimos completan completo con conceptuales concreto concreto. condensa condiciones conocimiento conseguir. consent consent-error conservacion conservamos const construidos construimos construimos. construir consulta consultan consultar contacto contacto-title contenido content-center continua contra control cookies copia correo correos cortas. corte cruza cta-aura cta-title cuando cuida. cumplir. currentColor cursor-pointer cyan d dan. dark data data-reveal data-stage dato datos datos-personales de debe decisiones definitiva deja del delicados. delivered demasiado depende derechos deriva desarrollo desde desfase desordenado destinatarios detalle devoluciones devolver dirige. disabled:cursor-progress disabled:opacity-70 discard div divide-white/8 divide-y doc documentada documentos donde duration-1000 duration-200 duration-300 duration-500 e ease-out edad ejecutan ejemplos el email email-error empezar empieza empresa empresa. empresarial empresas en encontrada enlaces entender entre entregas enviado enviamos enviar enviarla. eq equipo equipo. es es_ES escena esfuerzo esta estado estatica estos estrategia europeo exige existe explorar expo.out extrae f factura facturas failed falla false falta falta. fases fases. ficha filter fin finalidad first:border-t-0 first:pt-0 fixed flex flex-1 flex-col flex-wrap float flota flujo flujos focus focus:bg-white/[0.05] focus:border-cyan/70 focus:outline-none focus:shadow-[0_0_0_4px_rgb(34_227_255/0.12)] font-bold font-display font-medium font-mono font-normal font-sans font-semibold formas formato fresnel from-blue/[0.2] from-cyan/[0.17] from-violet/[0.2] funciona. funcionales g gap-1 gap-1.5 gap-12 gap-14 gap-2 gap-2.5 gap-20 gap-3 gap-4 gap-6 gap-8 gap-x-2 gap-x-3 gap-x-5 gap-y-1 gap-y-1.5 ghost gl_FragColor gl_PointSize gl_Position glass grid grid-cols-5 grid-cols-[3.75rem_minmax(0,1fr)] grid-cols-[minmax(0,1fr)_auto] grid-rows-3 grid-rows-[auto_minmax(0,1fr)] group group-hover:-translate-y-0.5 group-hover:-translate-y-1 group-hover:bg-[length:100%_1px] group-hover:opacity-100 group-hover:scale-x-100 group-hover:translate-x-0.5 gsap gsap/ScrollTrigger h h-1 h-1/3 h-10 h-11 h-12 h-14 h-18 h-auto h-full h-px h.w h.x h.y h.z h2 ha hace hacemos hacia hasta head hero-in hero-title herramienta herramientas hidden high high-performance hoja hover hover:border-cyan hover:border-white/25 hover:text-text https://api.resend.com/emails https://nexoia.studio https://schema.org https://www.aepd.es humana humano i i.x i.y i.z i1 i1.x i1.y i1.z i2 i2.x i2.y i2.z idea identificativos idle if img impacto importa indicada industrial infraestructura inicio inline-block inline-flex inset-0 inset-x-0 inset-y-0 integracion intelectual inteligencia inteligente inteligentes interest interest-error internacionales intranet intro invalid invoices ir iridiscentes items-baseline items-center items-end items-start j juanortereque@gmail.com justify-between justify-center justify-end justify-items-end k keydown l l.zxy la largo las last:pb-0 latin latin-ext leading-[1.4] leading-none leading-relaxed leading-snug leading-tight lee leer left left-0 left-1/2 left-2 left-[-10%] left-[calc(var(--spacing-gutter)+5px)] legal legal-prose legislacion lenis lg lg:[perspective:1600px] lg:absolute lg:block lg:col-span-4 lg:col-span-5 lg:col-span-6 lg:col-span-7 lg:col-span-8 lg:col-start-1 lg:col-start-6 lg:col-start-8 lg:flex lg:flex-row lg:gap-10 lg:gap-12 lg:gap-14 lg:gap-32 lg:gap-8 lg:grid-cols-12 lg:h-[min(78svh,46rem)] lg:h-full lg:h-svh lg:hidden lg:inset-0 lg:items-center lg:items-end lg:items-stretch lg:justify-center lg:m-auto lg:max-h-[15rem] lg:min-h-0 lg:mt-20 lg:mt-24 lg:my-6 lg:order-1 lg:order-2 lg:overflow-hidden lg:p-10 lg:pb-0 lg:pb-16 lg:pr-10 lg:pt-24 lg:pt-28 lg:pt-40 lg:py-0 lg:shrink-0 lg:sr-only lg:sticky lg:top-28 lg:w-[min(36vw,34rem)] lg:w-[min(44vw,40rem)] lg:w-auto ligera line-rise lista listo lite llegar lo logo-neon los lucide-react lunes m mano marcha marcha. max-h-[17rem] max-sm:hidden max-w-[16ch] max-w-[18ch] max-w-[22rem] max-w-[34rem] max-w-[36rem] max-w-[40rem] max-w-[44rem] max-w-[46rem] max-w-[52rem] max-w-[80%] max-w-[82%] max-w-copy max-w-full max-width md md:aspect-[16/11] md:col-span-2 md:col-span-3 md:col-span-4 md:grid-cols-12 md:py-20 medida medida. mejora mejorar. menores mensaje mente message message-error message-hint metodo metodo-title middle min-h-0 min-h-11 min-h-[12rem] min-h-[80svh] min-h-[9rem] min-h-dvh min-h-svh min-w-0 min-width minutos mismas mismo ml-1.5 ml-auto modelViewMatrix modelos montaje motion-reduce:animate-none motion/react mouse mover mr-2 mr-3 mt-0.5 mt-1 mt-1.5 mt-10 mt-12 mt-14 mt-16 mt-2 mt-3 mt-4 mt-5 mt-6 mt-7 mt-8 mt-auto mt-px muestran mueve mv mx-auto my-5 n n_ name name-error near necesitas. negocio neon never new next next/dynamic next/font/google no no-lo-se no-preference nodo nombre nombre. nombre@empresa.com. non-scaling-stroke none noopener noreferrer norm norm.w norm.x norm.y norm.z normal not_configured note notice noviembre ns ns.x ns.yyyy ns.z nuestros null o object objetivos. objeto obligarte off onPointerLeave onPointerMove online opacity-0 opacity-100 opacity-25 opacity-60 opacity-70 open oportunidades ordenada ordenamos organiza organization origin-bottom-left origin-left origin-top otras outline-none overflow-hidden p p-2.5 p-3 p-6 p0 p1 p2 p3 page-container paneles para particles pasan pasar paso paused pb-0.5 pb-10 pb-12 pb-6 pb-[0.06em] pb-[0.08em] pb-section pedido pedidos pedidos. pedimos pen pendiente pending permiso permisos persona persona. personales personalmente. pl-10 pl-4 place-items-center placeholder:text-muted/60 plan planificacion planning plazos pointer pointer-events-none pointerleave pointermove polite polvo poner por portal position pr-1.5 pr-11 prefers-reduced-motion preguntas prepara presupuesto presupuesto. primer primera principio priorizada priorizamos privacidad probamos problema problema. procesos producto projectionMatrix propia propiedad-intelectual propios propone proponemos propuesta propuestas prototipo proveedores proyecto proyectos proyectos-title pt-1 pt-2.5 pt-28 pt-32 pt-8 pueda puesta pulse puntero puntos px-1.5 px-2 px-2.5 px-3 px-4 px-5 px-6 px-7 px-8 px-gutter py-0.5 py-1 py-1.5 py-10 py-16 py-2 py-2.5 py-3 py-3.5 py-4 py-5 py-6 py-[0.7rem] py-section que quien quiere quieres r razonan react real reales reales. recibe recibes. recibida recorren redacta reduce registral registrales registran registro rehace relative repetitivas resend resize resize-y responde respondemos responden responderte. responsabilidad responsable restricciones resuelve return revisa revisar. riesgo riesgo. right-4 right-[-10%] right-[8%] rim round rounded-2xl rounded-[14px] rounded-[2.5rem] rounded-bl-[4px] rounded-br-[4px] rounded-card rounded-field rounded-full rounded-lg rounded-md rounded-panel rounded-pill rounded-sm row-start-1 ruido running ruta s s0 s0.xzyw s1 s1.xzyw sRGB sabe sabes salto scale-x-0 scroll scroll-drop scrolled se sea search seguridad select-none self-end semana semanal sentido. servicio servicios servicios-title sh sh.xxyy sh.zzww shadow-[0_0_14px_3px_rgb(34_227_255/0.5)] shadow-[0_0_18px_4px_rgb(34_227_255/0.55)] shadow-[0_0_8px_rgb(34_227_255/0.45)] shadow-[0_0_8px_var(--color-cyan)] shadow-[0_18px_40px_-20px_rgb(0_0_0/0.8)] shadow-[0_40px_120px_-40px_rgb(59_130_255/0.35)] shadow-[inset_0_1px_0_rgb(255_255_255/0.05)] shrink-0 si signal sin sistema sistema. sistemas sitio size size-1.5 size-11 size-12 size-16 size-2 size-2.5 size-3 size-3.5 size-4 size-5 size-6 size-7 size-8 size-[11px] size-[38vmax] size-[60vmax] size-[70%] size-[70vmax] size-[min(90vw,64rem)] size-full skip-link sm:flex-row sm:gap-6 sm:grid-cols-2 sm:grid-cols-[11rem_1fr] sm:items-center sm:justify-between sm:mt-10 sm:mt-6 sm:mt-7 sm:p-10 sm:p-8 sm:pt-0.5 sm:text-lead sm:w-auto sobre social sola solapes solas solicitudes solo solos soluciones son soporte space-y-1 space-y-1.5 space-y-5 span spotlight sr-only static status string su submit submitting success sumar summary_large_image superficie support swap t tabular-nums taller tarda tareas tarifas te tener tenga tengas terminal text text-[0.6em] text-[0.9em] text-[1.0625rem] text-[12px] text-[13px] text-[1rem] text-[2rem] text-body text-center text-cobalt text-cyan text-danger text-display text-h2 text-h3 text-lead text-micro text-muted text-ok text-right text-small text-text text-text/70 text-text/80 text-text/85 text-text/90 three tiempo tienda titular to-blue/[0.08] to-cyan/[0.06] to-violet/[0.08] tone top top-0 top-1.5 top-1/2 top-18 top-2 top-[12.5%] top-[30%] top-[59%] top-[8%] trabaja trabajar trabajo trabajos tracking-[-0.02em] tracking-[-0.03em] transferencias transfiere transition-[background-color,border-color] transition-[background-size] transition-[border-color,background-color,box-shadow] transition-[opacity,transform,filter] transition-all transition-colors transition-opacity transition-transform translate-y-0 translate-y-4 transparent trata tratamiento tratamos tres true truncate tu turnos tus twinkle uBlue uCyan uEnergy uFocusX uIntro uMouse uMouseStrength uOpacity uPixelRatio uSize uStage uTime uViolet uVisibility un una underline underline-offset-4 uniform unknown uno usa usamos usar usas use userSpaceOnUse uso v vAlong vAlpha vColor vNoise vNormal vSeed vViewDir valida validada validado valor value variant varying vec2 vec3 vec4 versiones viernes. vigentes violet virtuales visibilitychange visible void w-12 w-[54%] w-[76%] w-[8vw] w-[92%] w-fit w-full w-px wdth web web. webgl2 webhook webs website whitespace-nowrap wide will-change-transform x x0 x0.xyz x1 x2 x3 x_ y y.xy y.zw y_ ya z-0 z-10 z-50");
+@source inline("* -left-[9999px] -ml-px -mt-[100svh] -mt-[14svh] -mx-gutter -translate-y-1/2 -translate-y-6 @/assets/renders/proc-conversacion.webp @/assets/renders/proc-desarrollo.webp @/assets/renders/proc-diseno.webp @/assets/renders/proc-propuesta.webp @/assets/renders/proc-publicacion.webp @/assets/renders/story-0-alto.webp @/assets/renders/story-0-ancho.webp @/assets/renders/story-1-alto.webp @/assets/renders/story-1-ancho.webp @/assets/renders/story-2-alto.webp @/assets/renders/story-2-ancho.webp @/assets/renders/story-3-alto.webp @/assets/renders/story-3-ancho.webp @/assets/renders/story-4-alto.webp @/assets/renders/story-4-ancho.webp @/assets/renders/svc-corporativa.webp @/assets/renders/svc-landing.webp @/assets/renders/svc-rediseno.webp @/assets/renders/work-arquitectura.webp @/assets/renders/work-instalaciones.webp @/assets/renders/work-restaurante.webp @/components/contact/ContactForm @/components/layout/SiteShell @/components/legal/LegalDocument @/components/motion/Motion @/components/sections/Contact @/components/sections/Faq @/components/sections/Process @/components/sections/Services @/components/sections/Showcase @/components/sections/Work @/components/three/RenderLab @/components/three/showcase @/components/three/showcaseLive @/components/ui/Button @/components/ui/Logo @/components/visuals/renders @/config/legal @/config/site @/content/home @/lib/contact/schema @/lib/contact/send @context @graph @id @type A ARCHIVOS Abrir Acepta Aceptar Adaptada Alcance Answer Antes Asesoramiento Aviso Ayuda Base Bienvenidos Bold Botones Brasa Bricolage Cabecera Cada Calendario Calidad Cambios Capas Carta Casa Cerrar Cierzo Clara Cocina Cocinamos Compilado Con Concepto Conceptos Condiciones Contacto Contacto.tsx Content-Type Cookies Correo Datos Del Depende Desarrollo Detallado Domicilio El Electricidad Empresa Empresas En Enlaces Enviando Enviar Error Escape Escribe Estudio FAQPage Faro Formulario Fuente Geist Georgia GitHub Grotesque Habla Haga Hecha Hero Hero.tsx Hola Horario Igual Imagen Inicio Instagram Instalaciones Instrument Interlineado Ir J Juan Juan. KB LIMITS.messageMax La Laboratorio Landing Libro LinkedIn Listo Llamar Lo Logotipo Lumbre Lunes M10 M14 M2.5 MEDIDA Mantenimiento Marcas Me Menores Mensaje Mono Mucho NIF Necesito New No Nombre Nuevo Objeto Obra Ofertas Offer Ofrecemos Otra POST Para Paso Perfecto. Person Peso Pide Pie Plazos Por Preguntas Presupuesto Primera Principal Privacidad Probado Proceso Producto Productos ProfessionalService Propiedad Propuesta Proyecto Proyectos Publicada Que Question Quiero Reformas Reserva Reservar Responsabilidad Responsable Restaurante Revisa Reviso Roman Saber Sans Seguridad Service Servicios Servicios.tsx Si Siguiente Sin Somos Soy TERMINAL Te Texto Times Titular Todo Trabajo Trabajos Transferencias Tras Tu Tus Un Una Ventajas Ver Vinos Visita Vivienda WEBGL_lose_context Web WebSite Webs Ya Zonas [&::-webkit-scrollbar]:hidden [--focus-ring:var(--color-ink)] [data-clip] [data-hero-block] [data-hero-title] [data-hero] [data-magnetic] [data-parallax] [data-progress-track] [data-progress] [data-project-type] [data-reveal] [data-split] [data-stage-part] [data-stage-text] [data-step] [data-tilt-depth] [data-tilt] [font-variation-settings:'opsz'_24,'wdth'_100] [scrollbar-width:none] a absolute accent-accent-ink acelera acepta active actual adaptable adaptada adaptados ahora aire ajustamos al alcance. alert algo align-[0.02em] alojamiento alphabetic alto altura ancho and anim-ready animate-spin antes antialiased apellidos apetezca aplica aplicable app appearance-none application/json application/ld+json arquitectura aspect-[100/82] aspect-[4/3] assets aunque auto ayudo b backdrop-blur-lg base-juridica bg-[#05070d] bg-[#c9d0dc] bg-[length:3px_100%] bg-[linear-gradient(to_top,#05070d_6%,rgb(5_7_13/0.86)_34%,rgb(5_7_13/0.2)_58%,transparent_72%)] bg-[linear-gradient(var(--color-accent-light),var(--color-accent-light))] bg-[radial-gradient(120%_90%_at_50%_0%,#ffffff_0%,var(--color-paper)_75%)] bg-[radial-gradient(120%_90%_at_50%_0%,#ffffff_0%,var(--color-paper-2)_70%)] bg-[radial-gradient(circle,rgb(46_91_255/0.26),transparent_62%)] bg-accent bg-accent-soft bg-accent-soft/60 bg-card bg-center bg-danger/[0.06] bg-ink bg-ink-3 bg-line-strong bg-no-repeat bg-ok bg-paper bg-paper-2 bg-paper-2/70 bg-paper/85 bg-transparent bg-white bien block blur-0 blur-md border border-accent border-accent-light border-accent/40 border-b border-current/20 border-danger border-danger/30 border-ink-3 border-l border-l-2 border-line border-line-strong border-line/80 border-t border-transparent border-y-[3px] boton bottom bottom-0 bottom-6 bottom-[-10%] brasa break-all brevemente bright btn btn-ink btn-lg btn-outline btn-primary buen buenas button cada calendario calidad cambia cambiar cambios canvas carta center cercana cero cerrado check checkbox cierzo.example clara claro className clic click client clientes clientes. clipPath coarse cocina col colores comida como company company-error comparto complicaciones. components compromiso compromiso. con condensed condiciones conectado conseguir consent consent-error conservacion conservar conservo contactarte contacto contacto-title contacto. contado contenido contenidos contratarlos cookies cool corporativa corporativas correo correo. corta corto. cosa cualquier cuentas cuesta cumplen currentColor cursor-pointer d dark data-* data-clip data-hero data-hero-block data-hero-title data-magnetic data-open data-progress data-progress-track data-reveal data-split data-stage-last data-stage-part data-stage-text data-tilt data-tilt-depth datos datos-personales de debe del delante demasiado derechos desarrollador desarrollo desde despacio destinatarios detalle dev development digo dir directa directo disabled:cursor-progress disabled:opacity-80 display divide-line divide-y dominio dos dot duration-200 duration-300 duration-500 duration-700 e eager ease-out edad edge el ellos. email email-error empezar empezar. empresa empresas empresas. empty:hidden en encarga encargarme encina encontrada encuentren enlaces entienda enviado equipo. eres error.message errores es es-ES es_ES escriban escriban. escrito escritorio esta estamos estar este estos estudio experiencia explico expo.inOut expo.out export exportar extra-condensed failed false falta faq faq-icon faq-list faro.example fase favor. fechas ficticia filter final finalidad fine first:border-t first:border-t-0 first:pt-0 fixed flex flex-1 flex-col flex-wrap float focus:border-ink focus:outline-none focus:shadow-[0_0_0_4px_rgb(46_91_255/0.2)] font-bold font-display font-extrabold font-medium font-mono font-normal font-semibold fontStretch formato formulario fotos frecuentes freelance fuego funciona funciona. funciones function gap-1 gap-10 gap-12 gap-2 gap-2.5 gap-3 gap-4 gap-5 gap-6 gap-8 gap-x-5 gap-x-6 gap-y-3 gl_FragColor gl_Position gotcha gran grid grid-cols-[3rem_minmax(0,1fr)] group group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:translate-x-1 group-hover:translate-y-0.5 group-open:bg-accent group-open:border-accent group-open:text-white gsap gsap/ScrollTrigger gsap/SplitText guardar h h-11 h-12 h-[0.72em] h-[4.5rem] h-px h-svh h1 ha hace hacemos haces. hasta hecho hero hero-title hidden high high-performance hogares hola@tuempresa.es hora. hover hover:bg-ink/[0.05] hover:border-accent hover:border-accent-light hover:border-line-strong hover:text-ink hover:text-paper href https https://ortiorti07.github.io/nexo-ia-studio https://schema.org https://www.aepd.es i idea. identificativos idle image/png image/webp img imprescindible. indicada industrial inicio ink inline-block inline-flex inset-0 inset-x-0 instalaciones instalador instanceof intelectual internacionales intro inventadas ir isActive italic items-baseline items-center items-end items-start juanortereque@gmail.com juntos juntos. justify-between justify-center justify-end keydown keys kicker la ladera landing lanzamiento. largo las latin latin-ext layout.tsx lazy leading-none leading-relaxed leading-snug leading-tight left left-0 left-5 left-6 legal legal-prose legislacion lenis lento. letterSpacing lg lg:bg-[linear-gradient(to_right,rgb(5_7_13/0.9)_0%,rgb(5_7_13/0.55)_36%,transparent_60%)] lg:block lg:col-span-4 lg:col-span-5 lg:col-span-6 lg:col-span-7 lg:col-span-8 lg:col-start-1 lg:col-start-6 lg:col-start-8 lg:col-start-9 lg:flex-row lg:gap-10 lg:gap-6 lg:gap-8 lg:grid lg:grid-cols-1 lg:grid-cols-12 lg:grid-cols-3 lg:hidden lg:hover:shadow-float lg:items-center lg:items-end lg:justify-between lg:justify-center lg:max-w-none lg:mt-16 lg:mt-20 lg:mx-0 lg:order-1 lg:order-2 lg:overflow-visible lg:pb-0 lg:pb-16 lg:pt-28 lg:pt-40 lg:px-0 lg:self-start lg:space-y-28 lg:sticky lg:top-28 lg:w-auto light lines lines,words link-grow lista live llamada. llamen lleva lo loading lock logotipo los low lucide-react lumbre.example lunes m mano. manos. mapA mapB marca marca. max max-sm:hidden max-sm:mx-auto max-sm:w-full max-w-[16ch] max-w-[22rem] max-w-[24rem] max-w-[30rem] max-w-[34rem] max-w-[40rem] max-w-[44rem] max-w-[46rem] max-w-copy max-width maxW md md:col-span-2 md:col-span-3 md:col-span-5 md:grid-cols-12 md:grid-cols-2 md:py-20 medida mejorarla mejores menores mensaje mercado. merece. mesa message message-error message-hint mi middle miempresa.com/index.html min-aspect-ratio min-h-0 min-h-11 min-h-14 min-h-36 min-h-[80svh] min-h-dvh min-h-full min-h-svh min-w-0 min-width minuto misma mismo mixT ml-0.5 ml-1.5 ml-[0.12em] modelViewMatrix mono monospace mouse mt-0.5 mt-1 mt-1.5 mt-10 mt-12 mt-14 mt-2 mt-20 mt-3 mt-4 mt-5 mt-6 mt-7 mt-8 mt-auto mt-px mucho mucho. muchos name name-error necesitan necesitas necesitas. necesites. negocio negocio. network new next next/font/google next/image no node:fs/promises node:path nombre nombre. nombre@empresa.com. none noopener noreferrer normal nos nosotros not-last:mb-[20svh] not_configured note notice noviembre npm nuestra nuestros nueva null o object-contain object-cover objetivos. objeto obra off oficio ofreces on-ink opacity-0 opacity-100 opacity-45 opacity-70 open opengraph-image opengraph-image.png opsz optimizada ordenador ordenador. ordenarlo. organization origin-top os otras otro outline outline-light outline-none overflow-clip overflow-hidden overflow-x-auto overflow-y-auto p p-5 p-6 p-7 page page-container page.tsx pages pantalla pantalla. para partidas partir pasos pb-4 pb-6 pb-8 pb-[22svh] pb-[max(2.5rem,env(safe-area-inset-bottom))] pb-[max(3rem,env(safe-area-inset-bottom))] pb-section pendiente pensada pensadas perder permiso pero personales personalidad personalmente. pidan pl-2.5 pl-4 place-items-center placeholder:text-muted/70 plantillas plazos pocas. poco poder pointer pointer-events-none pointerleave pointermove polite por position postal power1.in power2.out power3 pr-11 prefers-reduced-motion preguntas preguntas-title preparados presupuesto presupuesto. primary primera primera. prioridad privacidad privacy-info problema proc-conversacion proc-desarrollo proc-diseno proc-propuesta proc-publicacion proceso proceso-title profesionalidad. programo projectType projectType-error projectionMatrix propiedad-intelectual propio propongo propuesta proyecto proyecto. proyectos prueba pruebo pt-10 pt-2 pt-20 pt-24 pt-32 pt-5 pt-6 publicamos pudo pueda puedes puesta px px-0 px-1.5 px-3 px-4 px-5 px-gutter py-0.5 py-1.5 py-10 py-16 py-3 py-3.5 py-4 py-5 py-section que quieres react recibe recorrido. rediseno reduce registral registrales rejected relative render renders reservar resize resize-y respondemos. responderte. respondo responsabilidad responsable restaurante return revisar right right-0 right-4 right-[-15%] rodeos rotate-[0.8deg] rotate-[1.6deg] rotationX rotationY round rounded-card rounded-field rounded-full rounded-md rounded-panel rounded-pill rounded-sm rounded-t-[2rem] run salir sampler2D sans-serif scale-100 scale-110 scale-[0.94] scroll scrolled se sea sean section sector. seguridad semi-condensed sent serif service-card servicio servicios servicios-title shadow-[0_-40px_80px_-30px_rgb(0_0_0/0.65)] shadow-[0_10px_24px_-10px_rgb(15_23_42/0.5)] shadow-[0_10px_24px_-12px_rgb(11_16_32/0.6)] shadow-[0_40px_90px_-30px_rgb(0_0_0/0.7)] shadow-[0_8px_24px_-18px_rgb(15_23_42/0.35)] shadow-[inset_0_1px_2px_rgb(15_23_42/0.06)] shadow-soft sharp shrink-0 si siempre sin site-header size-10 size-12 size-14 size-4 size-5 size-7 size-8 size-[min(90vw,60rem)] size-full skip-link sm:block sm:flex-row sm:gap-6 sm:grid-cols-2 sm:grid-cols-[11rem_1fr] sm:inline sm:items-center sm:items-end sm:justify-between sm:mt-5 sm:mt-6 sm:mt-9 sm:p-10 sm:p-7 sm:pt-0.5 sm:py-0 sm:py-6 sm:rounded-t-[3rem] sm:space-y-24 sm:text-[1.375rem] sm:text-[1.75rem] sm:text-body sm:text-lead sm:text-right sm:w-[55%] sm:w-[60%] sm:w-auto snap-center snap-mandatory snap-x sola solo son sorpresas. soy space-y-1 space-y-16 split-line sr-only src status step sticky stills story-4-ancho studio.root styles.css su submit submitting success summary_large_image svc-corporativa svc-landing svc-rediseno swap system-ui t tableta tarda te temporada temporada. tener tengas tengo terminada. text text-[0.75rem] text-[0.9em] text-[1.15rem] text-[1.375rem] text-[1.5rem] text-[2.25rem] text-accent-ink text-accent-light text-body text-center text-danger text-h2 text-h3 text-hero text-ink text-ink/75 text-lead text-left text-micro text-muted text-muted-dark text-paper text-paper/75 text-paper/85 text-right text-small text-white textos three three/addons/environments/RoomEnvironment.js three/addons/lights/RectAreaLightUniformsLib.js three/addons/objects/Reflector.js three/addons/postprocessing/EffectComposer.js three/addons/postprocessing/OutputPass.js three/addons/postprocessing/RenderPass.js three/addons/postprocessing/UnrealBloomPass.js tiempo tienes tipo titular tone tono too_fast top top-0 top-1 top-1/2 top-4 top-6 top-[4.5rem] top-[calc(50svh-15rem)] trabajaremos trabajo trabajos trabajos-title tracking-[-0.01em] tracking-[-0.02em] tracking-[-0.03em] tracking-normal transferencias transition-[background-color,border-color,box-shadow,color] transition-[background-color,border-color,color,scale] transition-[border-color,box-shadow] transition-[opacity,filter,scale] transition-[opacity,scale,translate,filter] transition-colors transition-opacity transition-shadow transition-transform translate-x-2 translate-x-4 translate-y-2 translate-y-4 translate-y-6 transparent trata tratamiento trato true tu tu-empresa tuempresa.es tuempresa.es/cocinas tuempresa.es/contacto tuempresa.es/servicios tus tuyos. ui-monospace un una undefined underline underline-offset-4 unifamiliar uniform usar use uso uv uvA uvA.xy uvB uvB.xy vUv vUv.x vUv.y va value varying vec2 vec3 vec4 vemos viernes visibilitychange visible visitante visitas void vuestra w-[0.26em] w-[80%] w-[84%] w-full w-px warm wdth web web. webgl2 webs website whitespace-nowrap work-arquitectura work-instalaciones work-restaurante x y ya z-10 z-50");
 /* tailwind-classes:end */
 
 /*
- * Sistema de diseño "Señal" (ver docs/direccion-visual.md)
- * Negro profundo, antracita y tres neones que solo emiten luz.
+ * Sistema de diseño "Plano" (ver docs/direccion-visual.md)
+ * Blancos fríos, tinta azulada y un cobalto que marca lo importante. Las piezas
+ * en 3D son dispositivos e interfaces renderizados: el propio servicio.
+ *
+ * `static`: todas las variables se emiten siempre, porque los módulos CSS de
+ * las escenas 3D las usan directamente con var(...).
  */
 
-@theme {
-  /* Color */
-  --color-bg: #050505;
-  --color-graphite: #0d0f13;
-  --color-anthracite: #1a1d24;
-  --color-text: #eef0f5;
-  --color-muted: #9ba1b0;
-  --color-blue: #3b82ff;
-  --color-violet: #8b5cff;
-  --color-cyan: #22e3ff;
-  --color-danger: #ff6b7a;
-  --color-ok: #3ee6a4;
+@theme static {
+  /* Color: tinta, blancos fríos y un cobalto que marca lo importante */
+  --color-paper: #f4f5f7;
+  --color-paper-2: #eaedf1;
+  --color-card: #ffffff;
+  --color-line: #dfe3ea;
+  --color-line-strong: #c3c9d4;
+  --color-ink: #0b1020;
+  --color-ink-2: #141a2c;
+  --color-ink-3: #252d42;
+  --color-muted: #535c6e;
+  --color-muted-dark: #9aa3b7;
+  --color-accent: #2e5bff;
+  --color-accent-ink: #2449d8;
+  --color-accent-light: #8ea6ff;
+  --color-accent-soft: #e5ebff;
+  --color-ok: #12805c;
+  --color-danger: #c0262d;
+  --color-danger-dark: #ff8f8f;
 
   /* Tipografía */
-  --font-display: var(--font-hubot), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-mona), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-  --text-hero: clamp(2.75rem, 1.1rem + 5.6vw, 7.25rem);
-  --text-hero--line-height: 0.94;
-  --text-hero--letter-spacing: -0.045em;
-  --text-display: clamp(2.4rem, 1.2rem + 4.2vw, 5.75rem);
-  --text-display--line-height: 0.96;
-  --text-display--letter-spacing: -0.04em;
-  --text-h2: clamp(2.1rem, 1.3rem + 2.8vw, 4rem);
-  --text-h2--line-height: 1;
-  --text-h2--letter-spacing: -0.035em;
-  --text-h3: clamp(1.4rem, 1.15rem + 0.9vw, 2rem);
-  --text-h3--line-height: 1.1;
-  --text-h3--letter-spacing: -0.02em;
-  --text-lead: clamp(1.1rem, 1rem + 0.4vw, 1.3rem);
+  --text-hero: clamp(2.6rem, 1.3rem + 4.8vw, 6rem);
+  --text-hero--line-height: 0.98;
+  --text-hero--letter-spacing: -0.035em;
+  --text-h2: clamp(2.1rem, 1.35rem + 2.6vw, 3.9rem);
+  --text-h2--line-height: 1.02;
+  --text-h2--letter-spacing: -0.03em;
+  --text-statement: clamp(1.55rem, 1.1rem + 1.75vw, 2.75rem);
+  --text-statement--line-height: 1.18;
+  --text-statement--letter-spacing: -0.02em;
+  --text-h3: clamp(1.35rem, 1.15rem + 0.6vw, 1.75rem);
+  --text-h3--line-height: 1.12;
+  --text-h3--letter-spacing: -0.015em;
+  --text-lead: clamp(1.1rem, 1.02rem + 0.35vw, 1.3rem);
   --text-lead--line-height: 1.55;
   --text-body: 1.0625rem;
   --text-body--line-height: 1.6;
@@ -50,45 +61,54 @@
   --text-micro--line-height: 1.45;
 
   /* Espaciado y medidas */
-  --spacing-gutter: clamp(1.25rem, 4vw, 3.5rem);
-  --spacing-section: clamp(6rem, 4rem + 8vw, 11rem);
-  --container-page: 86rem;
+  --spacing-gutter: clamp(1rem, 4vw, 3.5rem);
+  --spacing-section: clamp(5rem, 3rem + 7vw, 9.5rem);
+  --container-page: 84rem;
   --container-copy: 36rem;
 
   /* Radios */
   --radius-pill: 999px;
   --radius-panel: 1.75rem;
   --radius-card: 1.25rem;
-  --radius-field: 0.875rem;
+  --radius-field: 0.75rem;
+  --radius-window: 0.875rem;
 
-  /* Curvas (Emil Kowalski) */
+  /* Sombras cálidas en capas: contacto, cuerpo y ambiente */
+  --shadow-soft: 0 1px 2px rgb(15 23 42 / 0.06), 0 8px 24px -12px rgb(15 23 42 / 0.18);
+  --shadow-float:
+    0 1px 2px rgb(15 23 42 / 0.05), 0 12px 28px -10px rgb(15 23 42 / 0.18),
+    0 42px 80px -30px rgb(15 23 42 / 0.3);
+  --shadow-deep:
+    0 2px 4px rgb(15 23 42 / 0.06), 0 24px 48px -16px rgb(15 23 42 / 0.25),
+    0 80px 120px -40px rgb(15 23 42 / 0.38);
+
+  /* Curvas */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @layer base {
   :root {
-    color-scheme: dark;
-    --focus-ring: var(--color-cyan);
-    --neon: linear-gradient(120deg, var(--color-blue) 0%, var(--color-violet) 50%, var(--color-cyan) 100%);
+    color-scheme: light;
+    --focus-ring: var(--color-ink);
   }
 
   html {
     scroll-padding-top: 5.5rem;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    background: var(--color-bg);
+    background: var(--color-paper);
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    html:not(.lenis) {
+    html {
       scroll-behavior: smooth;
     }
   }
 
   body {
-    background: var(--color-bg);
-    color: var(--color-text);
+    background-color: var(--color-paper);
+    color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
@@ -100,8 +120,8 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-variation-settings: "wdth" 118;
-    font-weight: 720;
+    font-variation-settings: "opsz" 96, "wdth" 86;
+    font-weight: 700;
     text-wrap: balance;
   }
 
@@ -110,8 +130,8 @@
   }
 
   ::selection {
-    background: var(--color-cyan);
-    color: var(--color-bg);
+    background: var(--color-accent);
+    color: #fff;
   }
 
   :focus-visible {
@@ -130,28 +150,41 @@
   padding-inline: var(--spacing-gutter);
 }
 
-/* Hubot Sans en su eje más ancho */
-@utility wide {
-  font-variation-settings: "wdth" 125;
+/* Bloques sobre tinta: foco en cobalto claro */
+@utility on-ink {
+  --focus-ring: var(--color-accent-light);
+  background-color: var(--color-ink);
+  color: var(--color-paper);
 }
 
-/* Texto con el degradado de los tres neones */
-@utility text-neon {
-  background: var(--neon);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* Etiqueta de sección: monoespaciada, con un cuadrado de color delante */
+@utility kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+
+  &::before {
+    content: "";
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 2px;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 3px rgb(46 91 255 / 0.16);
+  }
 }
 
-/* Superficie de cristal: transparencia moderada y borde de luz */
-@utility glass {
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.055), rgb(255 255 255 / 0.015));
-  border: 1px solid rgb(255 255 255 / 0.08);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 30px 80px -40px rgb(0 0 0 / 0.8);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+/* Retícula de plano: líneas finas que se desvanecen hacia los bordes */
+@utility grid-paper {
+  background-image:
+    linear-gradient(rgb(11 16 32 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(11 16 32 / 0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
 }
 
 @utility skip-link {
@@ -162,8 +195,8 @@
   transform: translateY(-160%);
   padding: 0.75rem 1.1rem;
   border-radius: var(--radius-pill);
-  background: var(--color-text);
-  color: var(--color-bg);
+  background: var(--color-ink);
+  color: var(--color-paper);
   font-weight: 600;
   transition: transform 160ms var(--ease-out);
 
@@ -172,117 +205,241 @@
   }
 }
 
-/* ---------- Componentes con CSS propio ---------- */
+/* ---------- Botones (capa components: las utilidades pueden sobrescribirlos) ---------- */
 
-/* Botón principal: degradado neón con halo que crece al pasar el cursor */
-.btn-neon {
-  position: relative;
-  isolation: isolate;
-  background: linear-gradient(120deg, #2f6dff, #7b52ff 55%, #19c6e6);
-  color: #fff;
-  box-shadow:
-    0 0 0 1px rgb(255 255 255 / 0.12) inset,
-    0 10px 40px -10px rgb(59 130 255 / 0.65);
-  transition:
-    box-shadow 260ms var(--ease-out),
-    transform 160ms var(--ease-out);
-}
+@layer components {
 
-.btn-neon::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  z-index: -1;
-  border-radius: inherit;
-  background: var(--neon);
-  filter: blur(16px);
-  opacity: 0.35;
-  transition: opacity 260ms var(--ease-out);
-}
+  .btn {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding-inline: 1.4rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-sans);
+    font-size: var(--text-small);
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    user-select: none;
+    transition:
+      translate 160ms var(--ease-out),
+      scale 160ms var(--ease-out),
+      box-shadow 220ms var(--ease-out),
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease;
+  }
 
-@media (hover: hover) and (pointer: fine) {
-  .btn-neon:hover {
+  .btn-lg {
+    min-height: 3.5rem;
+    padding-inline: 1.75rem;
+    font-size: 1rem;
+  }
+
+  /* Principal: cobalto con relieve (brillo arriba, sombra de contacto abajo) */
+  .btn-primary {
+    background: linear-gradient(180deg, #4470ff, var(--color-accent));
+    color: #fff;
     box-shadow:
-      0 0 0 1px rgb(255 255 255 / 0.22) inset,
-      0 14px 60px -8px rgb(139 92 255 / 0.75);
+      inset 0 1px 0 rgb(255 255 255 / 0.28),
+      inset 0 -2px 0 rgb(10 30 120 / 0.25),
+      0 1px 2px rgb(10 30 120 / 0.3),
+      0 10px 24px -10px rgb(46 91 255 / 0.7);
   }
 
-  .btn-neon:hover::before {
-    opacity: 0.75;
+  .btn-ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.12),
+      0 1px 2px rgb(0 0 0 / 0.3),
+      0 10px 24px -12px rgb(11 16 32 / 0.6);
+  }
+
+  .btn-outline {
+    border: 1px solid rgb(11 16 32 / 0.18);
+    background: rgb(255 255 255 / 0.6);
+    color: var(--color-ink);
+  }
+
+  .btn-outline-light {
+    border: 1px solid rgb(244 245 247 / 0.25);
+    background: transparent;
+    color: var(--color-paper);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover,
+    .btn-ink:hover {
+      translate: 0 -1px;
+    }
+
+    .btn-primary:hover {
+      box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.32),
+        inset 0 -2px 0 rgb(10 30 120 / 0.25),
+        0 2px 4px rgb(10 30 120 / 0.3),
+        0 16px 32px -12px rgb(46 91 255 / 0.8);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-ink);
+      background: var(--color-card);
+    }
+
+    .btn-outline-light:hover {
+      border-color: var(--color-accent-light);
+      color: var(--color-accent-light);
+    }
+  }
+
+  .btn:active {
+    scale: 0.97;
+  }
+
+  /* Enlace con subrayado que crece al pasar el cursor */
+  .link-grow {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: background-size 260ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .link-grow:hover,
+    .group:hover .link-grow {
+      background-size: 100% 1px;
+    }
   }
 }
 
-/* Botón secundario: contorno de cristal */
-.btn-ghost {
-  border: 1px solid rgb(255 255 255 / 0.16);
-  background: rgb(255 255 255 / 0.03);
-  color: var(--color-text);
-  transition:
-    border-color 200ms ease,
-    background-color 200ms ease,
-    transform 160ms var(--ease-out);
+/* ---------- Cabecera sobre el escaparate oscuro de la portada ---------- */
+
+html[data-header="dark"] .site-header:not([data-open]) {
+  border-color: rgb(255 255 255 / 0.07);
+  background-color: rgb(5 7 13 / 0.55);
+  box-shadow: none;
+  color: var(--color-paper);
+  backdrop-filter: blur(14px);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .btn-ghost:hover {
-    border-color: rgb(34 227 255 / 0.55);
-    background: rgb(34 227 255 / 0.06);
-  }
+html[data-header="dark"] .site-header:not([data-open]) nav a {
+  color: rgb(244 245 247 / 0.78);
 }
 
-.btn-neon:active,
-.btn-ghost:active {
-  transform: scale(0.97);
+html[data-header="dark"] .site-header:not([data-open]) nav a:hover {
+  background-color: rgb(255 255 255 / 0.08);
+  color: #fff;
 }
 
-/* Luz que sigue al cursor dentro de un panel (variables --mx/--my) */
-.spotlight {
-  position: relative;
+html[data-header="dark"] .site-header:not([data-open]) .btn-ink {
+  background: #fff;
+  color: var(--color-ink);
 }
 
-.spotlight::after {
+html[data-header="dark"] .site-header:not([data-open]) .btn-outline {
+  border-color: rgb(255 255 255 / 0.25);
+  background: transparent;
+  color: #fff;
+}
+
+/* ---------- Movimiento (lo coreografía GSAP: src/components/motion/Motion.tsx) ---------- */
+
+/* Brillo que cruza el botón principal al pasar el ratón */
+.btn-primary::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
   pointer-events: none;
-  opacity: 0;
-  background: radial-gradient(
-    480px circle at var(--mx, 50%) var(--my, 50%),
-    rgb(var(--glow, 59 130 255) / 0.16),
-    transparent 60%
-  );
-  transition: opacity 300ms var(--ease-out);
+  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.38) 50%, transparent 70%);
+  translate: -120% 0;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .spotlight:hover::after {
-    opacity: 1;
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .btn-primary:hover::after {
+    translate: 120% 0;
+    transition: translate 750ms var(--ease-out);
   }
 }
 
-/* Halo de la llamada final: degradado cónico que gira muy despacio */
-.cta-aura {
-  background: conic-gradient(from 0deg, #3b82ff, #8b5cff, #22e3ff, #3b82ff);
+/* La portada empieza oculta solo si hay JavaScript y movimiento (la clase .js la pone un script en <head>) */
+.js [data-hero],
+.js [data-hero-title] {
+  opacity: 0;
+}
+
+.anim-fail [data-hero],
+.anim-fail [data-hero-title] {
+  opacity: 1 !important;
+}
+
+/* Primer fotograma mientras carga la escena: oscuro y desenfocado, luego se enfoca */
+.js [data-poster="loading"] {
+  filter: blur(18px) brightness(0.45);
+  scale: 1.08;
+}
+
+[data-poster="sharp"] {
+  transition-duration: 1600ms !important;
+}
+
+/* Máscara de las líneas de SplitText: deja sitio a tildes y descendentes */
+.split-line-mask {
+  padding-block: 0.08em;
+  margin-block: -0.08em;
+}
+
+/* ---------- Preguntas frecuentes ---------- */
+
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq .faq-icon {
+  transition: transform 260ms var(--ease-out);
+}
+
+.faq[open] .faq-icon {
+  transform: rotate(45deg);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .cta-aura {
-    animation: aura-spin 24s linear infinite;
+  .faq::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 320ms var(--ease-out),
+      content-visibility 320ms allow-discrete;
+  }
+
+  .faq[open]::details-content {
+    block-size: auto;
+  }
+
+  @supports (interpolate-size: allow-keywords) {
+    .faq-list {
+      interpolate-size: allow-keywords;
+    }
   }
 }
 
-@keyframes aura-spin {
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
+/* ---------- Páginas legales ---------- */
 
-/* Texto corrido de las páginas legales */
 .legal-prose {
   font-size: var(--text-body);
   line-height: 1.7;
-  color: rgb(238 240 245 / 0.82);
+  color: rgb(11 16 32 / 0.84);
 }
 
 .legal-prose > * + * {
@@ -306,99 +463,23 @@
 .legal-prose ul > li::before {
   content: "";
   position: absolute;
-  left: 0.2rem;
-  top: 0.7em;
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 999px;
-  background: var(--color-cyan);
-  box-shadow: 0 0 10px var(--color-cyan);
+  left: 0.15rem;
+  top: 0.68em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 2px;
+  background: var(--color-accent);
 }
 
 .legal-prose strong {
-  color: var(--color-text);
+  color: var(--color-ink);
   font-weight: 600;
 }
 
 .legal-prose a {
-  color: var(--color-cyan);
+  color: var(--color-accent-ink);
   text-decoration: underline;
   text-underline-offset: 4px;
-}
-
-/* Scroll suave (Lenis) */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis:not(.lenis-autoToggle).lenis-stopped {
-  overflow: clip;
-}
-
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
-
-/* Entrada del hero: el único momento orquestado al cargar */
-@media (prefers-reduced-motion: no-preference) {
-  .hero-in {
-    animation: hero-in 1100ms var(--ease-out) both;
-    animation-delay: calc(var(--i, 0) * 110ms + 350ms);
-  }
-
-  .line-rise {
-    animation: line-rise 1200ms var(--ease-out) both;
-    animation-delay: calc(var(--i, 0) * 100ms + 250ms);
-  }
-
-  /* Indicador de scroll: una gota de luz que baja por la línea */
-  .scroll-drop {
-    animation: scroll-drop 2200ms var(--ease-in-out) infinite;
-  }
-}
-
-@keyframes hero-in {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-    filter: blur(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-}
-
-@keyframes line-rise {
-  from {
-    transform: translateY(108%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes scroll-drop {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  30% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(260%);
-    opacity: 0;
-  }
-}
-
-/* Botón "Pausar animación": congela todas las animaciones continuas */
-html[data-motion="paused"] *,
-html[data-motion="paused"] *::before,
-html[data-motion="paused"] *::after {
-  animation-play-state: paused !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

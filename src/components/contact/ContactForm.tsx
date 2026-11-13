@@ -1,76 +1,60 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
-import { AlertCircle, Check, ChevronDown, Loader2, Mail, Send } from "lucide-react";
+import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode, type RefObject } from "react";
+import { ArrowRight, Check, ChevronDown, CircleAlert, LoaderCircle, Mail, Phone } from "lucide-react";
 import { href, site } from "@/config/site";
-import { legal } from "@/config/legal";
+import { ownerLabel } from "@/config/legal";
 import {
-  INTERESTS,
   LIMITS,
+  PROJECT_TYPES,
   emptyContact,
-  interestLabel,
+  isProjectType,
   validateContact,
   validateField,
   type ContactErrors,
   type ContactField,
   type ContactInput,
-  type ContactResponse,
-  type Interest,
+  type ProjectType,
 } from "@/lib/contact/schema";
+import { CONTACT_ENDPOINT, sendContact } from "@/lib/contact/send";
 
-type Status = "idle" | "submitting" | "delivered" | "not_configured" | "failed";
+type Status = "idle" | "submitting" | "sent" | "failed" | "too_fast" | "not_configured";
 
-/**
- * Adónde se envía el formulario:
- * - NEXT_PUBLIC_CONTACT_ENDPOINT: un servicio externo de formularios (p. ej.
- *   Formspree o Web3Forms). Funciona también en la versión estática.
- * - /api/contact: la ruta propia, cuando la web corre con servidor.
- * - Ninguno (versión estática sin servicio): se ofrece enviarlo por correo.
- */
-const ENDPOINT =
-  process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ??
-  (process.env.NEXT_PUBLIC_STATIC_EXPORT === "1" ? null : "/api/contact");
-
-type ContactFormProps = {
-  /** Lo calcula el servidor: indica si hay un canal de envío configurado. */
-  deliveryConfigured: boolean;
-};
+/** Un envío más rápido que esto, desde que se carga el formulario, es casi seguro un bot. */
+const MIN_FILL_TIME_MS = 3000;
 
 const fieldBase =
-  "w-full rounded-field border bg-white/[0.03] px-4 text-body text-text placeholder:text-muted/60 " +
-  "transition-[border-color,background-color,box-shadow] duration-200 hover:border-white/25 " +
-  "focus:border-cyan/70 focus:bg-white/[0.05] focus:shadow-[0_0_0_4px_rgb(34_227_255/0.12)] focus:outline-none";
+  "w-full rounded-field border bg-white px-4 text-body text-ink placeholder:text-muted/70 " +
+  "shadow-[inset_0_1px_2px_rgb(15_23_42/0.06)] transition-[border-color,box-shadow] duration-200 " +
+  "hover:border-line-strong focus:border-ink focus:shadow-[0_0_0_4px_rgb(46_91_255/0.2)] focus:outline-none";
 
-const buttonBase =
-  "inline-flex h-12 items-center justify-center gap-2 rounded-pill px-6 text-small font-semibold select-none";
-
-function buildMailto(values: ContactInput) {
-  const subject = `Consulta desde la web: ${values.name}`;
-  const body = [
-    values.message,
-    "",
-    "—",
-    `Nombre: ${values.name}`,
-    `Correo: ${values.email}`,
-    values.company ? `Empresa: ${values.company}` : null,
-    `Servicio: ${interestLabel(values.interest)}`,
-  ]
-    .filter(Boolean)
-    .join("\n");
-  return `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-
-export function ContactForm({ deliveryConfigured }: ContactFormProps) {
+export function ContactForm() {
   const [values, setValues] = useState<ContactInput>(emptyContact);
   const [errors, setErrors] = useState<ContactErrors>({});
   const [touched, setTouched] = useState<Partial<Record<ContactField, boolean>>>({});
   const [status, setStatus] = useState<Status>("idle");
   const formRef = useRef<HTMLFormElement>(null);
   const resultRef = useRef<HTMLHeadingElement>(null);
+  const startedAt = useRef(0);
   const uid = useId();
   const id = (field: string) => `${uid}-${field}`;
 
-  const showResult = status === "delivered" || status === "not_configured";
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
+
+  // Los enlaces «Quiero una landing page…» de los servicios preseleccionan el tipo de proyecto
+  useEffect(() => {
+    const onClick = (event: MouseEvent) => {
+      const link = (event.target as Element | null)?.closest<HTMLElement>("[data-project-type]");
+      const type = link?.dataset.projectType;
+      if (isProjectType(type)) setValues((prev) => ({ ...prev, projectType: type }));
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+
+  const showResult = status === "sent" || status === "not_configured";
 
   useEffect(() => {
     if (showResult) resultRef.current?.focus();
@@ -79,7 +63,8 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
   const update = <K extends keyof ContactInput>(field: K, value: ContactInput[K]) => {
     const next = { ...values, [field]: value };
     setValues(next);
-    // Si el campo ya mostraba un error, lo revalidamos al escribir
+    if (status === "failed" || status === "too_fast") setStatus("idle");
+    // Si el campo ya mostraba un error, se revalida al escribir
     if (field !== "website" && touched[field as ContactField]) {
       setErrors((prev) => ({ ...prev, [field]: validateField(field as ContactField, next) }));
     }
@@ -90,46 +75,49 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
     setErrors((prev) => ({ ...prev, [field]: validateField(field, values) }));
   };
 
+  const focusField = (field: string) =>
+    formRef.current?.querySelector<HTMLElement>(`[name="${field}"]`)?.focus();
+
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (status === "submitting") return;
+
     const found = validateContact(values);
     setErrors(found);
     setTouched({ name: true, email: true, company: true, message: true, consent: true });
-
-    const firstInvalid = Object.keys(found)[0] as ContactField | undefined;
+    const firstInvalid = Object.keys(found)[0];
     if (firstInvalid) {
-      formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
+      focusField(firstInvalid);
       return;
     }
 
-    // Sin destino configurado no fingimos un envío: ofrecemos el correo
-    if (!ENDPOINT) {
+    // Sin servicio configurado no se finge un envío
+    if (!CONTACT_ENDPOINT) {
       setStatus("not_configured");
       return;
     }
 
-    setStatus("submitting");
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(values),
-      });
-      // Servicio externo: basta con que responda bien
-      if (ENDPOINT !== "/api/contact") {
-        setStatus(res.ok ? "delivered" : "failed");
-        return;
-      }
-      const data = (await res.json()) as ContactResponse;
-      if (data.status === "invalid") {
-        setErrors(data.errors);
-        setStatus("idle");
-        return;
-      }
-      setStatus(data.status === "delivered" || data.status === "not_configured" ? data.status : "failed");
-    } catch {
-      setStatus("failed");
+    // Protección antispam: campo trampa relleno o envío instantáneo
+    if (values.website) {
+      setStatus("sent");
+      return;
     }
+    if (Date.now() - startedAt.current < MIN_FILL_TIME_MS) {
+      setStatus("too_fast");
+      return;
+    }
+
+    setStatus("submitting");
+    const result = await sendContact(values, CONTACT_ENDPOINT);
+    if (result.ok) {
+      setStatus("sent");
+      return;
+    }
+    if (result.fieldErrors && Object.keys(result.fieldErrors).length > 0) {
+      setErrors((prev) => ({ ...prev, ...result.fieldErrors }));
+      focusField(Object.keys(result.fieldErrors)[0]);
+    }
+    setStatus("failed");
   };
 
   const reset = (keepValues: boolean) => {
@@ -138,23 +126,24 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
       setTouched({});
       setErrors({});
     }
+    startedAt.current = Date.now();
     setStatus("idle");
   };
 
-  if (status === "delivered") {
+  if (status === "sent") {
     return (
       <ResultPanel
         headingRef={resultRef}
         tone="success"
         title="Mensaje enviado"
         actions={
-          <button type="button" onClick={() => reset(false)} className={`btn-ghost ${buttonBase}`}>
+          <button type="button" onClick={() => reset(false)} className="btn btn-outline">
             Enviar otro mensaje
           </button>
         }
       >
-        Gracias, {values.name}. Hemos recibido tu mensaje y te responderemos en{" "}
-        <strong className="font-semibold text-text">{values.email}</strong>.
+        Gracias, {values.name.trim()}. Me ha llegado tu mensaje y te responderé en{" "}
+        <strong className="font-semibold text-ink">{values.email.trim()}</strong>.
       </ResultPanel>
     );
   }
@@ -164,36 +153,54 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
       <ResultPanel
         headingRef={resultRef}
         tone="notice"
-        title="Tu mensaje aún no se ha enviado"
+        title="Tu mensaje no se ha enviado"
         actions={
-          <>
-            <a href={buildMailto(values)} className={`btn-neon ${buttonBase}`}>
-              <Mail aria-hidden="true" className="size-4" />
-              Enviarlo desde mi correo
-            </a>
-            <button type="button" onClick={() => reset(true)} className={`btn-ghost ${buttonBase}`}>
-              Volver al formulario
-            </button>
-          </>
+          <button type="button" onClick={() => reset(true)} className="btn btn-outline">
+            Volver al formulario
+          </button>
         }
       >
-        Los datos son correctos, pero el envío del formulario todavía no está conectado, así que no nos ha
-        llegado. Puedes enviárnoslo desde tu correo: se abrirá un mensaje con todo lo que has escrito, dirigido a{" "}
-        <strong className="font-semibold text-text">{site.email}</strong>.
+        El envío del formulario todavía no está activado, así que el mensaje no me ha llegado. Mientras tanto, puedes
+        escribirme a{" "}
+        <a href={`mailto:${site.email}`} className="font-semibold text-ink underline underline-offset-4">
+          {site.email}
+        </a>{" "}
+        o llamarme al{" "}
+        <a href={`tel:${site.phone.href}`} className="font-semibold whitespace-nowrap text-ink underline underline-offset-4">
+          {site.phone.display}
+        </a>
+        .
       </ResultPanel>
     );
   }
 
   const describedBy = (field: ContactField, extra?: string) =>
     [errors[field] ? id(`${field}-error`) : null, extra].filter(Boolean).join(" ") || undefined;
-
-  const border = (field: ContactField) => (errors[field] ? "border-danger/80" : "border-white/12");
+  const border = (field: ContactField) => (errors[field] ? "border-danger" : "border-line");
   const messageLength = values.message.trim().length;
+  const submitting = status === "submitting";
 
   return (
-    <form ref={formRef} onSubmit={onSubmit} noValidate className="grid gap-6">
+    <form
+      ref={formRef}
+      onSubmit={onSubmit}
+      noValidate
+      aria-labelledby={`${uid}-title`}
+      aria-busy={submitting}
+      className="grid gap-6"
+    >
+      <div>
+        <h3 id={`${uid}-title`} className="font-display text-[1.5rem] leading-tight font-bold tracking-[-0.02em]">
+          Escríbeme aquí
+        </h3>
+        <p className="mt-1.5 text-small text-muted">
+          Los campos marcados con <span aria-hidden="true">*</span>
+          <span className="sr-only">asterisco</span> son obligatorios.
+        </p>
+      </div>
+
       <div className="grid gap-6 sm:grid-cols-2">
-        <Field label="Nombre" htmlFor={id("name")} error={errors.name} errorId={id("name-error")}>
+        <Field label="Nombre" required htmlFor={id("name")} error={errors.name} errorId={id("name-error")}>
           <input
             id={id("name")}
             name="name"
@@ -210,13 +217,14 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
           />
         </Field>
 
-        <Field label="Correo electrónico" htmlFor={id("email")} error={errors.email} errorId={id("email-error")}>
+        <Field label="Correo electrónico" required htmlFor={id("email")} error={errors.email} errorId={id("email-error")}>
           <input
             id={id("email")}
             name="email"
             type="email"
             inputMode="email"
             autoComplete="email"
+            spellCheck={false}
             required
             value={values.email}
             onChange={(e) => update("email", e.target.value)}
@@ -244,16 +252,16 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
           />
         </Field>
 
-        <Field label="Servicio de interés" htmlFor={id("interest")} errorId={id("interest-error")}>
+        <Field label="¿Qué necesitas?" htmlFor={id("projectType")} errorId={id("projectType-error")}>
           <div className="relative">
             <select
-              id={id("interest")}
-              name="interest"
-              value={values.interest}
-              onChange={(e) => update("interest", e.target.value as Interest)}
-              className={`${fieldBase} h-12 appearance-none pr-11 ${border("interest")} [&>option]:bg-graphite`}
+              id={id("projectType")}
+              name="projectType"
+              value={values.projectType}
+              onChange={(e) => update("projectType", e.target.value as ProjectType)}
+              className={`${fieldBase} h-12 cursor-pointer appearance-none pr-11 ${border("projectType")}`}
             >
-              {INTERESTS.map((option) => (
+              {PROJECT_TYPES.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -268,35 +276,44 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
       </div>
 
       <Field
-        label="Descripción del proyecto"
+        label="Cuéntame tu proyecto"
+        required
         htmlFor={id("message")}
         error={errors.message}
         errorId={id("message-error")}
-        hint={<span id={id("message-hint")}>Qué hacéis, qué queréis mejorar y cualquier plazo que tengáis en mente.</span>}
+        hint={
+          <span id={id("message-hint")}>
+            A qué se dedica tu empresa, qué quieres conseguir con la web y si tienes alguna fecha en mente.
+          </span>
+        }
       >
         <textarea
           id={id("message")}
           name="message"
           rows={5}
           required
+          maxLength={LIMITS.messageMax + 200}
           value={values.message}
           onChange={(e) => update("message", e.target.value)}
           onBlur={() => blur("message")}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={describedBy("message", id("message-hint"))}
-          className={`${fieldBase} resize-y py-3 leading-relaxed ${border("message")}`}
+          className={`${fieldBase} min-h-36 resize-y py-3 leading-relaxed ${border("message")}`}
         />
-        <p className="mt-1.5 text-right font-mono text-micro text-muted" aria-hidden="true">
+        <p
+          className={`mt-1.5 text-right font-mono text-micro ${messageLength > LIMITS.messageMax ? "text-danger" : "text-muted"}`}
+          aria-hidden="true"
+        >
           {messageLength}/{LIMITS.messageMax}
         </p>
       </Field>
 
-      {/* Campo trampa para bots */}
+      {/* Campo trampa para bots (Formspree lo llama _gotcha): invisible para las personas */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor={id("website")}>No rellenes este campo</label>
+        <label htmlFor={id("gotcha")}>No rellenes este campo</label>
         <input
-          id={id("website")}
-          name="website"
+          id={id("gotcha")}
+          name="_gotcha"
           type="text"
           tabIndex={-1}
           autoComplete="off"
@@ -310,68 +327,92 @@ export function ContactForm({ deliveryConfigured }: ContactFormProps) {
           <input
             name="consent"
             type="checkbox"
+            required
             checked={values.consent}
             onChange={(e) => update("consent", e.target.checked)}
             aria-invalid={Boolean(errors.consent)}
-            aria-describedby={describedBy("consent")}
-            className="mt-0.5 size-5 shrink-0 cursor-pointer accent-cyan"
+            aria-describedby={describedBy("consent", id("privacy-info"))}
+            className="mt-0.5 size-5 shrink-0 cursor-pointer accent-accent-ink"
           />
-          <span className="text-small leading-snug text-text/90">
-            Acepto que {site.name} use estos datos únicamente para responder a mi consulta, según la{" "}
+          <span className="text-small leading-snug">
+            He leído y acepto la{" "}
             <a
               href={href("/privacidad")}
               target="_blank"
               rel="noopener"
-              className="font-semibold text-cyan underline underline-offset-4"
+              className="font-semibold text-accent-ink underline underline-offset-4"
             >
               política de privacidad
               <span className="sr-only"> (se abre en una pestaña nueva)</span>
             </a>
-            .
+            . <span aria-hidden="true">*</span>
           </span>
         </label>
         {errors.consent && <ErrorText id={id("consent-error")}>{errors.consent}</ErrorText>}
-        <p className="mt-4 text-micro leading-relaxed text-muted">
-          <strong className="font-semibold text-text/90">Protección de datos.</strong> Responsable:{" "}
-          {legal.ownerName ?? site.name}. Finalidad: responder a tu consulta y, si lo pides, enviarte una propuesta.
-          Legitimación: tu consentimiento. No cedemos tus datos a terceros salvo obligación legal. Puedes acceder a
-          ellos, rectificarlos o suprimirlos, entre otros derechos, como explica la política de privacidad.
+        <p id={id("privacy-info")} className="mt-4 text-micro leading-relaxed text-muted">
+          <strong className="font-semibold text-ink">Protección de datos.</strong> Responsable: {ownerLabel}. Finalidad:
+          responder a tu consulta y, si me la pides, enviarte una propuesta. Legitimación: tu consentimiento. El mensaje
+          se envía a través de Formspree, que lo recibe por cuenta mía. Puedes acceder a tus datos, rectificarlos o
+          suprimirlos, entre otros derechos, como explica la política de privacidad.
         </p>
       </div>
 
-      {!deliveryConfigured && (
-        <p className="rounded-card border border-cyan/25 bg-cyan/[0.06] px-4 py-3.5 text-small leading-snug text-text/90">
-          <strong className="font-semibold">Aviso:</strong> el envío de este formulario todavía no está conectado.
-          Puedes rellenarlo y comprobar que todo está bien; al final te ofreceremos enviarlo desde tu correo.
+      {!CONTACT_ENDPOINT && (
+        <p className="flex gap-3 rounded-card border border-accent/40 bg-accent-soft/60 px-4 py-3.5 text-small leading-snug">
+          <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-accent-ink" />
+          <span>
+            <strong className="font-semibold">El envío del formulario aún no está activado.</strong> Mientras tanto,
+            escríbeme a {site.email} o llámame al {site.phone.display}.
+          </span>
         </p>
       )}
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div role="alert" className="empty:hidden">
+        {status === "failed" && (
+          <p className="flex gap-3 rounded-card border border-danger/30 bg-danger/[0.06] px-4 py-3.5 text-small leading-snug text-danger">
+            <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+            <span>
+              No he podido recibir el mensaje. Revisa tu conexión y vuelve a intentarlo; si sigue fallando, escríbeme a{" "}
+              <a href={`mailto:${site.email}`} className="font-semibold underline underline-offset-4">
+                {site.email}
+              </a>{" "}
+              o llámame al{" "}
+              <a href={`tel:${site.phone.href}`} className="font-semibold whitespace-nowrap underline underline-offset-4">
+                {site.phone.display}
+              </a>
+              . Lo que has escrito sigue aquí.
+            </span>
+          </p>
+        )}
+        {status === "too_fast" && (
+          <p className="flex gap-3 rounded-card border border-danger/30 bg-danger/[0.06] px-4 py-3.5 text-small leading-snug text-danger">
+            <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+            <span>El formulario se ha enviado demasiado rápido. Revisa los datos y vuelve a pulsar «Enviar mensaje».</span>
+          </p>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <button
           type="submit"
-          disabled={status === "submitting"}
-          className={`btn-neon ${buttonBase} h-14 w-full px-8 text-[1rem] disabled:cursor-progress disabled:opacity-70 sm:w-auto`}
+          disabled={submitting}
+          className="btn btn-primary btn-lg w-full disabled:cursor-progress disabled:opacity-80 sm:w-auto"
         >
-          {status === "submitting" ? (
+          {submitting ? (
             <>
-              <Loader2 aria-hidden="true" className="size-4 animate-spin" />
+              <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />
               Enviando…
             </>
           ) : (
             <>
-              <Send aria-hidden="true" className="size-4" />
               Enviar mensaje
+              <ArrowRight aria-hidden="true" className="size-4" />
             </>
           )}
         </button>
-        <div role="status" aria-live="polite" className="text-small">
-          {status === "failed" && (
-            <span className="font-medium text-danger">
-              No hemos podido enviar el mensaje. Comprueba tu conexión e inténtalo de nuevo, o escríbenos a{" "}
-              {site.email} o llámanos al {site.phone.display}.
-            </span>
-          )}
-        </div>
+        <p aria-live="polite" className="text-micro text-muted sm:text-right">
+          {submitting ? "Enviando tu mensaje…" : "Sin salir de esta página."}
+        </p>
       </div>
     </form>
   );
@@ -381,6 +422,7 @@ function Field({
   label,
   htmlFor,
   optional,
+  required,
   error,
   errorId,
   hint,
@@ -389,6 +431,7 @@ function Field({
   label: string;
   htmlFor: string;
   optional?: boolean;
+  required?: boolean;
   error?: string;
   errorId: string;
   hint?: ReactNode;
@@ -396,8 +439,13 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={htmlFor} className="block text-small font-semibold text-text">
+      <label htmlFor={htmlFor} className="block text-small font-semibold text-ink">
         {label}
+        {required && (
+          <span aria-hidden="true" className="ml-0.5 text-accent-ink">
+            *
+          </span>
+        )}
         {optional && <span className="ml-1.5 font-normal text-muted">(opcional)</span>}
       </label>
       {hint && <p className="mt-1 text-micro text-muted">{hint}</p>}
@@ -410,7 +458,7 @@ function Field({
 function ErrorText({ id, children }: { id: string; children: ReactNode }) {
   return (
     <p id={id} className="mt-2 flex items-start gap-2 text-micro font-medium text-danger">
-      <AlertCircle aria-hidden="true" className="mt-px size-4 shrink-0" />
+      <CircleAlert aria-hidden="true" className="mt-px size-4 shrink-0" />
       {children}
     </p>
   );
@@ -423,27 +471,41 @@ function ResultPanel({
   actions,
   children,
 }: {
-  headingRef: React.RefObject<HTMLHeadingElement | null>;
+  headingRef: RefObject<HTMLHeadingElement | null>;
   tone: "success" | "notice";
   title: string;
   actions: ReactNode;
   children: ReactNode;
 }) {
   return (
-    <div>
+    <div className="py-4" role="status">
       <span
         aria-hidden="true"
-        className={`grid size-12 place-items-center rounded-full ${
-          tone === "success" ? "bg-ok/15 text-ok" : "bg-cyan/15 text-cyan"
-        }`}
+        className={`grid size-14 place-items-center rounded-full ${
+          tone === "success" ? "bg-ok text-white" : "bg-accent text-white"
+        } shadow-[0_10px_24px_-10px_rgb(15_23_42/0.5)]`}
       >
-        {tone === "success" ? <Check className="size-6" /> : <AlertCircle className="size-6" />}
+        {tone === "success" ? <Check className="size-7" strokeWidth={2.5} /> : <CircleAlert className="size-7" />}
       </span>
       <h3 ref={headingRef} tabIndex={-1} className="mt-6 text-h3 outline-none">
         {title}
       </h3>
       <p className="mt-4 max-w-copy text-body text-muted">{children}</p>
       <div className="mt-8 flex flex-wrap gap-3">{actions}</div>
+      <ul className="mt-10 space-y-1 border-t border-line pt-6 text-small">
+        <li>
+          <a href={`mailto:${site.email}`} className="inline-flex min-h-11 items-center gap-2 text-muted hover:text-ink">
+            <Mail aria-hidden="true" className="size-4 text-accent-ink" />
+            {site.email}
+          </a>
+        </li>
+        <li>
+          <a href={`tel:${site.phone.href}`} className="inline-flex min-h-11 items-center gap-2 text-muted hover:text-ink">
+            <Phone aria-hidden="true" className="size-4 text-accent-ink" />
+            {site.phone.display}
+          </a>
+        </li>
+      </ul>
     </div>
   );
 }

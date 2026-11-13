@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { X, Menu } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { contactAnchor, href, navigation, site } from "@/config/site";
 import { Logo } from "@/components/ui/Logo";
-import { MagneticLink } from "@/components/ui/MagneticLink";
+import { buttonClass } from "@/components/ui/Button";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -12,15 +12,15 @@ export function SiteHeader() {
   const menuId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
 
-  // Barra de cristal en cuanto se baja un poco
+  // Barra de papel translúcido en cuanto se baja un poco
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Menú móvil: Escape lo cierra y bloquea el scroll mientras está abierto
+  // Menú móvil: Escape lo cierra y se bloquea el scroll mientras está abierto
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
@@ -46,33 +46,29 @@ export function SiteHeader() {
     <header
       // Con el menú abierto, fondo sólido y sin desenfoque: backdrop-filter haría
       // que el panel fijo del menú se midiera respecto a la cabecera y no a la pantalla
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-300 ${
+      data-open={open ? "" : undefined}
+      className={`site-header fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow,color] duration-300 ${
         open
-          ? "border-b border-white/8 bg-bg"
+          ? "border-line bg-paper"
           : scrolled
-            ? "border-b border-white/8 bg-bg/70 backdrop-blur-xl"
-            : "border-b border-transparent bg-transparent"
+            ? "border-line/80 bg-paper/85 shadow-[0_8px_24px_-18px_rgb(15_23_42/0.35)] backdrop-blur-lg"
+            : "border-transparent bg-transparent"
       }`}
     >
-      <div className="page-container flex h-18 items-center justify-between gap-6">
-        <a href={href("/#inicio")} className="rounded-md" aria-label={`${site.name}, ir al inicio`}>
+      <div className="page-container flex h-[4.5rem] items-center justify-between gap-6">
+        <a href={href("/#inicio")} className="inline-flex min-h-11 items-center rounded-md" aria-label={`${site.owner}, diseño web: ir al inicio`}>
           <Logo />
         </a>
 
         <nav aria-label="Principal" className="hidden lg:block">
-          <ul className="flex items-center gap-8">
+          <ul className="flex items-center gap-1">
             {navigation.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="group relative inline-flex h-11 items-center text-small font-medium text-muted transition-colors duration-200 hover:text-text"
+                  className="inline-flex h-11 items-center rounded-pill px-4 text-small font-medium text-ink/75 transition-colors duration-200 hover:bg-ink/[0.05] hover:text-ink"
                 >
                   {item.label}
-                  {/* Subrayado de luz que se dibuja al pasar el cursor */}
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-x-0 bottom-2 h-px origin-left scale-x-0 bg-[linear-gradient(90deg,#3b82ff,#22e3ff)] transition-transform duration-300 ease-out group-hover:scale-x-100"
-                  />
                 </a>
               </li>
             ))}
@@ -80,13 +76,14 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <MagneticLink href={contactAnchor} variant="neon" size="md" className="max-sm:hidden" strength={6}>
-            Hablemos
-          </MagneticLink>
+          <a href={contactAnchor} className={buttonClass("ink", "md", "max-sm:hidden")}>
+            Cuéntame tu proyecto
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </a>
           <button
             ref={toggleRef}
             type="button"
-            className="btn-ghost inline-flex size-11 items-center justify-center rounded-full lg:hidden"
+            className="btn btn-outline size-12 min-h-0 px-0 lg:hidden"
             aria-expanded={open}
             aria-controls={menuId}
             aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -98,32 +95,29 @@ export function SiteHeader() {
       </div>
 
       {/* Menú móvil a pantalla completa */}
-      <div id={menuId} hidden={!open} className="fixed inset-x-0 top-18 bottom-0 bg-bg lg:hidden">
-        <nav aria-label="Principal (móvil)" className="page-container flex h-full flex-col pt-8 pb-10">
+      <div id={menuId} hidden={!open} className="fixed inset-x-0 top-[4.5rem] bottom-0 overflow-y-auto bg-paper lg:hidden">
+        <nav aria-label="Principal (móvil)" className="page-container flex min-h-full flex-col pt-6 pb-8">
           <ul className="flex flex-col">
             {navigation.map((item, i) => (
-              <li key={item.href} className="border-b border-white/8">
+              <li key={item.href} className="border-b border-line">
                 <a
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="flex items-baseline gap-4 py-5 font-display text-[2rem] leading-none font-bold tracking-[-0.03em]"
+                  className="flex items-baseline gap-4 py-5 font-display text-[2.25rem] leading-none font-bold tracking-[-0.03em]"
                 >
-                  <span className="font-mono text-micro text-muted">0{i + 1}</span>
+                  <span className="font-mono text-micro font-normal tracking-normal text-muted">0{i + 1}</span>
                   {item.label}
                 </a>
               </li>
             ))}
           </ul>
-          <div className="mt-auto flex flex-col gap-3">
-            <a
-              href={contactAnchor}
-              onClick={() => setOpen(false)}
-              className="btn-neon inline-flex h-14 items-center justify-center rounded-pill font-semibold"
-            >
-              Transforma tu negocio
+          <div className="mt-auto flex flex-col gap-3 pt-10">
+            <a href={contactAnchor} onClick={() => setOpen(false)} className={buttonClass("primary", "lg")}>
+              Cuéntame tu proyecto
+              <ArrowRight aria-hidden="true" className="size-4" />
             </a>
-            <a href={`mailto:${site.email}`} className="inline-flex h-11 items-center justify-center text-small text-muted">
-              {site.email}
+            <a href={`tel:${site.phone.href}`} className="inline-flex min-h-11 items-center justify-center text-small text-muted">
+              o llámame al {site.phone.display}
             </a>
           </div>
         </nav>

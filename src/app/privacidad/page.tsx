@@ -2,15 +2,14 @@ import type { Metadata } from "next";
 import { absoluteUrl, site } from "@/config/site";
 import { legal } from "@/config/legal";
 import { SiteShell } from "@/components/layout/SiteShell";
-import { Field, LegalDocument, OwnerDetails, type LegalSection } from "@/components/legal/LegalDocument";
+import { LegalDocument, OwnerDetails, type LegalSection } from "@/components/legal/LegalDocument";
 
 export const metadata: Metadata = {
   title: "Política de privacidad",
-  description: `Cómo trata ${site.name} los datos personales que recibe a través de su web.`,
+  description: `Cómo trata ${site.owner} los datos personales que recibe a través de esta web.`,
   alternates: { canonical: absoluteUrl("/privacidad") },
 };
 
-const owner = <Field value={legal.ownerName} label="Razón social o nombre" />;
 const email = <a href={`mailto:${legal.email}`}>{legal.email}</a>;
 
 const sections: LegalSection[] = [
@@ -26,42 +25,40 @@ const sections: LegalSection[] = [
   },
   {
     id: "datos",
-    title: "Qué datos tratamos",
+    title: "Qué datos trato",
     content: (
       <>
-        <p>Solo tratamos los datos que nos envías a través del formulario de contacto:</p>
+        <p>Solo trato los datos que me envías a través del formulario de contacto:</p>
         <ul>
-          <li>Nombre y correo electrónico.</li>
-          <li>Nombre de tu empresa, si decides indicarlo.</li>
-          <li>El tipo de ayuda que buscas y el mensaje que nos escribes.</li>
+          <li>Tu nombre y tu correo electrónico.</li>
+          <li>El nombre de tu empresa, si decides indicarlo.</li>
+          <li>El tipo de proyecto que te interesa y el mensaje que me escribes.</li>
         </ul>
         <p>
-          Te pedimos que no incluyas en el mensaje datos especialmente sensibles (como datos de
-          salud) ni datos de otras personas que no te hayan dado su permiso.
+          Te pido que no incluyas en el mensaje datos especialmente sensibles (como datos de salud) ni datos de otras
+          personas que no te hayan dado su permiso.
         </p>
         <p>
-          Además, como cualquier web, el proveedor de alojamiento puede registrar datos técnicos de
-          las visitas, como la dirección IP, el navegador o la hora de acceso, para garantizar la
-          seguridad y el funcionamiento del servicio.
+          Además, como ocurre con cualquier web, el servicio de alojamiento puede registrar datos técnicos de las
+          visitas, como la dirección IP, el navegador o la hora de acceso, para garantizar la seguridad y el
+          funcionamiento del servicio.
         </p>
       </>
     ),
   },
   {
     id: "finalidad",
-    title: "Para qué los usamos",
+    title: "Para qué los uso",
     content: (
       <>
         <ul>
-          <li>Responder a tu consulta y mantener la conversación que inicies con nosotros.</li>
-          <li>
-            Si nos lo pides, preparar y enviarte un diagnóstico o una propuesta de servicios.
-          </li>
-          <li>Proteger la web frente a usos indebidos y ataques.</li>
+          <li>Responder a tu consulta y mantener la conversación que inicies conmigo.</li>
+          <li>Si me lo pides, preparar y enviarte una propuesta o un presupuesto.</li>
+          <li>Proteger la web y el formulario frente a usos indebidos y envíos automáticos (spam).</li>
         </ul>
         <p>
-          No usamos tus datos para enviarte publicidad sin tu consentimiento, no elaboramos
-          perfiles y no tomamos decisiones automatizadas que te afecten.
+          No uso tus datos para enviarte publicidad sin tu consentimiento, no elaboro perfiles y no tomo decisiones
+          automatizadas que te afecten.
         </p>
       </>
     ),
@@ -72,58 +69,58 @@ const sections: LegalSection[] = [
     content: (
       <ul>
         <li>
-          <strong>Tu consentimiento</strong> (artículo 6.1.a del RGPD), que das al marcar la
-          casilla del formulario. Puedes retirarlo en cualquier momento, sin que ello afecte a lo
-          tratado antes.
+          <strong>Tu consentimiento</strong> (artículo 6.1.a del RGPD), que das al marcar la casilla del formulario.
+          Puedes retirarlo en cualquier momento, sin que ello afecte a lo tratado antes.
         </li>
         <li>
-          <strong>La aplicación de medidas precontractuales</strong> (artículo 6.1.b del RGPD)
-          cuando nos pides una propuesta.
+          <strong>La aplicación de medidas precontractuales</strong> (artículo 6.1.b del RGPD) cuando me pides una
+          propuesta o un presupuesto.
         </li>
         <li>
-          <strong>Nuestro interés legítimo</strong> (artículo 6.1.f del RGPD) en mantener la web
-          segura, para los datos técnicos de las visitas.
+          <strong>El interés legítimo</strong> (artículo 6.1.f del RGPD) en mantener la web segura y libre de spam,
+          para los datos técnicos de las visitas.
         </li>
       </ul>
     ),
   },
   {
     id: "conservacion",
-    title: "Cuánto tiempo los conservamos",
+    title: "Cuánto tiempo los conservo",
     content: (
       <>
         <p>
-          Conservamos tus datos mientras sean necesarios para atender tu consulta. Si llegamos a
-          trabajar juntos, los mantendremos durante la relación y, después, durante los plazos que
-          exija la ley.
+          Conservo tus datos mientras sean necesarios para atender tu consulta. Si llegamos a trabajar juntos, los
+          mantendré durante la relación y, después, durante los plazos que exija la ley.
         </p>
         <p>
-          Si no llega a haber relación comercial, los suprimiremos como máximo en{" "}
-          {legal.retentionWithoutContract}. Puedes pedirnos que los borremos antes.
+          Si no llega a haber relación comercial, los suprimiré como máximo en {legal.retentionWithoutContract}.
+          Puedes pedirme que los borre antes.
         </p>
       </>
     ),
   },
   {
     id: "destinatarios",
-    title: "Con quién los compartimos",
+    title: "Con quién los comparto",
     content: (
       <>
         <p>
-          No vendemos ni cedemos tus datos a terceros, salvo obligación legal (por ejemplo, si nos
-          los requiere una autoridad competente).
+          No vendo ni cedo tus datos a terceros, salvo obligación legal (por ejemplo, si me los requiere una
+          autoridad competente).
         </p>
         <p>
-          Para prestar el servicio nos apoyamos en proveedores que tratan los datos por cuenta de{" "}
-          {owner} como encargados del tratamiento, con un contrato que les obliga a protegerlos y a
-          usarlos solo siguiendo nuestras instrucciones:
+          Para que la web y el formulario funcionen me apoyo en proveedores que tratan los datos por mi cuenta, como
+          encargados del tratamiento, y solo para prestar su servicio:
         </p>
         <ul>
-          <li>El proveedor de alojamiento de la web.</li>
           <li>
-            El servicio de correo electrónico o de automatización que usamos para recibir y
-            gestionar los mensajes del formulario.
+            <strong>Formspree</strong>, el servicio que recibe los mensajes del formulario y me los reenvía por
+            correo electrónico.
           </li>
+          <li>
+            <strong>GitHub Pages</strong>, el servicio de GitHub que aloja esta web.
+          </li>
+          <li>El servicio de correo electrónico con el que recibo y gestiono los mensajes.</li>
         </ul>
       </>
     ),
@@ -133,10 +130,10 @@ const sections: LegalSection[] = [
     title: "Transferencias internacionales",
     content: (
       <p>
-        Si alguno de estos proveedores trata datos fuera del Espacio Económico Europeo, lo hará con
-        las garantías que exige el RGPD: una decisión de adecuación de la Comisión Europea (como el
-        Marco de Privacidad de Datos UE-EE. UU. para empresas adheridas) o cláusulas contractuales
-        tipo aprobadas por la Comisión.
+        Algunos de estos proveedores pueden tratar datos fuera del Espacio Económico Europeo. En ese caso, la
+        transferencia debe contar con las garantías que exige el RGPD, como una decisión de adecuación de la
+        Comisión Europea o cláusulas contractuales tipo aprobadas por la Comisión. Puedes pedirme más información
+        sobre estas garantías escribiéndome a {email}.
       </p>
     ),
   },
@@ -147,20 +144,20 @@ const sections: LegalSection[] = [
       <>
         <p>En cualquier momento puedes:</p>
         <ul>
-          <li>Acceder a tus datos y saber cómo los tratamos.</li>
-          <li>Rectificarlos si son inexactos o pedir que los suprimamos.</li>
-          <li>Oponerte a su tratamiento o pedir que lo limitemos.</li>
+          <li>Acceder a tus datos y saber cómo los trato.</li>
+          <li>Rectificarlos si son inexactos o pedirme que los suprima.</li>
+          <li>Oponerte a su tratamiento o pedir que lo limite.</li>
           <li>Solicitar su portabilidad.</li>
-          <li>Retirar el consentimiento que nos diste.</li>
+          <li>Retirar el consentimiento que me diste.</li>
         </ul>
         <p>
-          Para ejercerlos, escríbenos a {email} indicando qué derecho quieres ejercer. Si no
-          podemos confirmar tu identidad, te pediremos algún dato adicional. Te responderemos en
-          el plazo de un mes, que la ley permite ampliar en casos complejos.
+          Para ejercerlos, escríbeme a {email} indicando qué derecho quieres ejercer. Si no puedo confirmar tu
+          identidad, te pediré algún dato adicional. Te responderé en el plazo de un mes, que la ley permite ampliar
+          en casos complejos.
         </p>
         <p>
-          Si consideras que no hemos tratado bien tus datos, puedes presentar una reclamación ante
-          la Agencia Española de Protección de Datos en{" "}
+          Si consideras que no he tratado bien tus datos, puedes presentar una reclamación ante la Agencia Española
+          de Protección de Datos en{" "}
           <a href="https://www.aepd.es" rel="noopener noreferrer">
             www.aepd.es
           </a>
@@ -174,8 +171,8 @@ const sections: LegalSection[] = [
     title: "Menores de edad",
     content: (
       <p>
-        Esta web se dirige a empresas y profesionales. Si tienes menos de 14 años, no nos envíes
-        tus datos a través del formulario.
+        Esta web se dirige a empresas y profesionales. Si tienes menos de 14 años, no me envíes tus datos a través
+        del formulario.
       </p>
     ),
   },
@@ -184,9 +181,9 @@ const sections: LegalSection[] = [
     title: "Seguridad",
     content: (
       <p>
-        Aplicamos medidas técnicas y organizativas adecuadas para proteger tus datos frente a
-        accesos no autorizados, pérdidas o alteraciones. La web se sirve con conexión cifrada
-        (HTTPS) y solo accede a los mensajes el personal que los necesita para responderte.
+        Aplico medidas técnicas y organizativas adecuadas para proteger tus datos frente a accesos no autorizados,
+        pérdidas o alteraciones. La web se sirve con conexión cifrada (HTTPS) y el formulario envía los datos también
+        de forma cifrada.
       </p>
     ),
   },
@@ -196,13 +193,14 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          Esta web no utiliza cookies ni otras tecnologías de seguimiento, analítica o publicidad.
-          Las tipografías y el resto de recursos se sirven desde nuestro propio dominio, sin
-          conexiones a servicios de terceros.
+          Esta web no utiliza cookies ni otras tecnologías de seguimiento, analítica o publicidad. Las tipografías y
+          las ilustraciones se sirven desde la propia web, sin conexiones a servicios de terceros. La única conexión
+          con un servicio externo se produce cuando envías el formulario, para hacerme llegar tu mensaje a través de
+          Formspree.
         </p>
         <p>
-          Si en el futuro incorporamos herramientas que las utilicen, actualizaremos esta política
-          y te pediremos el consentimiento cuando la ley lo exija.
+          Si en el futuro incorporo herramientas que utilicen cookies, actualizaré esta política y te pediré el
+          consentimiento cuando la ley lo exija.
         </p>
       </>
     ),
@@ -212,8 +210,8 @@ const sections: LegalSection[] = [
     title: "Cambios en esta política",
     content: (
       <p>
-        Podemos actualizar esta política para adaptarla a cambios en la web o en la normativa.
-        Publicaremos siempre la versión vigente en esta página, con su fecha de actualización.
+        Puedo actualizar esta política para adaptarla a cambios en la web o en la normativa. Publicaré siempre la
+        versión vigente en esta página, con su fecha de actualización.
       </p>
     ),
   },
@@ -226,9 +224,8 @@ export default function PrivacidadPage() {
         title="Política de privacidad"
         intro={
           <p>
-            Qué datos recogemos cuando nos escribes, para qué los usamos y cómo puedes controlarlos,
-            conforme al Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018
-            (LOPDGDD).
+            Qué datos recojo cuando me escribes, para qué los uso y cómo puedes controlarlos, conforme al Reglamento
+            General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD).
           </p>
         }
         sections={sections}

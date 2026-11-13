@@ -1,10 +1,11 @@
 # Publica la web en GitHub Pages cada vez que se sube un cambio a main.
 #
-# GitHub Pages solo sirve archivos estáticos, así que:
-# - se compila con NEXT_PUBLIC_STATIC_EXPORT=1 (carpeta out/);
-# - se quita la ruta /api/contact (necesita servidor). El formulario ofrece
-#   enviar el mensaje por correo o usa NEXT_PUBLIC_CONTACT_ENDPOINT si existe
-#   (variable del repositorio: Settings → Secrets and variables → Actions → Variables).
+# GitHub Pages solo sirve archivos estáticos, así que se compila con
+# NEXT_PUBLIC_STATIC_EXPORT=1 (carpeta out/) bajo la subcarpeta del repositorio.
+#
+# El formulario de contacto envía los mensajes a Formspree. Su dirección se lee
+# de la variable del repositorio NEXT_PUBLIC_CONTACT_ENDPOINT
+# (Settings → Secrets and variables → Actions → Variables). Ver README.md.
 
 name: Publicar en GitHub Pages
 
@@ -38,9 +39,6 @@ jobs:
 
       - name: Instalar dependencias
         run: npm ci
-
-      - name: Quitar la API (GitHub Pages no ejecuta código de servidor)
-        run: rm -rf src/app/api
 
       - name: Compilar la web estática
         run: npm run build

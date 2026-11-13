@@ -1,37 +1,24 @@
 import { SiteShell } from "@/components/layout/SiteShell";
-import { SceneLayer } from "@/components/scene/SceneLayer";
-import { Hero } from "@/components/sections/Hero";
+import { Showcase } from "@/components/sections/Showcase";
 import { Services } from "@/components/sections/Services";
 import { Process } from "@/components/sections/Process";
-import { Cases } from "@/components/sections/Cases";
-import { FinalCta } from "@/components/sections/FinalCta";
+import { Work } from "@/components/sections/Work";
+import { Faq } from "@/components/sections/Faq";
 import { Contact } from "@/components/sections/Contact";
 
 /**
- * Portada. Cada bloque lleva `data-stage`: la formación que adopta la escena 3D
- * del fondo mientras está en pantalla (ver docs/direccion-visual.md).
+ * Portada (escaparate 3D ligado al scroll), qué puedes encargarme, cómo
+ * trabajamos, conceptos de diseño, dudas frecuentes y contacto.
  */
 export default function Home() {
   return (
-    <SiteShell background={<SceneLayer />}>
-      <div data-stage="0">
-        <Hero />
-      </div>
-      <div data-stage="1">
-        <Services />
-      </div>
-      <div data-stage="2">
-        <Process />
-      </div>
-      <div data-stage="3">
-        <Cases />
-      </div>
-      <div data-stage="4">
-        <FinalCta />
-      </div>
-      <div data-stage="5">
-        <Contact />
-      </div>
+    <SiteShell>
+      <Showcase />
+      <Services />
+      <Process />
+      <Work />
+      <Faq />
+      <Contact />
     </SiteShell>
   );
 }

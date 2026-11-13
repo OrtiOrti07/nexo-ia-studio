@@ -1,26 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Hubot_Sans, Mona_Sans } from "next/font/google";
+import { Bricolage_Grotesque, Geist_Mono, Instrument_Sans } from "next/font/google";
 import { absoluteUrl, href, site } from "@/config/site";
-import { services } from "@/content/home";
+import { faqs, services } from "@/content/home";
 import "./globals.css";
 
-// Titulares: Hubot Sans con su eje de anchura (expandida)
-const hubot = Hubot_Sans({
-  variable: "--font-hubot",
+// Titulares: Bricolage Grotesque, con sus ejes de tamaño óptico y anchura
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin", "latin-ext"],
-  axes: ["wdth"],
+  axes: ["opsz", "wdth"],
   display: "swap",
 });
 
-// Texto: Mona Sans, de la misma familia
-const mona = Mona_Sans({
-  variable: "--font-mona",
+// Texto: Instrument Sans, neutra pero con carácter
+const instrument = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin", "latin-ext"],
-  axes: ["wdth"],
   display: "swap",
 });
 
-// Solo índices y etiquetas técnicas cortas
+// Solo etiquetas cortas y detalles técnicos
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -36,14 +35,16 @@ export const metadata: Metadata = {
   },
   description: site.description,
   applicationName: site.name,
+  authors: [{ name: site.owner }],
+  creator: site.owner,
   manifest: href("/manifest.webmanifest"),
   keywords: [
-    "consultoría de inteligencia artificial",
-    "consultoría IA para empresas",
-    "agentes de IA",
-    "automatización de procesos con IA",
-    "chatbots para empresas",
-    "integración de inteligencia artificial",
+    "diseño web a medida",
+    "desarrollo web para empresas",
+    "diseñador web freelance",
+    "web corporativa",
+    "landing page",
+    "rediseño de páginas web",
   ],
   alternates: { canonical: absoluteUrl("/") },
   openGraph: {
@@ -64,25 +65,65 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#050505",
-  colorScheme: "dark",
+  themeColor: site.colors.paper,
+  colorScheme: "light",
 };
 
+/**
+ * Antes de pintar: marca <html> con .js (si hay movimiento) para que la portada
+ * empiece oculta y GSAP la revele. Si en 4 s no ha arrancado, .anim-fail la
+ * muestra igualmente: nunca se queda contenido escondido.
+ */
+const ANIMATION_BOOT = `(function(){var d=document.documentElement;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('js');setTimeout(function(){if(!d.classList.contains('anim-ready'))d.classList.add('anim-fail')},4000)})();`;
+
 function StructuredData() {
+  const home = absoluteUrl("/");
   const data = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: site.name,
-    url: site.url,
-    email: site.email,
-    telephone: site.phone.href,
-    description: site.description,
-    inLanguage: site.language,
-    knowsAbout: ["Inteligencia artificial aplicada a empresas", "Agentes de IA", "Automatización de procesos"],
-    makesOffer: services.map((service) => ({
-      "@type": "Offer",
-      itemOffered: { "@type": "Service", name: service.title, description: service.body },
-    })),
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${home}#web`,
+        url: home,
+        name: site.name,
+        description: site.description,
+        inLanguage: "es-ES",
+        publisher: { "@id": `${home}#juan` },
+      },
+      {
+        "@type": "Person",
+        "@id": `${home}#juan`,
+        name: site.owner,
+        jobTitle: "Diseñador y desarrollador web",
+        url: home,
+        email: site.email,
+        telephone: site.phone.href,
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": `${home}#servicio`,
+        name: site.name,
+        url: home,
+        email: site.email,
+        telephone: site.phone.href,
+        description: site.description,
+        founder: { "@id": `${home}#juan` },
+        knowsAbout: ["Diseño web", "Desarrollo web", "Landing pages", "Rediseño web", "Diseño adaptable a móvil"],
+        makesOffer: services.map((service) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: service.title, description: service.body },
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${home}#preguntas`,
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.q,
+          acceptedAnswer: { "@type": "Answer", text: faq.a },
+        })),
+      },
+    ],
   };
 
   return (
@@ -96,7 +137,15 @@ function StructuredData() {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang={site.language} className={`${hubot.variable} ${mona.variable} ${geistMono.variable} antialiased`}>
+    <html
+      lang={site.language}
+      className={`${bricolage.variable} ${instrument.variable} ${geistMono.variable} antialiased`}
+      // El script de <head> añade clases a <html> antes de hidratar
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: ANIMATION_BOOT }} />
+      </head>
       <body className="min-h-dvh">
         <StructuredData />
         {children}

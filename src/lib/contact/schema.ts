@@ -1,24 +1,25 @@
 /**
- * Validación del formulario de contacto, compartida entre navegador y servidor.
+ * Validación del formulario de contacto.
  */
 
-export const INTERESTS = [
-  { value: "automatizacion", label: "Automatización inteligente de procesos" },
-  { value: "agentes", label: "Desarrollo de agentes de IA" },
-  { value: "asistentes", label: "Chatbots y asistentes virtuales" },
-  { value: "integracion", label: "Integración de IA en tu empresa" },
-  { value: "estrategia", label: "Consultoría y estrategia de IA" },
-  { value: "medida", label: "Soluciones a medida" },
-  { value: "no-lo-se", label: "Aún no lo sé" },
+export const PROJECT_TYPES = [
+  { value: "corporativa", label: "Web corporativa" },
+  { value: "landing", label: "Landing page" },
+  { value: "rediseno", label: "Rediseño de mi web actual" },
+  { value: "otro", label: "Otra cosa o aún no lo sé" },
 ] as const;
 
-export type Interest = (typeof INTERESTS)[number]["value"];
+export type ProjectType = (typeof PROJECT_TYPES)[number]["value"];
+
+export function isProjectType(value: unknown): value is ProjectType {
+  return PROJECT_TYPES.some((type) => type.value === value);
+}
 
 export type ContactInput = {
   name: string;
   email: string;
   company: string;
-  interest: Interest;
+  projectType: ProjectType;
   message: string;
   consent: boolean;
   /** Campo trampa para bots: las personas no lo ven ni lo rellenan. */
@@ -41,30 +42,11 @@ export const emptyContact: ContactInput = {
   name: "",
   email: "",
   company: "",
-  interest: "no-lo-se",
+  projectType: "otro",
   message: "",
   consent: false,
   website: "",
 };
-
-const asText = (value: unknown) => (typeof value === "string" ? value.trim() : "");
-
-/** Convierte datos desconocidos (p. ej. el cuerpo de una petición) en un ContactInput. */
-export function normalizeContact(raw: unknown): ContactInput {
-  const data = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
-  const interest = INTERESTS.some((i) => i.value === data.interest)
-    ? (data.interest as Interest)
-    : "no-lo-se";
-  return {
-    name: asText(data.name),
-    email: asText(data.email).toLowerCase(),
-    company: asText(data.company),
-    interest,
-    message: asText(data.message),
-    consent: data.consent === true,
-    website: asText(data.website),
-  };
-}
 
 export function validateField(field: ContactField, input: ContactInput): string | undefined {
   switch (field) {
@@ -74,7 +56,7 @@ export function validateField(field: ContactField, input: ContactInput): string 
         return `El nombre es demasiado largo (máximo ${LIMITS.name} caracteres).`;
       return;
     case "email":
-      if (!input.email.trim()) return "Escribe tu correo electrónico.";
+      if (!input.email.trim()) return "Escribe tu correo electrónico para que pueda responderte.";
       if (!EMAIL_PATTERN.test(input.email.trim()))
         return "Revisa el correo: debe tener un formato como nombre@empresa.com.";
       return;
@@ -84,7 +66,7 @@ export function validateField(field: ContactField, input: ContactInput): string 
       return;
     case "message": {
       const length = input.message.trim().length;
-      if (!length) return "Cuéntanos brevemente qué necesitas.";
+      if (!length) return "Cuéntame brevemente qué necesitas.";
       if (length < LIMITS.messageMin)
         return `Añade algo más de detalle (mínimo ${LIMITS.messageMin} caracteres).`;
       if (length > LIMITS.messageMax)
@@ -92,14 +74,14 @@ export function validateField(field: ContactField, input: ContactInput): string 
       return;
     }
     case "consent":
-      if (!input.consent) return "Necesitamos tu permiso para usar estos datos y responderte.";
+      if (!input.consent) return "Necesito tu permiso para usar estos datos y poder responderte.";
       return;
-    case "interest":
+    case "projectType":
       return;
   }
 }
 
-const FIELD_ORDER: ContactField[] = ["name", "email", "company", "interest", "message", "consent"];
+const FIELD_ORDER: ContactField[] = ["name", "email", "company", "projectType", "message", "consent"];
 
 export function validateContact(input: ContactInput): ContactErrors {
   const errors: ContactErrors = {};
@@ -110,13 +92,6 @@ export function validateContact(input: ContactInput): ContactErrors {
   return errors;
 }
 
-export function interestLabel(value: Interest) {
-  return INTERESTS.find((i) => i.value === value)?.label ?? value;
+export function projectTypeLabel(value: ProjectType) {
+  return PROJECT_TYPES.find((type) => type.value === value)?.label ?? value;
 }
-
-/** Respuesta del endpoint /api/contact. */
-export type ContactResponse =
-  | { status: "delivered" }
-  | { status: "not_configured" }
-  | { status: "invalid"; errors: ContactErrors }
-  | { status: "failed" };
